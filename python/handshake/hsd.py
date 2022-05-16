@@ -46,7 +46,6 @@ class hsd:
         ADDRESS = _address
         PORT = _port
 
-### BEGIN: GET methods
     def get(self, _endpoint):
         url = "http://x:" + API_KEY + "@" + ADDRESS + ":" + PORT + _endpoint
         print(url)
@@ -54,6 +53,21 @@ class hsd:
         response = getResponse.json() if getResponse and getResponse.status_code == 200 else None
         return response # Returned as json
     ### END METHOD ################################### get(_endpoint)
+
+    def post(self, _endpoint, _post_message):
+        """
+        Description:
+        
+        
+        Params:
+            None
+        """
+        
+        url = "http://x:" + API_KEY + "@" + ADDRESS + ":" + PORT + _endpoint
+        postRequest = requests.post(url, _post_message)
+        response = postRequest.json() if postRequest and postRequest.status_code == 200 else None
+        return response # Returned as json
+    ### END METHOD ################################### post(_endpoint, _post_message)
 
     def getInfo(self):
         """
@@ -154,6 +168,42 @@ class hsd:
         return response
     ### END METHOD ################################### getHeaderHashOrHeight(self _headerHashOrHeight)
 
+    def postBroadcast(self, _tx):
+        """
+        Description:
+            Broadcast a transaction by adding it to the node's mempool.
+            If mempool verification fails, the node will still forcefully
+            advertise and relay the transaction for the next 60 seconds.
+        
+        Params:
+        (*) Denotes required argument
+        
+        (*) _tx : Raw transaction in hex.
+        """
+        
+        endpoint = '/broadcast/'
+        post_message = '{"tx": "' + _tx + '"}'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### postBroadcast(self, _tx)
+
+    def postBroadcastClaim(self, _claim):
+        """
+        Description:
+            Broadcast a claim by adding it to the node's mempool.
+        
+        Params:
+        (*) Denotes required argument
+        
+        (*) _claim : Raw claim in hex.
+        """
+        
+        endpoint = '/claim/'
+        post_message = '{ "claim": "' + _claim + '" }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### postBroadcastClaim(self, _claim)
+
     def getFeeEstimate(self, _blocks):
         """
         Description:
@@ -171,6 +221,27 @@ class hsd:
         response = self.get(endpoint)
         return response
     ### END METHOD ################################### getFeeEstimate(self, _blocks)
+
+    def postReset(self, _height):
+        """
+        Description:
+            Triggers a hard-reset of the blockchain. All blocks are disconnected
+            from the tip down to the provided height. Indexes and Chain Entries
+            are removed. Useful for "rescanning" an SPV wallet. Since there are
+            no blocks stored on disk, the only way to rescan the blockchain is to
+            re-request [merkle]blocks from peers.
+        
+        Params:
+        (*) Denotes required argument
+        
+        (*) _height : Block height to reset chain to.
+        """
+        
+        endpoint = '/reset'
+        post_message = '{ "height": ' + _height + '}'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### postReset(self, _height)
 
     def getCoinByHashIndex(self, _hash, _index):
         """
@@ -238,6 +309,21 @@ class hsd:
         return response
     ### END METHOD ################################### getTxHash(self, _address)
 
+    def rpc_postStop(self):
+        """
+        Description:
+            Stops the running node.
+        
+        Params:
+            None
+        """
+        
+        endpoint = '/'
+        post_message = '{ "method": "stop" }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_postStop(self)
+
     def rpc_getInfo(self):
         """
         Description:
@@ -248,7 +334,7 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = "{ 'method': 'stop' }"
+        post_message = "{ 'method': 'getinfo' }"
         response = self.post(endpoint, post_message)
         return response
     ### END METHOD ################################### rpc_getInfo(self)
@@ -267,6 +353,184 @@ class hsd:
         response = self.post(endpoint, post_message)
         return response
     ### END METHOD ################################### rpc_getMemoryInfo(self)
+
+    def rpc_setLogLevel(self, _params=['none']): # _params = ['NONE', 'ERROR', 'WARNING', 'INFO', 'DEBUG', 'SPAM']
+        """
+        Description:
+            Change Log level of the running node.
+        
+        Params:
+        (*) Denotes required argument
+        
+        (*) _params : Level for the logger as dictionary array.
+                      Levels are: NONE, ERROR, WARNING, INFO, DEBUG, SPAM 
+        """
+        
+        endpoint = '/'
+        post_message = '{ "method": "setloglevel", "params": "' + _params + '" }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_postSetLogLevel(self, _params)
+
+    def rpc_validateAddress(self, _address):
+        """
+        Description:
+            Validates address.
+        
+        Params:
+        (*) Denotes required argument
+        
+        (*) _address : Address to validate.
+        """
+        
+        endpoint = '/'
+        post_message = '{ "validateaddress": "", "params": "' + _address + '" }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_postValidateAddress(self, _address)
+
+    def rpc_createMultiSig(self, _nrequired, _keyDict):
+        """
+        Description:
+            Create multisig address.
+        
+        Params:
+        (*) Denotes required argument
+        
+        (*) _nrequired : Required number of approvals for spending.
+        (*) _keyDict   : Dictionary of public keys.
+        """
+        
+        endpoint = '/'
+        post_message = '{ "method": "createmultisig", "params": [ ' + _nrequired + ', "' + _keyDict + ' ]" }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_postCreateMultiSig(self, _nrequired, _keyDict)
+
+    def rpc_signMessageWithPrivKey(self, _privkey, _message):
+        """
+        Description:
+            Signs message with private key. 
+        
+        Params:
+        (*) Denotes required argument
+        
+        (*) _privkey : Private key.
+        (*) _message : Message you want to sign.
+        """
+        
+        endpoint = '/'
+        post_message = '{ "method": "signmessagewithprivkey", "params": [ ' + _privkey + ', "' + _message + ' ]" }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### def rpc_postSignMessageWithPrivKey(self, _privkey, _message)
+
+    def rpc_verifyMessage(self, _address, _signature, _message):
+        """
+        Description:
+            Verify signature.
+        
+        Params:
+        (*) Denotes required argument
+        
+        (*) _address   : Address of the signer.
+        (*) _signature : Signature of signed message.
+        (*) _message   : Message that was signed.
+        """
+        
+        endpoint = '/'
+        post_message = '{ "method": "verifymessage", "params": [ ' + _address + ', "' + _signature + ', "' + _message + ' ]" }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_postVerifyMessage(self, _address, _signature, _message)
+
+    def rpc_verifyMessageWithName(self, _name, _signature, _message):
+        """
+        Description:
+            Retrieves the address that owns a name and verifies signature.
+        
+        Params:
+        (*) Denotes required argument
+        
+        (*) _name      : Name to retrieve the address used to sign.
+        (*) _signature : Signature of signed message.
+        (*) _message   : Message that was signed.
+        """
+        
+        endpoint = '/'
+        post_message = '{ "method": "verifymessagewithname", "params": [ ' + _name + ', "' + _signature + ', "' + _message + ' ]" }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_postVerifyMessageWithName(self, _name, _signature, _message)
+
+    def rpc_setMockTime(self, _timestamp):
+        """
+        Description:
+            Changes network time (This is consensus-critical)
+        
+        Params:
+        (*) Denotes required argument
+        
+        (*) _timestamp : Timestamp to change to.
+        """
+        
+        endpoint = '/'
+        post_message = '{ "method": "setmocktime", "params": [ ' + _timestamp + ' ]" }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_postSetMockTime(self, _timestamp)
+
+    def rpc_pruneBlockchain(self):
+        """
+        Description:
+            Prunes the blockchain, it will keep blocks specified in Network Configurations.
+        
+        Params:
+            None
+        """
+        
+        endpoint = '/'
+        post_message = '{ "method": "pruneblockchain", "params": [] }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_postPruneBlockchain(self)
+    
+    def rpc_invalidateBlock(self, _blockhash):
+        """
+        Description:
+            Invalidates the block in the chain. It will rewind network to
+            blockhash and invalidate it. It won't accept that block as valid.
+            Invalidation will work while running,restarting node will remove
+            invalid block from list.
+        
+        Params:
+        (*) Denotes required argument
+        
+        (*) _blockhash : Block's hash.
+        """
+        
+        endpoint = '/'
+        post_message = '{ "method": "", "params": [ ' + _blockhash + ' ]" }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_postInvalidateBlock(self, _blockhash)
+    
+    def rpc_reconsiderBlock(self, _blockhash):
+        """
+        Description:
+            This rpc command will remove block from invalid block set.
+        
+        Params:
+        (*) Denotes required argument
+        
+        (*) _blockhash : Block's hash.
+        """
+        
+        endpoint = '/'
+        post_message = '{ "method": "reconsiderblock", "params": [ ' + _blockhash + ' ]" }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_postReconsiderBlock(self, _blockhash)
 
     def rpc_getBlockchainInfo(self):
         """
@@ -543,7 +807,7 @@ class hsd:
         Params:
         (*) Denotes required argument
         
-        (*) _nblocks : Number of blocks to check for estimation.
+        ( ) _nblocks : Number of blocks to check for estimation.
         """
         
         endpoint = '/'
@@ -562,7 +826,7 @@ class hsd:
         Params:
         (*) Denotes required argument
         
-        (*) _nblocks : Number of blocks to check for estimation.
+        ( ) _nblocks : Number of blocks to check for estimation.
         """
         
         endpoint = '/'
@@ -579,7 +843,7 @@ class hsd:
         Params:
         (*) Denotes required argument
         
-        (*) _nblocks : Number of blocks to check for estimation.
+        ( ) _nblocks : Number of blocks to check for estimation.
         """
         
         endpoint = '/'
@@ -617,7 +881,7 @@ class hsd:
         
         (*) _txhash         : Transaction hash.
         (*) _index          : Index of the Outpoint tx.
-        (*) _includemempool : Whether to include mempool transactions.
+        ( ) _includemempool : Whether to include mempool transactions.
         """
 
         _includemempool = _includemempool.lower()
@@ -627,273 +891,106 @@ class hsd:
         response = self.post(endpoint, post_message)
         return response
     ### END METHOD ################################### rpc_getTxOut(self, _txhash, _index, _includemempool='true')
-
-
-###########################################################################################################
-
-
-### BEGIN: POST methods ##############################
-    def post(self, _endpoint, _post_message):
-        """
-        Description:
-        
-        
-        Params:
-            None
-        """
-        
-        url = "http://x:" + API_KEY + "@" + ADDRESS + ":" + PORT + _endpoint
-        postRequest = requests.post(url, _post_message)
-        response = postRequest.json() if postRequest and postRequest.status_code == 200 else None
-        return response # Returned as json
-    ### END METHOD ################################### post(_endpoint, _post_message)
-
-    def postBroadcast(self, _tx):
-        """
-        Description:
-            Broadcast a transaction by adding it to the node's mempool.
-            If mempool verification fails, the node will still forcefully
-            advertise and relay the transaction for the next 60 seconds.
-        
-        Params:
-        (*) Denotes required argument
-        
-        (*) _tx : Raw transaction in hex.
-        """
-        
-        endpoint = '/broadcast/'
-        post_message = '{"tx": "' + _tx + '"}'
-        response = self.post(endpoint, post_message)
-        return response
-    ### END METHOD ################################### postBroadcast(self, _tx)
-
-    def postBroadcastClaim(self, _claim):
-        """
-        Description:
-            Broadcast a claim by adding it to the node's mempool.
-        
-        Params:
-        (*) Denotes required argument
-        
-        (*) _claim : Raw claim in hex.
-        """
-        
-        endpoint = '/claim/'
-        post_message = '{ "claim": "' + _claim + '" }'
-        response = self.post(endpoint, post_message)
-        return response
-    ### END METHOD ################################### postBroadcastClaim(self, _claim)
-
-    def postReset(self, _height):
-        """
-        Description:
-            Triggers a hard-reset of the blockchain. All blocks are disconnected
-            from the tip down to the provided height. Indexes and Chain Entries
-            are removed. Useful for "rescanning" an SPV wallet. Since there are
-            no blocks stored on disk, the only way to rescan the blockchain is to
-            re-request [merkle]blocks from peers.
-        
-        Params:
-        (*) Denotes required argument
-        
-        (*) _height : Block height to reset chain to.
-        """
-        
-        endpoint = '/reset'
-        post_message = '{ "height": ' + _height + '}'
-        response = self.post(endpoint, post_message)
-        return response
-    ### END METHOD ################################### postReset(self, _height)
-
-    def rpc_postStop(self):
-        """
-        Description:
-            Stops the running node.
-        
-        Params:
-            None
-        """
-        
-        endpoint = '/'
-        post_message = '{ "method": "stop" }'
-        response = self.post(endpoint, post_message)
-        return response
-    ### END METHOD ################################### rpc_postStop(self)
-
-    def rpc_setLogLevel(self, _params=['none']): # _params = ['NONE', 'ERROR', 'WARNING', 'INFO', 'DEBUG', 'SPAM']
-        """
-        Description:
-            Change Log level of the running node.
-        
-        Params:
-        (*) Denotes required argument
-        
-        (*) _params : Level for the logger as dictionary array.
-                      Levels are: NONE, ERROR, WARNING, INFO, DEBUG, SPAM 
-        """
-        
-        endpoint = '/'
-        post_message = '{ "method": "setloglevel", "params": "' + _params + '" }'
-        response = self.post(endpoint, post_message)
-        return response
-    ### END METHOD ################################### rpc_postSetLogLevel(self, _params)
-
-    def rpc_validateAddress(self, _address):
-        """
-        Description:
-            Validates address.
-        
-        Params:
-        (*) Denotes required argument
-        
-        (*) _address : Address to validate.
-        """
-        
-        endpoint = '/'
-        post_message = '{ "validateaddress": "", "params": "' + _address + '" }'
-        response = self.post(endpoint, post_message)
-        return response
-    ### END METHOD ################################### rpc_postValidateAddress(self, _address)
-
-    def rpc_createMultiSig(self, _nrequired, _keyDict):
-        """
-        Description:
-            Create multisig address.
-        
-        Params:
-        (*) Denotes required argument
-        
-        (*) _nrequired : Required number of approvals for spending.
-        (*) _keyDict   : Dictionary of public keys.
-        """
-        
-        endpoint = '/'
-        post_message = '{ "method": "createmultisig", "params": [ ' + _nrequired + ', "' + _keyDict + ' ]" }'
-        response = self.post(endpoint, post_message)
-        return response
-    ### END METHOD ################################### rpc_postCreateMultiSig(self, _nrequired, _keyDict)
-
-    def rpc_signMessageWithPrivKey(self, _privkey, _message):
-        """
-        Description:
-            Signs message with private key. 
-        
-        Params:
-        (*) Denotes required argument
-        
-        (*) _privkey : Private key.
-        (*) _message : Message you want to sign.
-        """
-        
-        endpoint = '/'
-        post_message = '{ "method": "signmessagewithprivkey", "params": [ ' + _privkey + ', "' + _message + ' ]" }'
-        response = self.post(endpoint, post_message)
-        return response
-    ### END METHOD ################################### def rpc_postSignMessageWithPrivKey(self, _privkey, _message)
-
-    def rpc_verifyMessage(self, _address, _signature, _message):
-        """
-        Description:
-            Verify signature.
-        
-        Params:
-        (*) Denotes required argument
-        
-        (*) _address   : Address of the signer.
-        (*) _signature : Signature of signed message.
-        (*) _message   : Message that was signed.
-        """
-        
-        endpoint = '/'
-        post_message = '{ "method": "verifymessage", "params": [ ' + _address + ', "' + _signature + ', "' + _message + ' ]" }'
-        response = self.post(endpoint, post_message)
-        return response
-    ### END METHOD ################################### rpc_postVerifyMessage(self, _address, _signature, _message)
-
-    def rpc_verifyMessageWithName(self, _name, _signature, _message):
-        """
-        Description:
-            Retrieves the address that owns a name and verifies signature.
-        
-        Params:
-        (*) Denotes required argument
-        
-        (*) _name      : Name to retrieve the address used to sign.
-        (*) _signature : Signature of signed message.
-        (*) _message   : Message that was signed.
-        """
-        
-        endpoint = '/'
-        post_message = '{ "method": "verifymessagewithname", "params": [ ' + _name + ', "' + _signature + ', "' + _message + ' ]" }'
-        response = self.post(endpoint, post_message)
-        return response
-    ### END METHOD ################################### rpc_postVerifyMessageWithName(self, _name, _signature, _message)
-
-    def rpc_setMockTime(self, _timestamp):
-        """
-        Description:
-            Changes network time (This is consensus-critical)
-        
-        Params:
-        (*) Denotes required argument
-        
-        (*) _timestamp : Timestamp to change to.
-        """
-        
-        endpoint = '/'
-        post_message = '{ "method": "setmocktime", "params": [ ' + _timestamp + ' ]" }'
-        response = self.post(endpoint, post_message)
-        return response
-    ### END METHOD ################################### rpc_postSetMockTime(self, _timestamp)
-
-    def rpc_pruneBlockchain(self):
-        """
-        Description:
-            Prunes the blockchain, it will keep blocks specified in Network Configurations.
-        
-        Params:
-            None
-        """
-        
-        endpoint = '/'
-        post_message = '{ "method": "pruneblockchain", "params": [] }'
-        response = self.post(endpoint, post_message)
-        return response
-    ### END METHOD ################################### rpc_postPruneBlockchain(self)
     
-    def rpc_invalidateBlock(self, _blockhash):
+    def rpc_getTxOutSetInfo(self):
         """
         Description:
-            Invalidates the block in the chain. It will rewind network to
-            blockhash and invalidate it. It won't accept that block as valid.
-            Invalidation will work while running,restarting node will remove
-            invalid block from list.
+            Returns information about UTXO's from Chain.
         
         Params:
-        (*) Denotes required argument
-        
-        (*) _blockhash : Block's hash.
+            None
         """
-        
+
         endpoint = '/'
-        post_message = '{ "method": "", "params": [ ' + _blockhash + ' ]" }'
+        post_message = '{ "method": "gettxoutsetinfo", "params": []" }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_postInvalidateBlock(self, _blockhash)
+    ### END METHOD ################################### rpc_getTxOutSetInfo(self)
     
-    def rpc_reconsiderBlock(self, _blockhash):
+    def rpc_getRawTransaction(self, _txhash, _verbose='false'):
         """
         Description:
-            This rpc command will remove block from invalid block set.
+            Returns raw transaction
         
         Params:
         (*) Denotes required argument
         
-        (*) _blockhash : Block's hash.
+        (*) _txhash  : Transaction hash.
+        ( ) _verbose : Returns json formatted if true.
+        """
+
+        _verbose = _verbose.lower()
+        
+        endpoint = '/'
+        post_message = '{ "method": "getrawtransaction", "params": [ ' + _txhash + ', "' + _verbose + ' ]" }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_getRawTransaction(self, _txhash, _verbose='false')
+    
+    def rpc_decodeRawTransaction(self, _rawtx):
+        """
+        Description:
+            Decodes raw tx and provide chain info.
+        
+        Params:
+        (*) Denotes required argument
+        
+        (*) _rawtx : Raw transaction hex.
         """
         
         endpoint = '/'
-        post_message = '{ "method": "reconsiderblock", "params": [ ' + _blockhash + ' ]" }'
+        post_message = '{ "method": "decoderawtransaction", "params": [ ' + _rawtx + ' ]" }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_postReconsiderBlock(self, _blockhash)
+    ### END METHOD ################################### decodeRawTransaction(self, _rawtx)
+    
+    def rpc_decodeScript(self, _script):
+        """
+        Description:
+            Decodes script.
+        
+        Params:
+        (*) Denotes required argument
+        
+        (*) _script : Script hex.
+        """
+        
+        endpoint = '/'
+        post_message = '{ "method": "decodescript", "params": [ ' + _script + ' ]" }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_decodeScript(self, _script)
+    
+    def rpc_sendRawTransaction(self, _rawtx):
+        """
+        Description:
+            Sends raw transaction without verification.
+        
+        Params:
+        (*) Denotes required argument
+        
+        (*) _rawtx : Raw transaction hex.
+        """
+        
+        endpoint = '/'
+        post_message = '{ "method": "decodescript", "params": [ ' + _rawtx + ' ]" }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_sendRawTransaction(self, _rawtx)
+    
+    def rpc_createRawTransaction(self, _rawtx):
+        """
+        Description:
+            Creates raw, unsigned transaction without any formal verification.
+        
+        Params:
+        (*) Denotes required argument
+        
+        (*) _rawtx : Raw transaction hex.
+        """
+
+        endpoint = '/'
+        post_message = '{ "method": "decodescript", "params": [ ' + _rawtx + ' ]" }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_sendRawTransaction(self, _rawtx)
