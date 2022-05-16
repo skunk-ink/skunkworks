@@ -31,8 +31,6 @@
                                    `"             `""""`  `""""""`   
 ```
 # The Repository
- - [Python](#python)
-    - [Handshake Python Wrapper](#handshake-python-wrapper)
 ## Python
 ### Handshake Python Wrapper [(View Source)](python/handshake/hsd.py)
 For more information on using the Handshake API, visit the [Handshake API Docs](https://hsd-dev.org/api-docs/#introduction)
