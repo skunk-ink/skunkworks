@@ -40,13 +40,17 @@ class hsd:
     def __init__(self, _api_key:str, _address:str, _port:int=12037):
         """
         Description:
+
             Initialization of the hsd class
         
         Params:
+
         (*) Denotes required argument
 
         (*) _api_key : HSD API key.
+
         (*) _address : HSD node ip.
+
         (*) _port    : HSD node port.
         """
         global API_KEY
@@ -56,14 +60,16 @@ class hsd:
         API_KEY = _api_key
         ADDRESS = _address
         PORT = str(_port)
-    ### END METHOD ################################### def __init__(self, _api_key, _address, _port="12037")
+    ### END METHOD ################################### __init__(self, _api_key:str, _address:str, _port:int=12037)
 
     def get(self, _endpoint:str):
         """
         Description:
+
             GET response from API
         
         Params:
+
         (*) Denotes required argument
 
         (*) _endpoint     : API endpoint to send GET request.
@@ -73,17 +79,20 @@ class hsd:
         getResponse = requests.get(url)
         response = getResponse.json()
         return response # Returned as json
-    ### END METHOD ################################### get(_endpoint)
+    ### END METHOD ################################### get(self, _endpoint:str)
 
     def post(self, _endpoint:str, _post_message:str):
         """
         Description:
+
             POST message to API
         
         Params:
+
         (*) Denotes required argument
 
         (*) _endpoint     : API endpoint to send POST message.
+
         (*) _post_message : Message to be sent.
         """
         
@@ -91,14 +100,16 @@ class hsd:
         postRequest = requests.post(url, _post_message)
         response = postRequest.json()
         return response # Returned as json
-    ### END METHOD ################################### post(_endpoint, _post_message)
+    ### END METHOD ################################### post(self, _endpoint:str, _post_message:str)
 
     def getInfo(self):
         """
         Description:
+
             Get server Info.
         
         Params:
+
             None
         """
 
@@ -110,9 +121,11 @@ class hsd:
     def getMemPool(self):
         """
         Description:
+
             Get mempool snapshot (array of json txs).
         
         Params:
+
             None
         """
         
@@ -124,10 +137,12 @@ class hsd:
     def getMemPoolInvalid(self, _verbose:str='false'):
         """
         Description:
+
             Get mempool rejects filter (a Bloom filter used to store rejected TX hashes).
         
         
         Params:
+
         (*) Denotes required argument
 
         ( ) _verbose : (bool) Returns entire Bloom Filter in filter property, hex-encoded.
@@ -141,15 +156,17 @@ class hsd:
 
         response = self.get(endpoint)
         return response
-    ### END METHOD ################################### getMemPoolInvalid(self)
+    ### END METHOD ################################### getMemPoolInvalid(self, _verbose:str='false')
 
     def getMemPoolInvalidHash(self, _hash:str):
         """
         Description:
+
             Test a TX hash against the mempool rejects filter.
         
 
         Params:
+
         (*) Denotes required argument
         
         (*) _hash : Transaction hash.
@@ -158,14 +175,16 @@ class hsd:
         endpoint = '/mempool/invalid/' + _hash
         response = self.get(endpoint)
         return response
-    ### END METHOD ################################### getMemPoolInvalidHash(self, _hash)
+    ### END METHOD ################################### getMemPoolInvalidHash(self, _hash:str)
 
     def getBlockHashOrHeight(self, _blockHashOrHeight:str):
         """
         Description:
+
             Returns block info by block hash or height.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _blockHashOrHeight : Hash or Height of block.
@@ -174,14 +193,16 @@ class hsd:
         endpoint = '/block/' + _blockHashOrHeight
         response = self.get(endpoint)
         return response
-    ### END METHOD ################################### getBlockHashOrHeight(self, _blockHashOrHeight)
+    ### END METHOD ################################### getBlockHashOrHeight(self, _blockHashOrHeight:str)
 
     def getHeaderHashOrHeight(self, _headerHashOrHeight:str):
         """
         Description:
+
             Returns block header by block hash or height.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _headerHashOrHeight : Hash or Height of block.
@@ -190,16 +211,18 @@ class hsd:
         endpoint = '/header/' + _headerHashOrHeight
         response = self.get(endpoint)
         return response
-    ### END METHOD ################################### getHeaderHashOrHeight(self _headerHashOrHeight)
+    ### END METHOD ################################### getHeaderHashOrHeight(self, _headerHashOrHeight:str)
 
     def postBroadcast(self, _tx:str):
         """
         Description:
+
             Broadcast a transaction by adding it to the node's mempool.
             If mempool verification fails, the node will still forcefully
             advertise and relay the transaction for the next 60 seconds.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _tx : Raw transaction in hex.
@@ -209,14 +232,16 @@ class hsd:
         post_message = '{"tx": "' + _tx + '"}'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### postBroadcast(self, _tx)
+    ### END METHOD ################################### postBroadcast(self, _tx:str)
 
     def postBroadcastClaim(self, _claim:str):
         """
         Description:
+
             Broadcast a claim by adding it to the node's mempool.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _claim : Raw claim in hex.
@@ -226,16 +251,18 @@ class hsd:
         post_message = '{ "claim": "' + _claim + '" }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### postBroadcastClaim(self, _claim)
+    ### END METHOD ################################### postBroadcastClaim(self, _claim:str)
 
     def getFeeEstimate(self, _blocks:int):
         """
         Description:
+
             Estimate the fee required (in dollarydoos per kB) for a
             transaction to be confirmed by the network within a targeted
             number of blocks (default 1).
         
         Params:
+
         (*) Denotes required argument
         
         (*) _blocks : Number of blocks to target confirmation.
@@ -244,11 +271,12 @@ class hsd:
         endpoint = '/fee?blocks=' + str(_blocks)
         response = self.get(endpoint)
         return response
-    ### END METHOD ################################### getFeeEstimate(self, _blocks)
+    ### END METHOD ################################### getFeeEstimate(self, _blocks:int)
 
     def postReset(self, _height:int):
         """
         Description:
+
             Triggers a hard-reset of the blockchain. All blocks are disconnected
             from the tip down to the provided height. Indexes and Chain Entries
             are removed. Useful for "rescanning" an SPV wallet. Since there are
@@ -256,6 +284,7 @@ class hsd:
             re-request [merkle]blocks from peers.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _height : Block height to reset chain to.
@@ -265,32 +294,37 @@ class hsd:
         post_message = '{ "height": ' + str(_height) + '}'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### postReset(self, _height)
+    ### END METHOD ################################### postReset(self, _height:int)
 
     def getCoinByHashIndex(self, _hash:str, _index:int):
         """
         Description:
+
             Get coin by outpoint (hash and index). Returns coin in hsd coin
             JSON format. value is always expressed in subunits.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _hash  : Hash of tx.
+
         (*) _index : Output's index in tx.
         """
         
         endpoint = '/coin/' + hash + '/' + _hash + '/' + str(_index)
         response = self.get(endpoint)
         return response
-    ### END METHOD ################################### getCoinByHashIndex(self, _hash, _index)
+    ### END METHOD ################################### getCoinByHashIndex(self, _hash:str, _index:int)
 
     def getCoinByAddress(self, _address:str):
         """
         Description:
+
             Get coin objects array by address.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _address : Handshake address.
@@ -299,14 +333,16 @@ class hsd:
         endpoint = '/coin/address/' + _address
         response = self.get(endpoint)
         return response
-    ### END METHOD ################################### getCoinByAddress(self, _address)
+    ### END METHOD ################################### getCoinByAddress(self, _address:str)
 
     def getTxByHash(self, _txhash:str):
         """
         Description:
+
            Returns transaction objects array by hash
         
         Params:
+
         (*) Denotes required argument
         
         (*) _txhash : Transaction hash.
@@ -315,14 +351,16 @@ class hsd:
         endpoint = '/tx/' + _txhash
         response = self.get(endpoint)
         return response
-    ### END METHOD ################################### getTxHash(self, _hash)
+    ### END METHOD ################################### getTxByHash(self, _txhash:str)
 
     def getTxByAddress(self, _address:str):
         """
         Description:
+
            Returns transaction objects array by address.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _address : Handshake address.
@@ -331,14 +369,16 @@ class hsd:
         endpoint = '/tx/address/' + _address
         response = self.get(endpoint)
         return response
-    ### END METHOD ################################### getTxHash(self, _address)
+    ### END METHOD ################################### getTxByAddress(self, _address:str)
 
     def rpc_postStop(self):
         """
         Description:
+
             Stops the running node.
         
         Params:
+
             None
         """
         
@@ -351,9 +391,11 @@ class hsd:
     def rpc_getInfo(self):
         """
         Description:
+
             Returns general info.
         
         Params:
+
             None 
         """
         
@@ -366,9 +408,11 @@ class hsd:
     def rpc_getMemoryInfo(self):
         """
         Description:
+
             Returns Memory usage info.
         
         Params:
+
             None
         """
         
@@ -378,12 +422,14 @@ class hsd:
         return response
     ### END METHOD ################################### rpc_getMemoryInfo(self)
 
-    def rpc_setLogLevel(self, _params:str=['none']): # _params = ['NONE', 'ERROR', 'WARNING', 'INFO', 'DEBUG', 'SPAM']
+    def rpc_setLogLevel(self, _params:str=['NONE']): # _params = ['NONE', 'ERROR', 'WARNING', 'INFO', 'DEBUG', 'SPAM']
         """
         Description:
+
             Change Log level of the running node.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _params : Level for the logger as list array.
@@ -391,37 +437,42 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "setloglevel", "params": "' + _params + '" }'
+        post_message = '{ "method": "setloglevel", "params": [ "' + _params + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_postSetLogLevel(self, _params)
+    ### END METHOD ################################### rpc_setLogLevel(self, _params:str=['NONE'])
 
     def rpc_validateAddress(self, _address:str):
         """
         Description:
+
             Validates address.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _address : Address to validate.
         """
         
         endpoint = '/'
-        post_message = '{ "validateaddress": "", "params": "' + _address + '" }'
+        post_message = '{ "validateaddress": "", "params": [ "' + _address + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_postValidateAddress(self, _address)
+    ### END METHOD ################################### rpc_validateAddress(self, _address:str)
 
     def rpc_createMultiSig(self, _nrequired:int, _keyDict:str):
         """
         Description:
+
             Create multisig address.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _nrequired : Required number of approvals for spending.
+
         (*) _keyDict   : List array of public keys.
         """
         
@@ -429,70 +480,82 @@ class hsd:
         post_message = '{ "method": "createmultisig", "params": [ ' + str(_nrequired) + ', "' + _keyDict + ' ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_postCreateMultiSig(self, _nrequired, _keyDict)
+    ### END METHOD ################################### rpc_createMultiSig(self, _nrequired:int, _keyDict:str)
 
     def rpc_signMessageWithPrivKey(self, _privkey:str, _message:str):
         """
         Description:
+
             Signs message with private key. 
         
         Params:
         (*) Denotes required argument
         
         (*) _privkey : Private key.
+
         (*) _message : Message you want to sign.
         """
         
         endpoint = '/'
-        post_message = '{ "method": "signmessagewithprivkey", "params": [ ' + _privkey + ', "' + _message + ' ] }'
+        post_message = '{ "method": "signmessagewithprivkey", "params": [ "' + _privkey + '", "' + _message + ' ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### def rpc_postSignMessageWithPrivKey(self, _privkey, _message)
+    ### END METHOD ################################### rpc_signMessageWithPrivKey(self, _privkey:str, _message:str)
 
     def rpc_verifyMessage(self, _address:str, _signature:str, _message:str):
         """
         Description:
+
             Verify signature.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _address   : Address of the signer.
+
         (*) _signature : Signature of signed message.
+
         (*) _message   : Message that was signed.
         """
         
         endpoint = '/'
-        post_message = '{ "method": "verifymessage", "params": [ ' + _address + ', "' + _signature + ', "' + _message + ' ] }'
+        post_message = '{ "method": "verifymessage", "params": [ "' + _address + '", "' + _signature + '", "' + _message + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_postVerifyMessage(self, _address, _signature, _message)
+    ### END METHOD ################################### rpc_verifyMessage(self, _address:str, _signature:str, _message:str)
 
     def rpc_verifyMessageWithName(self, _name:str, _signature:str, _message:str):
         """
         Description:
+
             Retrieves the address that owns a name and verifies signature.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _name      : Name to retrieve the address used to sign.
+
         (*) _signature : Signature of signed message.
+
         (*) _message   : Message that was signed.
         """
         
         endpoint = '/'
-        post_message = '{ "method": "verifymessagewithname", "params": [ ' + _name + ', "' + _signature + ', "' + _message + ' ] }'
+        post_message = '{ "method": "verifymessagewithname", "params": [ "' + _name + '", "' + _signature + '", "' + _message + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_postVerifyMessageWithName(self, _name, _signature, _message)
+    ### END METHOD ################################### rpc_verifyMessageWithName(self, _name:str, _signature:str, _message:str)
 
     def rpc_setMockTime(self, _timestamp:int):
         """
         Description:
+
             Changes network time (This is consensus-critical)
         
         Params:
+
         (*) Denotes required argument
         
         (*) _timestamp : Timestamp to change to.
@@ -502,14 +565,16 @@ class hsd:
         post_message = '{ "method": "setmocktime", "params": [ ' + str(_timestamp) + ' ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_postSetMockTime(self, _timestamp)
+    ### END METHOD ################################### rpc_setMockTime(self, _timestamp:int)
 
     def rpc_pruneBlockchain(self):
         """
         Description:
+
             Prunes the blockchain, it will keep blocks specified in Network Configurations.
         
         Params:
+
             None
         """
         
@@ -522,46 +587,52 @@ class hsd:
     def rpc_invalidateBlock(self, _blockhash:str):
         """
         Description:
+
             Invalidates the block in the chain. It will rewind network to
             blockhash and invalidate it. It won't accept that block as valid.
             Invalidation will work while running,restarting node will remove
             invalid block from list.
         
         Params:
+        
         (*) Denotes required argument
         
         (*) _blockhash : Block's hash.
         """
         
         endpoint = '/'
-        post_message = '{ "method": "", "params": [ ' + _blockhash + ' ] }'
+        post_message = '{ "method": "", "params": [ "' + _blockhash + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_postInvalidateBlock(self, _blockhash)
+    ### END METHOD ################################### rpc_invalidateBlock(self, _blockhash:str)
     
     def rpc_reconsiderBlock(self, _blockhash:str):
         """
         Description:
+
             This rpc command will remove block from invalid block set.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _blockhash : Block's hash.
         """
         
         endpoint = '/'
-        post_message = '{ "method": "reconsiderblock", "params": [ ' + _blockhash + ' ] }'
+        post_message = '{ "method": "reconsiderblock", "params": [ "' + _blockhash + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_postReconsiderBlock(self, _blockhash)
+    ### END METHOD ################################### rpc_reconsiderBlock(self, _blockhash:str)
 
     def rpc_getBlockchainInfo(self):
         """
         Description:
+
             Returns blockchain information.
         
         Params:
+
             None
         """
         
@@ -574,9 +645,11 @@ class hsd:
     def rpc_getBestBlockHash(self):
         """
         Description:
+
             Returns Block Hash of the tip.
         
         Params:
+
             None
         """
         
@@ -589,9 +662,11 @@ class hsd:
     def rpc_getBlockCount(self):
         """
         Description:
+
             Returns block count.
         
         Params:
+
             None
         """
         
@@ -604,13 +679,17 @@ class hsd:
     def rpc_getBlock(self, _hash:str, _verbose:str='true', _details:str='false'):
         """
         Description:
+
             Returns information about block.
 
         Params:
+
         (*) Denotes required argument
         
         (*) _hash    : Hash of the block.
+
         ( ) _verbose : If set to 'false', it will return hex of the block.
+
         ( ) _details : If set to 'true', it will return transaction details too.
         """
 
@@ -618,21 +697,25 @@ class hsd:
         _details = _details.lower()
         
         endpoint = '/'
-        post_message = '{ "method": "getblock", "params": [ ' + _hash + ', "' + _verbose + ', "' + _details + ' ] }'
+        post_message = '{ "method": "getblock", "params": [ "' + _hash + '", "' + _verbose + '", "' + _details + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_getBlock(self, _hash, _verbose='true', _details='false')
+    ### END METHOD ################################### rpc_getBlock(self, _hash:str, _verbose:str='true', _details:str='false')
     
     def rpc_getBlockByHeight(self, _blockheight:str, _verbose:str='true', _details:str='false'):
         """
         Description:
+
             Returns information about block by height.
 
         Params:
+
         (*) Denotes required argument
         
         (*) _hash : Hash of the block.
+
         ( ) _verbose : If set to 'false', it will return hex of the block.
+
         ( ) _details : If set to 'true', it will return transaction details too.
         """
 
@@ -640,17 +723,19 @@ class hsd:
         _details = _details.lower()
         
         endpoint = '/'
-        post_message = '{ "method": "getblockbyheight", "params": [ ' + _blockheight + ', "' + _verbose + ', "' + _details + ' ] }'
+        post_message = '{ "method": "getblockbyheight", "params": [ "' + _blockheight + '", "' + _verbose + '", "' + _details + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_getBlockByHeight(self, _blockheight, _verbose='true', _details='false')
+    ### END METHOD ################################### rpc_getBlockByHeight(self, _blockheight:str, _verbose:str='true', _details:str='false')
     
     def rpc_getBlockHash(self, _blockheight:int):
         """
         Description:
+
             Returns block's hash given its height.
 
         Params:
+
         (*) Denotes required argument
         
         (*) _blockheight : Height of the block in the blockchain.
@@ -660,34 +745,39 @@ class hsd:
         post_message = '{ "method": "getblockhash", "params": [ ' + str(_blockheight) + ' ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_getBlockHash(self, _blockheight)
+    ### END METHOD ################################### rpc_getBlockHash(self, _blockheight:int)
     
     def rpc_getBlockHeader(self, _hash:str, _verbose:str='true'):
         """
         Description:
+
             Returns a block's header given its hash.
 
         Params:
+
         (*) Denotes required argument
         
         (*) _hash    : Hash of the block in the blockchain.
+
         ( ) _verbose : If set to 'false', it will return hex of the block.
         """
 
         _verbose = _verbose.lower()
         
         endpoint = '/'
-        post_message = '{ "method": "getblockheader", "params": [ ' + _hash + ', "' + _verbose + ' ] }'
+        post_message = '{ "method": "getblockheader", "params": [ "' + _hash + '", "' + _verbose + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_getBlockHeader(self, _hash, _verbose='true')
+    ### END METHOD ################################### rpc_getBlockHeader(self, _hash:str, _verbose:str='true')
     
     def rpc_getChainTips(self):
         """
         Description:
+
             Returns chaintips.
         
         Params:
+
             None
         """
         
@@ -700,9 +790,11 @@ class hsd:
     def rpc_getDifficulty(self):
         """
         Description:
+
             Returns current difficulty level.
         
         Params:
+
             None
         """
         
@@ -715,9 +807,11 @@ class hsd:
     def rpc_getMemPoolInfo(self):
         """
         Description:
+
             Returns informations about mempool.
         
         Params:
+
             None
         """
         
@@ -730,64 +824,74 @@ class hsd:
     def rpc_getMemPoolAncestors(self, _txhash:str, _verbose:str='false'):
         """
         Description:
+
             Returns all in-mempool ancestors for a transaction in the mempool.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _txhash  : Transaction Hash.
+
         ( ) _verbose : False returns only tx hashs, true - returns dependency tx info.
         """
 
         _verbose = _verbose.lower()
         
         endpoint = '/'
-        post_message = '{ "method": "getmempoolancestors", "params": [ ' + _txhash + ', "' + _verbose + ' ] }'
+        post_message = '{ "method": "getmempoolancestors", "params": [ "' + _txhash + '", "' + _verbose + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_getMemPoolAncestors(self, _txhash, _verbose='false')
+    ### END METHOD ################################### rpc_getMemPoolAncestors(self, _txhash:str, _verbose:str='false')
     
     def rpc_getMemPoolDescendants(self, _txhash:str, _verbose:str='false'):
         """
         Description:
+
             Returns all in-mempool descendants for a transaction in the mempool.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _txhash  : Transaction Hash.
+
         ( ) _verbose : False returns only tx hashs, true - returns dependency tx info.
         """
         
         endpoint = '/'
-        post_message = '{ "method": "getmempooldescendants", "params": [ ' + _txhash + ', "' + _verbose + ' ] }'
+        post_message = '{ "method": "getmempooldescendants", "params": [ "' + _txhash + '", "' + _verbose + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_getMemPoolDescendants(self, _txhash, _verbose='false')
+    ### END METHOD ################################### rpc_getMemPoolDescendants(self, _txhash:str, _verbose:str='false')
     
     def rpc_getMemPoolEntry(self, _txhash:str):
         """
         Description:
+
             Returns mempool transaction info by its hash.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _txhash : Transaction Hash.
         """
         
         endpoint = '/'
-        post_message = '{ "method": "getmempoolentry", "params": [ ' + _txhash + ' ] }'
+        post_message = '{ "method": "getmempoolentry", "params": [ "' + _txhash + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_getMemPoolEntry(self, _txhash)
+    ### END METHOD ################################### rpc_getMemPoolEntry(self, _txhash:str)
     
     def rpc_getRawMemPool(self, _verbose:str='false'):
         """
         Description:
+
             Returns mempool detailed information (on verbose). Or mempool tx list.
         
         Params:
+
         (*) Denotes required argument
         
         ( ) _verbose : False returns only tx hashs, true - returns full tx info.
@@ -796,39 +900,45 @@ class hsd:
         _verbose = _verbose.lower()
         
         endpoint = '/'
-        post_message = '{ "method": "getrawmempool", "params": [ ' + _verbose + ' ] }'
+        post_message = '{ "method": "getrawmempool", "params": [ "' + _verbose + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_getRawMemPool(self, _verbose='false')
+    ### END METHOD ################################### rpc_getRawMemPool(self, _verbose:str='false')
     
     def rpc_prioritiseTransaction(self, _txhash:str, _priorityDelta:int, _feeDelta:int):
         """
         Description:
+
             Prioritises the transaction.
 
             Note: Changing fee or priority will only trick local miner (using this mempool) into
                 accepting Transaction(s) into the block. (even if Priority/Fee doen't qualify)
         
         Params:
+
         (*) Denotes required argument
         
         (*) _txhash        : Transaction hash.
+
         (*) _priorityDelta : Virtual priority to add/subtract to the entry.
+
         (*) _feeDelta      : Virtual fee to add/subtract to the entry.
         """
         
         endpoint = '/'
-        post_message = '{ "method": "prioritisetransaction", "params": [ ' + _txhash + ', "' + str(_priorityDelta) + ', "' + str(_feeDelta) + ' ] }'
+        post_message = '{ "method": "prioritisetransaction", "params": [ "' + _txhash + '", "' + str(_priorityDelta) + '", "' + str(_feeDelta) + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_prioritiseTransaction(self, _txhash, _priorityDelta, _feeDelta)
+    ### END METHOD ################################### rpc_prioritiseTransaction(self, _txhash:str, _priorityDelta:int, _feeDelta:int)
     
     def rpc_estimateFee(self, _nblocks:int=1):
         """
         Description:
+
             Estimates fee to be paid for transaction.
         
         Params:
+
         (*) Denotes required argument
         
         ( ) _nblocks : Number of blocks to check for estimation.
@@ -838,16 +948,18 @@ class hsd:
         post_message = '{ "method": "estimatefee", "params": [ ' + str(_nblocks) + ' ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_estimateFee(self, _nblocks=1)
+    ### END METHOD ################################### rpc_estimateFee(self, _nblocks:int=1)
     
     def rpc_estimatePriority(self, _nblocks:int=1):
         """
         Description:
+
             Estimates the priority (coin age) that a transaction
             needs in order to be included within a certain number
             of blocks as a free high-priority transaction.
         
         Params:
+
         (*) Denotes required argument
         
         ( ) _nblocks : Number of blocks to check for estimation.
@@ -857,14 +969,16 @@ class hsd:
         post_message = '{ "method": "estimatepriority", "params": [ ' + str(_nblocks) + ' ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_estimatePriority(self, _nblocks=1)
+    ### END METHOD ################################### rpc_estimatePriority(self, _nblocks:int=1)
     
     def rpc_estimateSmartFee(self, _nblocks:int=1):
         """
         Description:
+
             Estimates smart fee to be paid for transaction.
         
         Params:
+
         (*) Denotes required argument
         
         ( ) _nblocks : Number of blocks to check for estimation.
@@ -874,16 +988,18 @@ class hsd:
         post_message = '{ "method": "estimatesmartfee", "params": [ ' + str(_nblocks) + ' ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_estimateSmartFee(self, _nblocks=1)
+    ### END METHOD ################################### rpc_estimateSmartFee(self, _nblocks:int=1)
     
     def rpc_estimateSmartPriority(self, _nblocks:int=1):
         """
         Description:
+
             Estimates smart priority (coin age) that a transaction
             needs in order to be included within a certain number
             of blocks as a free high-priority transaction.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _nblocks : Number of blocks to check for estimation.
@@ -893,33 +1009,39 @@ class hsd:
         post_message = '{ "method": "estimatesmartpriority", "params": [ ' + str(_nblocks) + ' ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_estimateSmartPriority(self, _nblocks=1)
+    ### END METHOD ################################### rpc_estimateSmartPriority(self, _nblocks:int=1)
     
     def rpc_getTxOut(self, _txhash:str, _index:int, _includemempool:int=1):
         """
         Description:
+
             Get outpoint of the transaction.
         
         Params:
+        
         (*) Denotes required argument
         
         (*) _txhash         : Transaction hash.
+
         (*) _index          : Index of the outpoint tx.
+
         ( ) _includemempool : Whether to include mempool transactions.
         """
         
         endpoint = '/'
-        post_message = '{ "method": "gettxout", "params": [ ' + _txhash + ', "' + _index + ', "' + str(_includemempool) + ' ] }'
+        post_message = '{ "method": "gettxout", "params": [ "' + _txhash + '", ' + str(_index) + ', ' + str(_includemempool) + ' ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_getTxOut(self, _txhash, _index, _includemempool='true')
+    ### END METHOD ################################### rpc_getTxOut(self, _txhash:str, _index:int, _includemempool:int=1)
     
     def rpc_getTxOutSetInfo(self):
         """
         Description:
+
             Returns information about UTXO's from Chain.
         
         Params:
+
             None
         """
 
@@ -932,85 +1054,99 @@ class hsd:
     def rpc_getRawTransaction(self, _txhash:str, _verbose:str='false'):
         """
         Description:
+
             Returns raw transaction
         
         Params:
+
         (*) Denotes required argument
         
         (*) _txhash  : Transaction hash.
+
         ( ) _verbose : Returns json formatted if true.
         """
 
         _verbose = _verbose.lower()
         
         endpoint = '/'
-        post_message = '{ "method": "getrawtransaction", "params": [ ' + _txhash + ', "' + _verbose + ' ] }'
+        post_message = '{ "method": "getrawtransaction", "params": [ "' + _txhash + '", "' + _verbose + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_getRawTransaction(self, _txhash, _verbose='false')
+    ### END METHOD ################################### rpc_getRawTransaction(self, _txhash:str, _verbose:str='false')
     
     def rpc_decodeRawTransaction(self, _rawtx:str):
         """
         Description:
+
             Decodes raw tx and provide chain info.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _rawtx : Raw transaction hex.
         """
         
         endpoint = '/'
-        post_message = '{ "method": "decoderawtransaction", "params": [ ' + _rawtx + ' ] }'
+        post_message = '{ "method": "decoderawtransaction", "params": [ "' + _rawtx + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### decodeRawTransaction(self, _rawtx)
+    ### END METHOD ################################### rpc_decodeRawTransaction(self, _rawtx:str)
     
     def rpc_decodeScript(self, _script:str):
         """
         Description:
+
             Decodes script.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _script : Script hex.
         """
         
         endpoint = '/'
-        post_message = '{ "method": "decodescript", "params": [ ' + _script + ' ] }'
+        post_message = '{ "method": "decodescript", "params": [ "' + _script + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_decodeScript(self, _script)
+    ### END METHOD ################################### rpc_decodeScript(self, _script:str)
     
     def rpc_sendRawTransaction(self, _rawtx:str):
         """
         Description:
+
             Sends raw transaction without verification.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _rawtx : Raw transaction hex.
         """
         
         endpoint = '/'
-        post_message = '{ "method": "sendrawtransaction", "params": [ ' + _rawtx + ' ] }'
+        post_message = '{ "method": "sendrawtransaction", "params": [ "' + _rawtx + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_sendRawTransaction(self, _rawtx)
+    ### END METHOD ################################### rpc_sendRawTransaction(self, _rawtx:str)
     
     def rpc_createRawTransaction(self, _txhash:str, _txindex:int, _address:str, _amount:int, _data:str):
         """
         Description:
+
             Creates raw, unsigned transaction without any formal verification.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _txhash  : Transaction hash.
+
         (*) _txindex : Transaction outpoint index.
+
         (*) _address : Recipient address.
+
         (*) _amount  : Amount to send in HNS (float).
         """
 
@@ -1018,21 +1154,28 @@ class hsd:
         post_message = '{ "method": "createrawtransaction", "params": [[{ "txid": "' + _txhash + '", "vout": ' + str(_txindex) + ' }], { "' + _address + '": ' + str(_amount) + ', "data": "' + _data + '" }] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_createRawTransaction(self, _txhash, _txindex, _address, _amount)
+    ### END METHOD ################################### rpc_createRawTransaction(self, _txhash:str, _txindex:int, _address:str, _amount:int, _data:str)
     
     def rpc_signRawTransaction(self, _rawtx:str, _txhash:str, _txindex:int, _address:str, _amount:int, _privkey:str):
         """
         Description:
+
             Creates raw, unsigned transaction without any formal verification.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _rawtx   : Raw transaction.
+
         (*) _txhash  : Transaction hash.
+
         (*) _txindex : Transaction outpoint index.
+
         (*) _address : Address which received the output you're going to sign.
+
         (*) _amount  : Amount the output is worth.
+
         ( ) _privkey : List of private keys.
         """
 
@@ -1042,38 +1185,42 @@ class hsd:
         post_message = '{ "method": "signrawtransaction", "params": [ "' + _rawtx + '", [{ "txid": "' + _txhash + '", "vout": ' + str(_txindex) + ', "address": "' + _address + '", "amount": ' + str(_amount) + ' }], [ "' + _privkey + '" ]] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_signRawTransaction(self, _rawtx, _txhash, _txindex, _address, _amount, _privkey)
+    ### END METHOD ################################### rpc_signRawTransaction(self, _rawtx:str, _txhash:str, _txindex:int, _address:str, _amount:int, _privkey:str)
     
     def rpc_getTxOutProof(self, _txidlist:str):
         """
         Description:
+
             Checks if transactions are within block. Returns proof of transaction inclusion (raw MerkleBlock).
         
         Params:
+
         (*) Denotes required argument
         
         (*) _txidlist  : List array of transaction ID's
         """
 
         endpoint = '/'
-        post_message = '{ "method": "gettxoutproof", "params": [ ' + _txidlist + ' ] }'
+        post_message = '{ "method": "gettxoutproof", "params": [ "' + _txidlist + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_getTxOutProof(self, _txidlist, _blockhash)
+    ### END METHOD ################################### rpc_getTxOutProof(self, _txidlist:str)
     
     def rpc_verifyTxOutProof(self, _proof:str):
         """
         Description:
+
             Checks the proof for transaction inclusion. Returns transaction hash if valid.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _proof : Proof of transaction inclusion (raw MerkleBlock).
         """
 
         endpoint = '/'
-        post_message = '{ "method": "verifytxoutproof", "params": [ ' + _proof + ' ] }'
+        post_message = '{ "method": "verifytxoutproof", "params": [ "' + _proof + '" ] }'
         response = self.post(endpoint, post_message)
         return response
     ### END METHOD ################################### rpc_verifyTxOutProof(self, _proof)
@@ -1081,24 +1228,28 @@ class hsd:
     def rpc_getNetworkHashPerSec(self, _blocks:int=120, _height:int=1):
         """
         Description:
+
             Returns the estimated current or historical network hashes per second, based on last blocks.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _blocks : Number of blocks to lookup.
+        
         (*) _height : Starting height for calculations.
         """
 
         endpoint = '/'
-        post_message = '{ "method": "getnetworkhashps", "params": [ ' + str(_blocks) + ', "' + str(_height) + ' ] }'
+        post_message = '{ "method": "getnetworkhashps", "params": [ ' + str(_blocks) + ', ' + str(_height) + ' ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_getNetworkHashPerSec(self, _blocks=120, _height=1)
+    ### END METHOD ################################### rpc_getNetworkHashPerSec(self, _blocks:int=120, _height:int=1)
     
     def rpc_getMiningInfo(self):
         """
         Description:
+
             Returns mining info.
 
             Note: currentblocksize, currentblockweight, currentblocktx, difficulty are
@@ -1106,6 +1257,7 @@ class hsd:
                   is mining.
         
         Params:
+
             None
         """
 
@@ -1118,16 +1270,18 @@ class hsd:
     def rpc_getWork(self, _data:str=[]):
         """
         Description:
+
             Returns hashing work to be solved by miner. Or submits solved block.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _data : Data to be submitted to the network.
         """
 
         endpoint = '/'
-        post_message = '{ "method": "getworklp", "params": ' + _data + ' }'
+        post_message = '{ "method": "getworklp", "params": [ "' + _data + '" ] }'
         response = self.post(endpoint, post_message)
         return response
     ### END METHOD ################################### rpc_getWorkLP(self)
@@ -1135,12 +1289,14 @@ class hsd:
     def rpc_getWorkLP(self):
         """
         Description:
+
             Long polling for new work.
 
             Returns new work, whenever new TX is received in the mempoolor new
             block has been discovered. So miner can restart mining on new data.
         
         Params:
+
             None
         """
 
@@ -1153,9 +1309,11 @@ class hsd:
     def rpc_getBlockTemplate(self):
         """
         Description:
+
             Returns block template or proposal for use with mining. Also validates proposal if mode is specified as proposal.
         
         Params:
+
             None
         """
 
@@ -1168,23 +1326,26 @@ class hsd:
     def rpc_submitBlock(self, _blockdata:str):
         """
         Description:
+
             Adds block to chain.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _blockdata : Mined block data (hex).
         """
 
         endpoint = '/'
-        post_message = '{ "method": "submitblock", "params": "' + _blockdata + '" }'
+        post_message = '{ "method": "submitblock", "params": [ "' + _blockdata + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_submitBlock(self, _blockdata)
+    ### END METHOD ################################### rpc_submitBlock(self, _blockdata:str)
     
     def rpc_verifyBlock(self, _blockdata:str):
         """
         Description:
+
             Verifies the block data.
         
         Params:
@@ -1194,35 +1355,40 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "verifyblock", "params": "' + _blockdata + '" }'
+        post_message = '{ "method": "verifyblock", "params": [ "' + _blockdata + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_verifyBlock(self, _blockdata)
+    ### END METHOD ################################### rpc_verifyBlock(self, _blockdata:str)
     
     def rpc_setGenerate(self, _mining:int=0, _proclimit:int=0):
         """
         Description:
+
             Will start the mining on CPU.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _mining    : 1 will start mining, 0 will stop.
+
         (*) _proclimit : 1 will set processor limit, 0 will remove limit.
         """
 
         endpoint = '/'
-        post_message = '{ "method": "setgenerate", "params": "' + str(_mining) + '", "' + str(_proclimit) + '" }'
+        post_message = '{ "method": "setgenerate", "params": [ ' + str(_mining) + ', ' + str(_proclimit) + ' ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_setGenerate(self, _mining=0, _proclimit=0)
+    ### END METHOD ################################### rpc_setGenerate(self, _mining:int=0, _proclimit:int=0)
     
     def rpc_getGenerate(self):
         """
         Description:
+
             Returns status of mining on Node.
         
         Params:
+
             None
         """
 
@@ -1235,6 +1401,7 @@ class hsd:
     def rpc_Generate(self, _numblocks:int=1):
         """
         Description:
+
             Mines numblocks number of blocks. Will return once all blocks are mined. CLI command may timeout before that happens.
         
         Params:
@@ -1244,35 +1411,40 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "generate", "params": "' + str(_numblocks) + '" }'
+        post_message = '{ "method": "generate", "params": [' + str(_numblocks) + '] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_Generate(self, _numblocks=1)
+    ### END METHOD ################################### rpc_Generate(self, _numblocks:int=1)
     
     def rpc_GenerateToAddress(self, _address:str, _numblocks:int=1):
         """
         Description:
+
             Mines numblocks blocks, with address as coinbase.
         
         Params:
+
         (*) Denotes required argument
         
         (*) _address   : Coinbase address for new blocks.
+
         (*) _numblocks : Number of blocks to mine.
         """
 
         endpoint = '/'
-        post_message = '{ "method": "generatetoaddress", "params": "' + str(_numblocks) + '", "' + _address + '" }'
+        post_message = '{ "method": "generatetoaddress", "params": [ ' + str(_numblocks) + ', "' + _address + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_GenerateToAddress(self, _address, _numblocks=1)
+    ### END METHOD ################################### rpc_GenerateToAddress(self, _address:str, _numblocks:int=1)
     
     def rpc_getConnectionCount(self):
         """
         Description:
+
             Returns connection count.
         
         Params:
+
             None
         """
 
@@ -1285,9 +1457,11 @@ class hsd:
     def rpc_ping(self):
         """
         Description:
+
             Will send ping request to every connected peer.
         
         Params:
+
             None
         """
 
@@ -1300,9 +1474,11 @@ class hsd:
     def rpc_getPeerInfo(self):
         """
         Description:
+
             Returns information about all connected peers.
         
         Params:
+
             None
         """
 
@@ -1312,21 +1488,317 @@ class hsd:
         return response
     ### END METHOD ################################### rpc_getPeerInfo(self)
     
-    def rpc_addNode(self, _ipAddress:str, _cmd:str):
+    def rpc_addNode(self, _nodeAddress:str, _cmd:str):
         """
         Description:
-            Mines numblocks blocks, with address as coinbase.
+
+            Adds or removes peers in Host List. 
         
         Params:
+
         (*) Denotes required argument
         
-        (*) _address   : Coinbase address for new blocks.
-        (*) _numblocks : Number of blocks to mine.
+        (*) _nodeAddress : IP Address of the Node. Eg. '127.0.0.1:14038'
+
+        (*) _cmd         : 'add' - Adds node to Host List and connects to it.
+
+                           'onetry' - Tries to connect to the given node.
+
+                           'remove' - Removes node from host list.
         """
 
         endpoint = '/'
-        post_message = '{ "method": "generatetoaddress", "params": "' + _ipAddress + '", "' + _cmd + '" }'
+        post_message = '{ "method": "addnode", "params": [ "' + _nodeAddress + '", "' + _cmd + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_GenerateToAddress(self, _address, _numblocks=1)
+    ### END METHOD ################################### rpc_addNode(self, _nodeAddress:str, _cmd:str)
+    
+    def rpc_disconnectNode(self, _nodeAddress:str):
+        """
+        Description:
 
+            Disconnects node.
+        
+        Params:
+
+        (*) Denotes required argument
+        
+        (*) _address : IP Address of the Node. Eg. '127.0.0.1:14038'
+        """
+
+        endpoint = '/'
+        post_message = '{ "method": "disconnectnode", "params": [ "' + _nodeAddress + '" ] }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_disconnectNode(self, _nodeAddress:str)
+    
+    def rpc_getAddedNodeInfo(self, _nodeAddress:str):
+        """
+        Description:
+
+            Returns node information from host list.
+        
+        Params:
+
+        (*) Denotes required argument
+        
+        (*) _address : IP Address of the Node. Eg. '127.0.0.1:14038'
+        """
+
+        endpoint = '/'
+        post_message = '{ "method": "getaddednodeinfo", "params": [ "' + _nodeAddress + '" ] }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_getAddedNodeInfo(self, _nodeAddress:str)
+    
+    def rpc_getNetTotals(self):
+        """
+        Description:
+
+            Returns information about used network resources.
+        
+        Params:
+
+            None
+        """
+
+        endpoint = '/'
+        post_message = '{ "method": "getnettotals", "params": [] }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_getNetTotals(self)
+    
+    def rpc_getNetworkInfo(self):
+        """
+        Description:
+
+            Returns local node's network information.
+        
+        Params:
+
+            None
+        """
+
+        endpoint = '/'
+        post_message = '{ "method": "getnetworkinfo", "params": [] }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### def rpc_getNetworkInfo(self)
+    
+    def rpc_setBan(self, _nodeAddress:str, _cmd:str):
+        """
+        Description:
+
+            Adds or removes nodes from banlist.
+        
+        Params:
+
+        (*) Denotes required argument
+        
+        (*) _nodeAddress : IP Address of the Node. Eg. '127.0.0.1:14038'
+
+        (*) _cmd         : 'add' - Adds node to ban list, removes from host list, disconnects.
+
+                           'remove' - Removes node from ban list.
+        """
+
+        endpoint = '/'
+        post_message = '{ "method": "setban", "params": ["' + _nodeAddress + '", "' + _cmd + '"] }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_setBan(self, _nodeAddress:str, _cmd:str)
+    
+    def rpc_listBan(self):
+        """
+        Description:
+
+            Lists all banned peers.
+        
+        Params:
+
+            None
+        """
+
+        endpoint = '/'
+        post_message = '{ "method": "listbanned", "params": [] }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_listBan(self)
+    
+    def rpc_clearBanned(self):
+        """
+        Description:
+
+            Removes all banned peers.
+        
+        Params:
+
+            None
+        """
+
+        endpoint = '/'
+        post_message = '{ "method": "clearbanned", "params": [] }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_clearBanned(self)
+    
+    def rpc_getNameInfo(self, _name:str):
+        """
+        Description:
+
+            Returns information on a given name. Use this function to query any name in any state.
+        
+        Params:
+
+        (*) Denotes required argument
+
+        (*) _name : Name you wish to look up.
+        """
+
+        endpoint = '/'
+        post_message = '{ "method": "getnameinfo", "params": [ "' + _name + '" ] }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_getNameInfo(self, _name:str)
+    
+    def rpc_getNameByHash(self, _hash:str):
+        """
+        Description:
+
+            Returns the name for a from a given name hash.
+        
+        Params:
+
+        (*) Denotes required argument
+
+        (*) _hash : Name hash you wish to look up.
+        """
+
+        endpoint = '/'
+        post_message = '{ "method": "getnamebyhash", "params": [ "' + _hash + '" ] }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_getNameByHash(self, _hash:str)
+    
+    def rpc_getNameResource(self, _name:str):
+        """
+        Description:
+
+            Returns the resource records for the given name (added to the trie by the name owner using sendupdate).
+        
+        Params:
+
+        (*) Denotes required argument
+
+        (*) _name : Name for resource records.
+        """
+
+        endpoint = '/'
+        post_message = '{ "method": "getnameresource", "params": [ "' + _name + '" ] }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_getNameResource(self, _name:str)
+    
+    def rpc_getNameProof(self, _name:str):
+        """
+        Description:
+
+            Returns the merkle tree proof for a given name.
+        
+        Params:
+
+        (*) Denotes required argument
+
+        (*) _name : Name hash you wish to look up.
+        """
+
+        endpoint = '/'
+        post_message = '{ "method": "getnameproof", "params": [ "' + _name + '" ] }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_getNameProof(self, _name:str)
+    
+    def rpc_sendRawClaim(self, _base64_string:str):
+        """
+        Description:
+
+            If you already have DNSSEC setup, you can avoid publishing a
+            TXT record publicly by creating the proof locally. This requires
+            that you have direct access to your zone-signing keys. The
+            private keys themselves must be stored in BIND's private key
+            format and naming convention.
+        
+        Params:
+
+        (*) Denotes required argument
+
+        (*) _base64_string : Raw serialized base64-string.
+        """
+
+        endpoint = '/'
+        post_message = '{ "method": "sendrawclaim", "params": [ "' + _base64_string + '" ] }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_sendRawClaim(self, _base64_string:str)
+    
+    def rpc_getDnsSecProof(self, _name:str, _estimate:str='false', _verbose:str='true'):
+        """
+        Description:
+
+            Adds or removes nodes from banlist.
+        
+        Params:
+
+        (*) Denotes required argument
+        
+        (*) _name     : Domain name.
+
+        (*) _estimate : No validation when 'true'.
+
+        (*) _verbose  : Returns hex when 'false'.
+        """
+
+        endpoint = '/'
+        post_message = '{ "method": "getdnssecproof", "params": ["' + _name + '", "' + _estimate + '", "' + _verbose + '"] }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_getDnsSecProof(self, _name:str, _estimate:str='false', _verbose:str='true')
+    
+    def rpc_sendRawAirdrop(self, _base64_string:str):
+        """
+        Description:
+
+            Airdrop proofs create brand new coins directly
+            to a Handshake address.
+        
+        Params:
+
+        (*) Denotes required argument
+
+        (*) _base64_string : Raw serialized base64-string.
+        """
+
+        endpoint = '/'
+        post_message = '{ "method": "sendrawairdrop", "params": [ "' + _base64_string + '" ] }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_sendRawAirdrop(self, _base64_string:str)
+    
+    def rpc_grindName(self, _length:int=10):
+        """
+        Description:
+
+            Grind a rolled-out available name.
+        
+        Params:
+
+        (*) Denotes required argument
+
+        (*) _length : Length of name to generate.
+        """
+
+        endpoint = '/'
+        post_message = '{ "method": "grindname", "params": [ ' + str(_length) + ' ] }'
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### rpc_grindName(self, _length:int=10)
