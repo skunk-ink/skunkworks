@@ -66,7 +66,7 @@ class hsd:
         """
         Description:
 
-            GET response from API
+            GET (json) response from API
         
         Params:
 
@@ -85,7 +85,7 @@ class hsd:
         """
         Description:
 
-            POST message to API
+            POST (json) message to API
         
         Params:
 
