@@ -702,7 +702,7 @@ class hsd:
         return response
     ### END METHOD ################################### rpc_getBlock(self, _hash:str, _verbose:str='true', _details:str='false')
     
-    def rpc_getBlockByHeight(self, _blockheight:str, _verbose:str='true', _details:str='false'):
+    def rpc_getBlockByHeight(self, _blockheight:int, _verbose:str='true', _details:str='false'):
         """
         Description:
 
@@ -723,7 +723,7 @@ class hsd:
         _details = _details.lower()
         
         endpoint = '/'
-        post_message = '{ "method": "getblockbyheight", "params": [ "' + _blockheight + '", "' + _verbose + '", "' + _details + '" ] }'
+        post_message = '{ "method": "getblockbyheight", "params": [ ' + str(_blockheight) + ', "' + _verbose + '", "' + _details + '" ] }'
         response = self.post(endpoint, post_message)
         return response
     ### END METHOD ################################### rpc_getBlockByHeight(self, _blockheight:str, _verbose:str='true', _details:str='false')
