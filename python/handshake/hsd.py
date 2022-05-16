@@ -897,18 +897,3 @@ class hsd:
         response = self.post(endpoint, post_message)
         return response
     ### END METHOD ################################### rpc_postReconsiderBlock(self, _blockhash)
-    
-    def rpc_post(self):
-        """
-        Description:
-        
-        
-        Params:
-            None
-        """
-        
-        endpoint = '/'
-        post_message = '{ "method": "", "params": [ ' +  + ', "' +  + ' ]" }'
-        response = self.post(endpoint, post_message)
-        return response
-    ### END METHOD ################################### 

@@ -35,4 +35,4 @@
     - [Handshake Python Wrapper](#handshake-python-wrapper)
 ## Python
 ### Handshake Python Wrapper
-For more information on using the wrapper, view the [Handshake API Docs](https://hsd-dev.org/api-docs/#introduction)
+For more information on using the Handshake API, visit the [Handshake API Docs](https://hsd-dev.org/api-docs/#introduction)
