@@ -38,7 +38,7 @@ class hsd:
 
     PORT = ''
 
-    def __init__(self, _api_key:str, _address:str, _port:int=12037):
+    def __init__(self, _api_key:str, _ipaddress:str='127.0.0.1', _port:int=12037):
         """
         Description:
 
@@ -48,20 +48,20 @@ class hsd:
 
         (*) Denotes required argument
 
-        (*) _api_key : HSD API key.
+        (*) _api_key   : HSD API key.
 
-        (*) _address : HSD node ip.
+        (*) _ipaddress : HSD node ip. Default = '127.0.0.1'.
 
-        (*) _port    : HSD node port.
+        (*) _port      : HSD node port. Defualt = 12037
         """
         global API_KEY
         global ADDRESS
         global PORT
 
         API_KEY = _api_key
-        ADDRESS = _address
+        ADDRESS = _ipaddress
         PORT = str(_port)
-    ### END METHOD ################################### __init__(self, _api_key:str, _address:str, _port:int=12037)
+    ### END METHOD ################################### __init__(self, _api_key:str, _ipaddress:str='127.0.0.1', _port:int=12037)
 
     def get(self, _endpoint:str):
         """
@@ -1868,7 +1868,7 @@ class hsw:
 
     PORT = ''
 
-    def __init__(self, _api_key:str, _address:str, _port:int=12039):
+    def __init__(self, _api_key:str, _ipaddress:str='127.0.0.1', _port:int=12039):
         """
         Description:
 
@@ -1878,20 +1878,20 @@ class hsw:
 
         (*) Denotes required argument
 
-        (*) _api_key : HSW API key.
+        (*) _api_key   : HSW API key.
 
-        (*) _address : HSW node ip.
+        ( ) _ipaddress : HSW node ip. Default = '127.0.0.1'.
 
-        (*) _port    : HSW node port.
+        ( ) _port      : HSW node port. Default = 12039
         """
         global API_KEY
         global ADDRESS
         global PORT
 
         API_KEY = _api_key
-        ADDRESS = _address
+        ADDRESS = _ipaddress
         PORT = str(_port)
-    ### END METHOD ################################### __init__(self, _api_key:str, _address:str, _port:int=12037)
+    ### END METHOD ################################### __init__(self, _api_key:str, _ipaddress:str='127.0.0.1', _port:int=12039):
 
     def get(self, _endpoint:str):
         """
@@ -2024,10 +2024,6 @@ class hsw:
         response = self.post(endpoint, post_message)
         return response
     ### END METHOD ################################### resetAuthToken(self, _id:str, _passphrase:str)
-
-
-
-
 
     def createAccount(self, _id:str, _passphrase:str, _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
