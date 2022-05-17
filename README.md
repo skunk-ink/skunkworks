@@ -40,7 +40,7 @@
 ```python
 from skunkworks.python.handshake import hsd, hsw
 
-# Used default ip and port
+# Use default ip and port
 
 hsd_api = hsd('api-key')
 hsw_api = hsw('api-key')
