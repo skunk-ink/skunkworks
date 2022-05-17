@@ -31,27 +31,27 @@
 
 import requests
 
-class hsd:
+class hsw:
 
     API_KEY = ''
     ADDRESS = ''
     PORT = ''
 
-    def __init__(self, _api_key:str, _address:str, _port:int=12039):
+    def __init__(self, _api_key:str, _address:str, _port:int=12037):
         """
         Description:
 
-            Initialization of the hsw class
+            Initialization of the hsd class
         
         Params:
 
         (*) Denotes required argument
 
-        (*) _api_key : HSW API key.
+        (*) _api_key : HSD API key.
 
-        (*) _address : HSW node ip.
+        (*) _address : HSD node ip.
 
-        (*) _port    : HSW node port.
+        (*) _port    : HSD node port.
         """
         global API_KEY
         global ADDRESS
@@ -72,13 +72,13 @@ class hsd:
 
         (*) Denotes required argument
 
-        (*) _endpoint     : API endpoint to send GET request.
+        (*) _endpoint : API endpoint to send GET request.
         """
 
         url = "http://x:" + API_KEY + "@" + ADDRESS + ":" + PORT + _endpoint
         getResponse = requests.get(url)
         response = getResponse.json()
-        return response # Return as json
+        return response # Returned as json
     ### END METHOD ################################### get(self, _endpoint:str)
 
     def post(self, _endpoint:str, _post_message:str):
@@ -99,5 +99,5 @@ class hsd:
         url = "http://x:" + API_KEY + "@" + ADDRESS + ":" + PORT + _endpoint
         postRequest = requests.post(url, _post_message)
         response = postRequest.json()
-        return response # Return as json
+        return response # Returned as json
     ### END METHOD ################################### post(self, _endpoint:str, _post_message:str)
