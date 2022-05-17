@@ -56,6 +56,7 @@ response = hsd_api.getInfo()
 print(response)
 
 response = hsw_api.resetAuthToken('primary', 'secret123')
+print(response)
 
 ```
 > *For more information on using the Handshake API, visit the **[Handshake API Docs](https://hsd-dev.org/api-docs/#introduction)***

@@ -2025,6 +2025,100 @@ class hsw:
         return response
     ### END METHOD ################################### resetAuthToken(self, _id:str, _passphrase:str)
 
+    def getWalletInfo(self, _id:str=''):
+        """
+        Description:
+
+            Get wallet info by ID. If no id is passed in the CLI it assumes an id of primary.
+        
+        Params:
+
+            (*) Denotes required argument
+
+            ( ) _id : Name of the wallet whose info you would like to retrieve.
+        """
+        
+
+        endpoint = '/wallet/' + _id
+        response = self.get(endpoint)
+        return response
+    ### END METHOD ################################### getWalletInfo(self, _id:str='')
+
+    def getMasterHDKey(self, _id:str):
+        """
+        Description:
+
+            Get wallet master HD key. This is normally censored in the
+            wallet info route.The provided API key must have admin access.
+        
+        Params:
+
+            (*) Denotes required argument
+
+            (*) _id : Name of the wallet whose info you would like to retrieve.
+        """
+        
+
+        endpoint = '/wallet/' + _id + "/master"
+        response = self.get(endpoint)
+        return response
+    ### END METHOD ################################### getMasterHDKey(self, _id:str='')
+
+    def changePassword(self, _id:str, _new_passphrase:str, _old_passphrase:str=''):
+        """
+        Description:
+
+            Change wallet passphrase. Encrypt if unencrypted.
+        
+        Params:
+
+            (*) Denotes required argument
+
+            (*) _id         : Wallet ID (used for storage).
+
+            ( ) _old_passphrase : Old passphrase. Pass in empty string if none.
+
+            (*) _new_passphrase : New passphrase.
+        """
+        
+
+        endpoint = '/wallet/' + _id + "/passphrase"
+
+        post_message = '{"old":"' + _old_passphrase + '", "passphrase":"' + _new_passphrase + '"}'
+
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### changePassword(self, _id:str, _new_passphrase:str, _old_passphrase:str='')
+
+    def sendTransaction(self, _id:str, _new_passphrase:str, _old_passphrase:str=''):
+        """
+        Description:
+
+            Change wallet passphrase. Encrypt if unencrypted.
+        
+        Params:
+
+            (*) Denotes required argument
+
+            (*) _id         : Wallet ID (used for storage).
+
+            ( ) _old_passphrase : Old passphrase. Pass in empty string if none.
+
+            (*) _new_passphrase : New passphrase.
+        """
+        
+
+        endpoint = '/wallet/' + _id + "/send"
+
+        post_message = '{"old":"' + _old_passphrase + '", "passphrase":"' + _new_passphrase + '"}'
+
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### changePassword(self, _id:str, _new_passphrase:str, _old_passphrase:str='')
+
+
+    
+
     def createAccount(self, _id:str, _passphrase:str, _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
         Description:
