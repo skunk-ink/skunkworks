@@ -29,7 +29,6 @@
                                    `"             `""""`  `""""""`      
 """
 
-from tabnanny import verbose
 import requests
 
 class hsd:
