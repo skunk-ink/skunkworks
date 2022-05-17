@@ -20,7 +20,7 @@
   ░▒█░░▒█░▒█▀▀▀█░▒█▀▀▄░▒█░▄▀░▒█▀▀▀█  \:::::::::::::|'::/::::::::/
   ░▒█▒█▒█░▒█░░▒█░▒█▄▄▀░▒█▀▄░░░▀▀▀▄▄  /\::::::::::::/  /:::::::/:|
   ░▒▀▄▀▄▀░▒█▄▄▄█░▒█░▒█░▒█░▒█░▒█▄▄▄█ |::';:::::::::/   |::::::/::;
-     HANDSHAKE PYTHON WRAPPER (hsd) |:::/`-:::::;;-._ |:::::/::/
+           HANDSHAKE PYTHON WRAPPER |:::/`-:::::;;-._ |:::::/::/
                                     |:::|  `-::::\   `|::::/::/
                                     |:::|     \:::\   \:::/::/
                                    /:::/       \:::\   \:/\:/
@@ -31,10 +31,11 @@
 
 import requests
 
+API_KEY = ''
+ADDRESS = ''
+
 class hsd:
 
-    API_KEY = ''
-    ADDRESS = ''
     PORT = ''
 
     def __init__(self, _api_key:str, _address:str, _port:int=12037):
@@ -1861,3 +1862,206 @@ class hsd:
         response = self.post(endpoint, post_message)
         return response
     ### END METHOD ################################### rpc_grindName(self, _length:int=10)
+
+
+class hsw:
+
+    PORT = ''
+
+    def __init__(self, _api_key:str, _address:str, _port:int=12039):
+        """
+        Description:
+
+            Initialization of the hsw class
+        
+        Params:
+
+        (*) Denotes required argument
+
+        (*) _api_key : HSW API key.
+
+        (*) _address : HSW node ip.
+
+        (*) _port    : HSW node port.
+        """
+        global API_KEY
+        global ADDRESS
+        global PORT
+
+        API_KEY = _api_key
+        ADDRESS = _address
+        PORT = str(_port)
+    ### END METHOD ################################### __init__(self, _api_key:str, _address:str, _port:int=12037)
+
+    def get(self, _endpoint:str):
+        """
+        Description:
+
+            GET (json) response from API
+        
+        Params:
+
+        (*) Denotes required argument
+
+        (*) _endpoint : API endpoint to send GET request.
+        """
+
+        url = "http://x:" + API_KEY + "@" + ADDRESS + ":" + PORT + _endpoint
+        getResponse = requests.get(url)
+        response = getResponse.json()
+        return response # Returned as json
+    ### END METHOD ################################### get(self, _endpoint:str)
+
+    def post(self, _endpoint:str, _post_message:str):
+        """
+        Description:
+
+            POST (json) message to API
+        
+        Params:
+
+        (*) Denotes required argument
+
+        (*) _endpoint     : API endpoint to send POST message.
+
+        (*) _post_message : Message to be sent.
+        """
+        
+        url = "http://x:" + API_KEY + "@" + ADDRESS + ":" + PORT + _endpoint
+        postRequest = requests.post(url, _post_message)
+        response = postRequest.json()
+        return response # Returned as json
+    ### END METHOD ################################### post(self, _endpoint:str, _post_message:str)
+
+    def put(self, _endpoint:str, _put_message:str):
+        """
+        Description:
+
+            PUT (json) message to API
+        
+        Params:
+
+        (*) Denotes required argument
+
+        (*) _endpoint     : API endpoint to send POST message.
+
+        (*) _post_message : Message to be sent.
+        """
+        
+        url = "http://x:" + API_KEY + "@" + ADDRESS + ":" + PORT + _endpoint
+        putRequest = requests.put(url, _put_message)
+        response = putRequest.json()
+        return response # Returned as json
+    ### END METHOD ################################### put(self, _endpoint:str, _put_message:str)
+
+    def createWallet(self, _id:str, _passphrase:str, _accountkey:str='', _type:str='pubkeyhash',
+                    _mnemonic:str='',_master:str='', _watchonly:bool=True, _m:int=1, _n:int=1):
+        """
+        Description:
+
+            Create a new wallet with a specified ID.
+        
+        Params:
+
+            (*) Denotes required argument
+
+            (*) _id         : Wallet ID (used for storage).
+
+            ( ) _type       : Type of wallet (pubkeyhash, multisig). Default is 'pubkeyhash'
+
+            ( ) _master     : Master HD key. If not present, it will be generated.
+
+            ( ) _mnemonic   : A mnemonic phrase to use to instantiate an hd private key. One will be generated if none provided.
+
+            ( ) _m          : 'm' value for multisig (m-of-n).
+
+            ( ) _n          : 'n' value for multisig (m-of-n)
+
+            (*) _passphrase : A strong passphrase used to encrypt the wallet.
+
+            ( ) _watchonly  : Watch for CLI. Default set to True.
+
+            (*) _accountkey : The extended public key for the primary account in the new wallet. This value is ignored if watchOnly is false (key for CLI).
+        """
+        
+        watchonly = ''
+
+        if _watchonly == True:
+            watchonly = '1'
+        else:
+            watchonly = '0'
+
+        endpoint = '/wallet/' + _id
+
+        put_message = '{"passphrase":"' + _passphrase + '", "watchOnly": ' + watchonly + ', "accountKey":"' + _accountkey + \
+                       '", "type":"' + _type + '", "master":"' + _master + '", "m": ' + str(_m) + ', "n": ' + str(_n) + ', "mnemonic":"' + _mnemonic + '"}'
+
+        response = self.put(endpoint, put_message)
+        return response
+    ### END METHOD ################################### createWallet(self, _id:str, _passphrase:str, _accountkey:str='', _type:str='pubkeyhash',
+    #                                                               _mnemonic:str='',_master:str=None, _watchonly:bool=True, _m:int=1, _n:int=1)
+
+    def resetAuthToken(self, _id:str, _passphrase:str):
+        """
+        Description:
+
+            Create a new wallet with a specified ID.
+        
+        Params:
+
+            (*) Denotes required argument
+
+            (*) _id         : Wallet ID (used for storage).
+
+            (*) _passphrase : A strong passphrase used to encrypt the wallet.
+        """
+        
+
+        endpoint = '/wallet/' + _id + "/retoken"
+
+        post_message = '{"passphrase":"' + _passphrase + '"}'
+
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### resetAuthToken(self, _id:str, _passphrase:str)
+
+
+
+
+
+    def createAccount(self, _id:str, _passphrase:str, _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
+        """
+        Description:
+
+            Create account with specified account name.
+        
+        Params:
+
+            (*) Denotes required argument
+
+            (*) _id         : Wallet ID (used for storage).
+
+            (*) _passphrase : A strong passphrase used to encrypt the wallet.
+
+            (*) _name       : Name to give the account. Option can be account or name.
+
+            (*) _type       : Type of wallet (pubkeyhash, multisig). Default is 'pubkeyhash'
+
+            ( ) _accountkey : The extended public key for the account. This is ignored for
+                              non watch only wallets. Watch only accounts can't accept private
+                              keys for import (or sign transactions).
+
+            ( ) _m          : 'm' value for multisig (m-of-n).
+
+            ( ) _n          : 'n' value for multisig (m-of-n)
+        """
+        
+
+        endpoint = '/wallet/' + _id + "/account/" + _name
+
+        put_message = '{"type":"' + _type + '", "passphrase":"' + _passphrase + '", "accountKey":"' + _accountkey + '", "m": ' + str(_m) + ', "n": ' + str(_n) + '}'
+
+        response = self.put(endpoint, put_message)
+        return response
+    ### END METHOD ################################### createAccount(self, _id:str, _passphrase:str, _name:str='', _accountkey:str='',
+    #                                                                _type:str='pubkeyhash', _m:int=1, _n:int=1)
