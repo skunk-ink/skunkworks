@@ -29,6 +29,7 @@
                                    `"             `""""`  `""""""`      
 """
 
+from tabnanny import verbose
 import requests
 
 class hsd:
@@ -72,7 +73,7 @@ class hsd:
 
         (*) Denotes required argument
 
-        (*) _endpoint     : API endpoint to send GET request.
+        (*) _endpoint : API endpoint to send GET request.
         """
 
         url = "http://x:" + API_KEY + "@" + ADDRESS + ":" + PORT + _endpoint
@@ -134,7 +135,7 @@ class hsd:
         return response
     ### END METHOD ################################### getMemPool(self)
 
-    def getMemPoolInvalid(self, _verbose:str='false'):
+    def getMemPoolInvalid(self, _verbose:bool=False):
         """
         Description:
 
@@ -148,17 +149,16 @@ class hsd:
         ( ) _verbose : (bool) Returns entire Bloom Filter in filter property, hex-encoded.
         """
 
-        _verbose = _verbose.lower()
-        if _verbose == "true":
-            endpoint = '/mempool/invalid?verbose=' + _verbose
+        if _verbose == True:
+            endpoint = '/mempool/invalid?verbose=true'
         else:
             endpoint = '/mempool/invalid'
 
         response = self.get(endpoint)
         return response
-    ### END METHOD ################################### getMemPoolInvalid(self, _verbose:str='false')
+    ### END METHOD ################################### getMemPoolInvalid(self, _verbose:bool=False)
 
-    def getMemPoolInvalidHash(self, _hash:str):
+    def getMemPoolInvalidHash(self, _txhash:str):
         """
         Description:
 
@@ -169,13 +169,13 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _hash : Transaction hash.
+        (*) _txhash : Transaction hash.
         """
         
-        endpoint = '/mempool/invalid/' + _hash
+        endpoint = '/mempool/invalid/' + _txhash
         response = self.get(endpoint)
         return response
-    ### END METHOD ################################### getMemPoolInvalidHash(self, _hash:str)
+    ### END METHOD ################################### getMemPoolInvalidHash(self, _txhash:str)
 
     def getBlockHashOrHeight(self, _blockHashOrHeight:str):
         """
@@ -296,7 +296,7 @@ class hsd:
         return response
     ### END METHOD ################################### postReset(self, _height:int)
 
-    def getCoinByHashIndex(self, _hash:str, _index:int):
+    def getCoinByHashIndex(self, _txhash:str, _index:int):
         """
         Description:
 
@@ -307,15 +307,15 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _hash  : Hash of tx.
+        (*) _txhash : Hash of tx.
 
-        (*) _index : Output's index in tx.
+        (*) _index  : Output's index in tx.
         """
         
-        endpoint = '/coin/' + hash + '/' + _hash + '/' + str(_index)
+        endpoint = '/coin/' + hash + '/' + _txhash + '/' + str(_index)
         response = self.get(endpoint)
         return response
-    ### END METHOD ################################### getCoinByHashIndex(self, _hash:str, _index:int)
+    ### END METHOD ################################### getCoinByHashIndex(self, _txhash:str, _index:int)
 
     def getCoinByAddress(self, _address:str):
         """
@@ -676,7 +676,7 @@ class hsd:
         return response
     ### END METHOD ################################### rpc_getBlockCount(self)
     
-    def rpc_getBlock(self, _hash:str, _verbose:str='true', _details:str='false'):
+    def rpc_getBlock(self, _blockhash:str, _verbose:bool=True, _details:bool=False):
         """
         Description:
 
@@ -686,23 +686,33 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _hash    : Hash of the block.
+        (*) _blockhash : Hash of the block.
 
-        ( ) _verbose : If set to 'false', it will return hex of the block.
+        ( ) _verbose   : (bool) If set to False, it will return hex of the block.
 
-        ( ) _details : If set to 'true', it will return transaction details too.
+        ( ) _details   : (bool) If set to True, it will return transaction details too.
         """
 
-        _verbose = _verbose.lower()
-        _details = _details.lower()
+        verbose = ''
+        details = ''
+
+        if _verbose == True:
+            verbose = '1'
+        else:
+            verbose = '0'
+
+        if _details == True:
+            details = '1'
+        else:
+            details = '0'
         
         endpoint = '/'
-        post_message = '{ "method": "getblock", "params": [ "' + _hash + '", "' + _verbose + '", "' + _details + '" ] }'
+        post_message = '{ "method": "getblock", "params": [ "' + _blockhash + '", ' + verbose + ', ' + details + ' ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_getBlock(self, _hash:str, _verbose:str='true', _details:str='false')
+    ### END METHOD ################################### rpc_getBlock(self, _blockhash:str, _verbose:bool=True, _details:bool=False)
     
-    def rpc_getBlockByHeight(self, _blockheight:int, _verbose:str='true', _details:str='false'):
+    def rpc_getBlockByHeight(self, _blockheight:int, _verbose:bool=True, _details:bool=False):
         """
         Description:
 
@@ -712,21 +722,31 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _hash : Hash of the block.
+        (*) _blockheight : Height of the block in the blockchain.
 
-        ( ) _verbose : If set to 'false', it will return hex of the block.
+        ( ) _verbose     : (bool) If set to True, it will return hex of the block.
 
-        ( ) _details : If set to 'true', it will return transaction details too.
+        ( ) _details     : (bool) If set to True, it will return transaction details too.
         """
 
-        _verbose = _verbose.lower()
-        _details = _details.lower()
+        verbose = ''
+        details = ''
+
+        if _verbose == True:
+            verbose = '1'
+        else:
+            verbose = '0'
+
+        if _details == True:
+            details = '1'
+        else:
+            details = '0'
         
         endpoint = '/'
-        post_message = '{ "method": "getblockbyheight", "params": [ ' + str(_blockheight) + ', "' + _verbose + '", "' + _details + '" ] }'
+        post_message = '{ "method": "getblockbyheight", "params": [ ' + str(_blockheight) + ', ' + verbose + ', ' + details + ' ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_getBlockByHeight(self, _blockheight:str, _verbose:str='true', _details:str='false')
+    ### END METHOD ################################### rpc_getBlockByHeight(self, _blockheight:int, _verbose:bool=True, _details:bool=False)
     
     def rpc_getBlockHash(self, _blockheight:int):
         """
@@ -747,7 +767,7 @@ class hsd:
         return response
     ### END METHOD ################################### rpc_getBlockHash(self, _blockheight:int)
     
-    def rpc_getBlockHeader(self, _hash:str, _verbose:str='true'):
+    def rpc_getBlockHeader(self, _blockhash:str, _verbose:bool=True):
         """
         Description:
 
@@ -757,18 +777,23 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _hash    : Hash of the block in the blockchain.
+        (*) _blockhash : Hash of the block in the blockchain.
 
-        ( ) _verbose : If set to 'false', it will return hex of the block.
+        ( ) _verbose   : If set to False, it will return (hex) of the block.
         """
 
-        _verbose = _verbose.lower()
+        verbose = ''
+
+        if _verbose == True:
+            verbose = '1'
+        else:
+            verbose = '0'
         
         endpoint = '/'
-        post_message = '{ "method": "getblockheader", "params": [ "' + _hash + '", "' + _verbose + '" ] }'
+        post_message = '{ "method": "getblockheader", "params": [ "' + _blockhash + '", ' + verbose + ' ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_getBlockHeader(self, _hash:str, _verbose:str='true')
+    ### END METHOD ################################### rpc_getBlockHeader(self, _blockhash:str, _verbose:bool=True)
     
     def rpc_getChainTips(self):
         """
@@ -821,7 +846,7 @@ class hsd:
         return response
     ### END METHOD ################################### rpc_getMemPoolInfo(self)
     
-    def rpc_getMemPoolAncestors(self, _txhash:str, _verbose:str='false'):
+    def rpc_getMemPoolAncestors(self, _txhash:str, _verbose:bool=False):
         """
         Description:
 
@@ -836,15 +861,20 @@ class hsd:
         ( ) _verbose : False returns only tx hashs, true - returns dependency tx info.
         """
 
-        _verbose = _verbose.lower()
+        verbose = ''
+
+        if _verbose == True:
+            verbose = '1'
+        else:
+            verbose = '0'
         
         endpoint = '/'
-        post_message = '{ "method": "getmempoolancestors", "params": [ "' + _txhash + '", "' + _verbose + '" ] }'
+        post_message = '{ "method": "getmempoolancestors", "params": [ "' + _txhash + '", ' + verbose + ' ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_getMemPoolAncestors(self, _txhash:str, _verbose:str='false')
+    ### END METHOD ################################### rpc_getMemPoolAncestors(self, _txhash:str, _verbose:bool=False)
     
-    def rpc_getMemPoolDescendants(self, _txhash:str, _verbose:str='false'):
+    def rpc_getMemPoolDescendants(self, _txhash:str, _verbose:bool=False):
         """
         Description:
 
@@ -858,12 +888,19 @@ class hsd:
 
         ( ) _verbose : False returns only tx hashs, true - returns dependency tx info.
         """
+
+        verbose = ''
+
+        if _verbose == True:
+            verbose = '1'
+        else:
+            verbose = '0'
         
         endpoint = '/'
-        post_message = '{ "method": "getmempooldescendants", "params": [ "' + _txhash + '", "' + _verbose + '" ] }'
+        post_message = '{ "method": "getmempooldescendants", "params": [ "' + _txhash + '", ' + verbose + ' ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_getMemPoolDescendants(self, _txhash:str, _verbose:str='false')
+    ### END METHOD ################################### rpc_getMemPoolDescendants(self, _txhash:str, _verbose:bool=False)
     
     def rpc_getMemPoolEntry(self, _txhash:str):
         """
@@ -884,7 +921,7 @@ class hsd:
         return response
     ### END METHOD ################################### rpc_getMemPoolEntry(self, _txhash:str)
     
-    def rpc_getRawMemPool(self, _verbose:str='false'):
+    def rpc_getRawMemPool(self, _verbose:bool=False):
         """
         Description:
 
@@ -897,13 +934,18 @@ class hsd:
         ( ) _verbose : False returns only tx hashs, true - returns full tx info.
         """
 
-        _verbose = _verbose.lower()
+        verbose = ''
+
+        if _verbose == True:
+            verbose = '1'
+        else:
+            verbose = '0'
         
         endpoint = '/'
-        post_message = '{ "method": "getrawmempool", "params": [ "' + _verbose + '" ] }'
+        post_message = '{ "method": "getrawmempool", "params": [ ' + verbose + ' ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_getRawMemPool(self, _verbose:str='false')
+    ### END METHOD ################################### rpc_getRawMemPool(self, _verbose:bool=False)
     
     def rpc_prioritiseTransaction(self, _txhash:str, _priorityDelta:int, _feeDelta:int):
         """
@@ -1051,7 +1093,7 @@ class hsd:
         return response
     ### END METHOD ################################### rpc_getTxOutSetInfo(self)
     
-    def rpc_getRawTransaction(self, _txhash:str, _verbose:str='false'):
+    def rpc_getRawTransaction(self, _txhash:str, _verbose:bool=False):
         """
         Description:
 
@@ -1066,13 +1108,18 @@ class hsd:
         ( ) _verbose : Returns json formatted if true.
         """
 
-        _verbose = _verbose.lower()
+        verbose = ''
+
+        if _verbose == True:
+            verbose = '1'
+        else:
+            verbose = '0'
         
         endpoint = '/'
-        post_message = '{ "method": "getrawtransaction", "params": [ "' + _txhash + '", "' + _verbose + '" ] }'
+        post_message = '{ "method": "getrawtransaction", "params": [ "' + _txhash + '", ' + verbose + ' ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_getRawTransaction(self, _txhash:str, _verbose:str='false')
+    ### END METHOD ################################### rpc_getRawTransaction(self, _txhash:str, _verbose:bool=False)
     
     def rpc_decodeRawTransaction(self, _rawtx:str):
         """
@@ -1661,7 +1708,7 @@ class hsd:
         return response
     ### END METHOD ################################### rpc_getNameInfo(self, _name:str)
     
-    def rpc_getNameByHash(self, _hash:str):
+    def rpc_getNameByHash(self, _namehash:str):
         """
         Description:
 
@@ -1671,14 +1718,14 @@ class hsd:
 
         (*) Denotes required argument
 
-        (*) _hash : Name hash you wish to look up.
+        (*) _namehash : Name hash you wish to look up.
         """
 
         endpoint = '/'
-        post_message = '{ "method": "getnamebyhash", "params": [ "' + _hash + '" ] }'
+        post_message = '{ "method": "getnamebyhash", "params": [ "' + _namehash + '" ] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_getNameByHash(self, _hash:str)
+    ### END METHOD ###################################  rpc_getNameByHash(self, _namehash:str)
     
     def rpc_getNameResource(self, _name:str):
         """
@@ -1709,7 +1756,7 @@ class hsd:
 
         (*) Denotes required argument
 
-        (*) _name : Name hash you wish to look up.
+        (*) _name : Domain name you to retreive the proof for.
         """
 
         endpoint = '/'
@@ -1741,7 +1788,7 @@ class hsd:
         return response
     ### END METHOD ################################### rpc_sendRawClaim(self, _base64_string:str)
     
-    def rpc_getDnsSecProof(self, _name:str, _estimate:str='false', _verbose:str='true'):
+    def rpc_getDnsSecProof(self, _name:str, _estimate:bool=False, _verbose:bool=True):
         """
         Description:
 
@@ -1753,16 +1800,29 @@ class hsd:
         
         (*) _name     : Domain name.
 
-        (*) _estimate : No validation when 'true'.
+        (*) _estimate : No validation when True.
 
-        (*) _verbose  : Returns hex when 'false'.
+        (*) _verbose  : Returns (hex) when False.
         """
+        
+        estimate = ''
+        verbose = ''
+
+        if _verbose == True:
+            verbose = '1'
+        else:
+            verbose = '0'
+
+        if _estimate == True:
+            estimate = '1'
+        else:
+            estimate = '0'
 
         endpoint = '/'
-        post_message = '{ "method": "getdnssecproof", "params": ["' + _name + '", "' + _estimate + '", "' + _verbose + '"] }'
+        post_message = '{ "method": "getdnssecproof", "params": ["' + _name + '", ' + estimate + ', ' + verbose + '] }'
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### rpc_getDnsSecProof(self, _name:str, _estimate:str='false', _verbose:str='true')
+    ### END METHOD ################################### rpc_getDnsSecProof(self, _name:str, _estimate:bool=False, _verbose:bool=True)
     
     def rpc_sendRawAirdrop(self, _base64_string:str):
         """
