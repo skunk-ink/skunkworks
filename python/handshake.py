@@ -2090,6 +2090,70 @@ class hsw:
         return response
     ### END METHOD ################################### changePassword(self, _id:str, _new_passphrase:str, _old_passphrase:str='')
 
+    def createTransaction(self, _id:str, _passphrase:str, _rate:int, _value:float=None, _smart:bool=False, _blocks:int=None, _maxFee:int=None, _subtractFee:bool=False,
+                        _subtractIndex:int=None, _selection:str='all', _depth:int=None, _address:str=''):
+        """
+        Description:
+
+            Create and template a transaction (useful for multisig). Does not broadcast or add to wallet.
+        
+        Params:
+
+            (*) Denotes required argument
+
+            (*) _id            : Account to use for transaction.
+
+            ( ) _passphrase    : Passphrase to unlock the account.
+
+            (*) _smart         : Whether or not to choose smart coins, will also used unconfirmed transactions.
+
+            (*) _blocks        : Number of blocks to use for fee estimation.
+
+            (*) _rate          : The rate for transaction fees. Denominated in subunits per kb.
+
+            (*) _maxFee        : Maximum fee you're willing to pay.
+
+            (*) _subtractFee   : Whether to subtract fee from outputs (evenly).
+
+            (*) _subtractIndex : Subtract only from specified output index.
+
+            (*) _selection     : How to select coins.
+
+            (*) _depth         : Number of confirmation for coins to spend.
+
+            (*) _value         : Value to send in subunits (or whole HNS, see warning above).
+
+            (*) _address       : Destination address for transaction.
+        """
+
+        smart = ''
+        subtractFee = ''
+
+        if _smart == True:
+            smart = '1'
+        else:
+            smart = '0'
+
+        if _subtractFee == True:
+            subtractFee = '1'
+        else:
+            subtractFee = '0'
+
+        outputs = '[{"address":"' + _address + '", "value":' + str(_value) + ', "smart":' + smart + ', "blocks":' + str(_blocks) + \
+                 ', "maxFee":' + str(_maxFee) + ', "subtractFee":' + subtractFee + ', "subtractIndex":' + str(_subtractIndex) + \
+                 ', "selection":"' + _selection + '", "depth":' + str(_depth) + '}]'
+        
+        print(outputs)
+
+        endpoint = '/wallet/' + _id + "/create"
+
+        post_message = '{"passphrase":"' + _passphrase + '", "rate":' + str(_rate) + ', "outputs": [' + outputs + ']}'
+
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### createTransaction(self, _id:str, _passphrase:str, _rate:int, _value:float=None, _smart:bool=False, _blocks:int=None, _maxFee:int=None, _subtractFee:bool=False,
+    #                                                                        _subtractIndex:int=None, _selection:str='all', _depth:int=None, _address:str=''):
+
     def createAccount(self, _id:str, _passphrase:str, _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
         Description:
