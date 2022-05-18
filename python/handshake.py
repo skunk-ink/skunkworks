@@ -2074,7 +2074,7 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id         : Wallet ID (used for storage).
+            (*) _id             : Wallet ID.
 
             ( ) _old_passphrase : Old passphrase. Pass in empty string if none.
 
@@ -2089,6 +2089,32 @@ class hsw:
         response = self.post(endpoint, post_message)
         return response
     ### END METHOD ################################### changePassword(self, _id:str, _new_passphrase:str, _old_passphrase:str='')
+
+    def signTransaction(self, _id:str, _passphrase:str, _tx_hex:str):
+        """
+        Description:
+
+            Sign a templated transaction (useful for multisig).
+        
+        Params:
+
+            (*) Denotes required argument
+
+            (*) _id         : Wallet ID.
+
+            (*) _passphrase : Passphrase to unlock the wallet.
+
+            (*) _tx_hex     : The hex of the transaction you would like to sign.
+        """
+        
+
+        endpoint = '/wallet/' + _id + "/sign"
+
+        post_message = '{"tx":"' + _tx_hex + '", "passphrase":"' + _passphrase + '"}'
+
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### signTransaction(self, _id:str, _passphrase:str, _tx_hex:str)
 
     def createAccount(self, _id:str, _passphrase:str, _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
