@@ -2090,6 +2090,32 @@ class hsw:
         return response
     ### END METHOD ################################### changePassword(self, _id:str, _new_passphrase:str, _old_passphrase:str='')
 
+    def zapTransactions(self, _account:str, _id:str='primary', _age:int=0):
+        """
+        Description:
+
+            Remove all pending transactions older than a specified age.
+        
+        Params:
+
+            (*) Denotes required argument
+
+            (*) _id      : Wallet ID.
+
+            ( ) _account : Account to zap from.
+
+            (*) _age     : Age threshold to zap up to (seconds).
+        """
+        
+
+        endpoint = '/wallet/' + _id + "/zap"
+
+        post_message = '{"account":"' + _account + '", "age":"' + _age + '"}'
+
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### zapTransactions(self, _account:str, _id:str, _age:int=0)
+
     def createAccount(self, _id:str, _passphrase:str, _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
         Description:
