@@ -2107,7 +2107,6 @@ class hsw:
             (*) _age     : Age threshold to zap up to (seconds).
         """
         
-
         endpoint = '/wallet/' + _id + "/zap"
 
         post_message = '{"account":"' + _account + '", "age":"' + _age + '"}'
