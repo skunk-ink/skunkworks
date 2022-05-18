@@ -34,6 +34,14 @@ import requests
 API_KEY = ''
 ADDRESS = ''
 
+########################################################################################################
+########################################################################################################
+####                                                                                                ####
+####                              Begin Handshake Daemon Class                                      ####
+####                                                                                                ####
+########################################################################################################
+########################################################################################################
+
 class hsd:
 
     PORT = ''
@@ -1864,6 +1872,14 @@ class hsd:
     ### END METHOD ################################### rpc_grindName(self, _length:int=10)
 
 
+########################################################################################################
+########################################################################################################
+####                                                                                                ####
+####                              Begin Handshake Wallet Class                                      ####
+####                                                                                                ####
+########################################################################################################
+########################################################################################################
+
 class hsw:
 
     PORT = ''
@@ -1954,7 +1970,7 @@ class hsw:
         return response # Returned as json
     ### END METHOD ################################### put(self, _endpoint:str, _put_message:str)
 
-    def createWallet(self, _id:str, _passphrase:str, _accountkey:str='', _type:str='pubkeyhash',
+    def createWallet(self, _passphrase:str, _id:str='primary', _accountkey:str='', _type:str='pubkeyhash',
                     _mnemonic:str='',_master:str='', _watchonly:bool=True, _m:int=1, _n:int=1):
         """
         Description:
@@ -1998,10 +2014,10 @@ class hsw:
 
         response = self.put(endpoint, put_message)
         return response
-    ### END METHOD ################################### createWallet(self, _id:str, _passphrase:str, _accountkey:str='', _type:str='pubkeyhash',
+    ### END METHOD ################################### createWallet(self, _id:str='primary', _passphrase:str, _accountkey:str='', _type:str='pubkeyhash',
     #                                                               _mnemonic:str='',_master:str=None, _watchonly:bool=True, _m:int=1, _n:int=1)
 
-    def resetAuthToken(self, _id:str, _passphrase:str):
+    def resetAuthToken(self, _passphrase:str, _id:str='primary'):
         """
         Description:
 
@@ -2011,19 +2027,18 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id         : Wallet ID (used for storage).
+            (*) _id         : Wallet ID.
 
             (*) _passphrase : A strong passphrase used to encrypt the wallet.
         """
         
-
         endpoint = '/wallet/' + _id + "/retoken"
 
         post_message = '{"passphrase":"' + _passphrase + '"}'
 
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### resetAuthToken(self, _id:str, _passphrase:str)
+    ### END METHOD ################################### resetAuthToken(self, _id:str='primary', _passphrase:str)
 
     def getWalletInfo(self, _id:str=''):
         """
@@ -2038,13 +2053,12 @@ class hsw:
             ( ) _id : Name of the wallet whose info you would like to retrieve.
         """
         
-
         endpoint = '/wallet/' + _id
         response = self.get(endpoint)
         return response
     ### END METHOD ################################### getWalletInfo(self, _id:str='')
 
-    def getMasterHDKey(self, _id:str):
+    def getMasterHDKey(self, _id:str='primary'):
         """
         Description:
 
@@ -2058,13 +2072,12 @@ class hsw:
             (*) _id : Name of the wallet whose info you would like to retrieve.
         """
         
-
         endpoint = '/wallet/' + _id + "/master"
         response = self.get(endpoint)
         return response
     ### END METHOD ################################### getMasterHDKey(self, _id:str='')
 
-    def changePassword(self, _id:str, _new_passphrase:str, _old_passphrase:str=''):
+    def changePassword(self, _new_passphrase:str, _id:str='primary', _old_passphrase:str=''):
         """
         Description:
 
@@ -2081,17 +2094,15 @@ class hsw:
             (*) _new_passphrase : New passphrase.
         """
         
-
         endpoint = '/wallet/' + _id + "/passphrase"
 
         post_message = '{"old":"' + _old_passphrase + '", "passphrase":"' + _new_passphrase + '"}'
 
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### changePassword(self, _id:str, _new_passphrase:str, _old_passphrase:str='')
+    ### END METHOD ################################### changePassword(self, _id:str='primary', _new_passphrase:str, _old_passphrase:str='')
 
-
-    def signTransaction(self, _id:str, _passphrase:str, _tx_hex:str):
+    def signTransaction(self, _passphrase:str, _tx_hex:str, _id:str='primary'):
         """
         Description:
 
@@ -2110,7 +2121,7 @@ class hsw:
 
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### signTransaction(self, _id:str, _passphrase:str, _tx_hex:str)
+    ### END METHOD ################################### signTransaction(self, _id:str='primary', _passphrase:str, _tx_hex:str)
 
     def zapTransactions(self, _account:str, _id:str='primary', _age:int=0):
         """
@@ -2135,9 +2146,30 @@ class hsw:
 
         response = self.post(endpoint, post_message)
         return response
-    ### END METHOD ################################### zapTransactions(self, _account:str, _id:str, _age:int=0)
+    ### END METHOD ################################### zapTransactions(self, _account:str, _id:str='primary', _age:int=0)
 
-    def createAccount(self, _id:str, _passphrase:str, _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
+    def lockWallet(self, _id:str='primary'):
+        """
+        Description:
+
+            If unlock was called, zero the derived AES key and revert to normal behavior.
+        
+        Params:
+
+            (*) Denotes required argument
+
+            ( ) _id      : Wallet ID.
+        """
+        
+        endpoint = '/wallet/' + _id + "/lock"
+
+        post_message = ''
+
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### lockWallet(self, _id:str='primary')
+
+    def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
         Description:
 
@@ -2164,12 +2196,11 @@ class hsw:
             ( ) _n          : 'n' value for multisig (m-of-n)
         """
         
-
         endpoint = '/wallet/' + _id + "/account/" + _name
 
         put_message = '{"type":"' + _type + '", "passphrase":"' + _passphrase + '", "accountKey":"' + _accountkey + '", "m": ' + str(_m) + ', "n": ' + str(_n) + '}'
 
         response = self.put(endpoint, put_message)
         return response
-    ### END METHOD ################################### createAccount(self, _id:str, _passphrase:str, _name:str='', _accountkey:str='',
+    ### END METHOD ################################### createAccount(self, _id:str='primary', _passphrase:str, _name:str='', _accountkey:str='',
     #                                                                _type:str='pubkeyhash', _m:int=1, _n:int=1)
