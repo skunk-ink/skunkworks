@@ -2158,7 +2158,7 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _id      : Wallet ID.
+            ( ) _id : Wallet ID.
         """
         
         endpoint = '/wallet/' + _id + "/lock"
@@ -2168,6 +2168,35 @@ class hsw:
         response = self.post(endpoint, post_message)
         return response
     ### END METHOD ################################### lockWallet(self, _id:str='primary')
+
+    def importPublicKey(self, _account:str, _pub_key:str, _id:str='primary'):
+        """
+        Description:
+
+            Import a standard public WIF key.
+
+            A rescan will be required to see any transaction history associated with the key.
+            
+            Note: Imported keys do not exist anywhere in the wallet's HD tree.They can be
+                  associated with accounts but will not be properly backed up with only the
+                  mnemonic. 
+        
+        Params:
+
+            (*) Denotes required argument
+
+            (*) _id      : Wallet ID.
+
+            ( ) _pub_key : Hex encoded public key.
+        """
+        
+        endpoint = '/wallet/' + _id + "/import"
+
+        post_message = '{"account":"' + _account + '", "publicKey":"' + _pub_key + '"}'
+
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### importPublicKey(self, _account:str, _pub_key:str, _id:str='primary')
 
     def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
