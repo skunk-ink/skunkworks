@@ -2547,6 +2547,29 @@ class hsw:
         return response
     ### END METHOD ################################### getWalletCoin(self, _txhash:str, _index:str='0', _id:str='primary')
 
+    def walletRescan(self, _height:int):
+        """
+        DESCRIPTION:
+
+            Initiates a blockchain rescan for the walletdb. Wallets will
+            be rolled back to the specified height (transactions above
+            this height will be unconfirmed).
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _height : Name of wallet.
+        """
+        
+        endpoint = '/rescan/'
+
+        _message = '{"height": ' + str(_height) + ' }'
+
+        response = self.post(endpoint, _message)
+        return response
+    ### END METHOD ################################### walletRescan(self, _height:int)
+
     def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
         DESCRIPTION:
