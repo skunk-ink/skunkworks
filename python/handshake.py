@@ -2532,3 +2532,24 @@ class hsw:
         return response
     ### END METHOD ################################### createAccount(self, _id:str='primary', _passphrase:str, _name:str='', _accountkey:str='',
     #                                                                _type:str='pubkeyhash', _m:int=1, _n:int=1)
+
+    def rpc_getNewAddress(self, _account:str=''):
+        """
+        DESCRIPTION:
+
+            Get the next receiving address from specified account, or default account.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _account  : Account name. Default = 'defualt'
+        """
+        
+        endpoint = '/'
+
+        _message = '{ "method": "getnewaddress", "params": [ "' + _account +'" ] }'
+
+        response = self.post(endpoint, _message)
+        return response
+    ### END METHOD ################################### rpc_getNewAddress(self, _account:str='')
