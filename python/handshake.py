@@ -2475,7 +2475,7 @@ class hsw:
         return response
     ### END METHOD ################################### listCoins(self, _id:str='primary')
 
-    def lockCoinOutputs(self, _txhash:str, _index:str='0', _id:str='primary'):
+    def lockCoinOutpoints(self, _txhash:str, _index:str='0', _id:str='primary'):
         """
         DESCRIPTION:
 
@@ -2495,7 +2495,7 @@ class hsw:
         endpoint = '/wallet/' + _id + '/locked/' + _txhash + '/' + _index
         response = self.put(endpoint)
         return response
-    ### END METHOD ################################### lockCoinOutputs(self, _txhash:str, _index:str='0', _id:str='primary')
+    ### END METHOD ################################### lockCoinOutpoints(self, _txhash:str, _index:str='0', _id:str='primary')
 
     def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
