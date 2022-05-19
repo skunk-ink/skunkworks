@@ -2400,7 +2400,7 @@ class hsw:
 
             (*) _id       : Name of wallet.
 
-            ( ) _account  : BIP44 account to generate address from.
+            (*) _account  : BIP44 account to generate address from.
         """
         
         endpoint = '/wallet/' + _id + '/address'
@@ -2410,6 +2410,29 @@ class hsw:
         response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### generateReceivingAddress(self, _account:str, _id:str='primary')
+
+    def generateChangeAddress(self, _account:str='default', _id:str='primary'):
+        """
+        DESCRIPTION:
+
+            Derive new change address for account.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _id       : Name of wallet.
+
+            (*) _account  : BIP44 account to generate address from. Default = 'defualt'
+        """
+        
+        endpoint = '/wallet/' + _id + '/change'
+
+        _message = '{"account":"' + _account + '"}'
+
+        response = self.post(endpoint, _message)
+        return response
+    ### END METHOD ################################### generateChangeAddress(self, _account:str='default', _id:str='primary')
 
     def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
