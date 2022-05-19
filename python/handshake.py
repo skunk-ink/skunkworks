@@ -47,11 +47,11 @@ class hsd:
 
     def __init__(self, _api_key:str, _ipaddress:str='127.0.0.1', _port:int=12037):
         """
-        Description:
+        DESCRIPTION:
 
             Initialization of the hsd class
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
 
@@ -69,18 +69,18 @@ class hsd:
 
     def get(self, _endpoint:str):
         """
-        Description:
+        DESCRIPTION:
 
             GET (json) response from API
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
 
         (*) _endpoint : API endpoint to send GET request.
         """
 
-        url = "http://x:" + self.API_KEY + "@" + self.ADDRESS + ":" + self.PORT + _endpoint
+        url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + _endpoint
         getResponse = requests.get(url)
         response = getResponse.json()
         return response # Returned as json
@@ -88,11 +88,11 @@ class hsd:
 
     def post(self, _endpoint:str, _post_message:str):
         """
-        Description:
+        DESCRIPTION:
 
             POST (json) message to API
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
 
@@ -101,7 +101,7 @@ class hsd:
         (*) _post_message : Message to be sent.
         """
         
-        url = "http://x:" + self.API_KEY + "@" + self.ADDRESS + ":" + self.PORT + _endpoint
+        url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + _endpoint
         postRequest = requests.post(url, _post_message)
         response = postRequest.json()
         return response # Returned as json
@@ -109,11 +109,11 @@ class hsd:
 
     def getInfo(self):
         """
-        Description:
+        DESCRIPTION:
 
             Get server Info.
         
-        Params:
+        PARAMS:
 
             None
         """
@@ -125,11 +125,11 @@ class hsd:
 
     def getMemPool(self):
         """
-        Description:
+        DESCRIPTION:
 
             Get mempool snapshot (array of json txs).
         
-        Params:
+        PARAMS:
 
             None
         """
@@ -141,12 +141,12 @@ class hsd:
 
     def getMemPoolInvalid(self, _verbose:bool=False):
         """
-        Description:
+        DESCRIPTION:
 
             Get mempool rejects filter (a Bloom filter used to store rejected TX hashes).
         
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
 
@@ -164,12 +164,12 @@ class hsd:
 
     def getMemPoolInvalidHash(self, _txhash:str):
         """
-        Description:
+        DESCRIPTION:
 
             Test a TX hash against the mempool rejects filter.
         
 
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -183,11 +183,11 @@ class hsd:
 
     def getBlockHashOrHeight(self, _blockHashOrHeight:str):
         """
-        Description:
+        DESCRIPTION:
 
             Returns block info by block hash or height.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -201,11 +201,11 @@ class hsd:
 
     def getHeaderHashOrHeight(self, _headerHashOrHeight:str):
         """
-        Description:
+        DESCRIPTION:
 
             Returns block header by block hash or height.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -219,13 +219,13 @@ class hsd:
 
     def postBroadcast(self, _tx:str):
         """
-        Description:
+        DESCRIPTION:
 
             Broadcast a transaction by adding it to the node's mempool.
             If mempool verification fails, the node will still forcefully
             advertise and relay the transaction for the next 60 seconds.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -240,11 +240,11 @@ class hsd:
 
     def postBroadcastClaim(self, _claim:str):
         """
-        Description:
+        DESCRIPTION:
 
             Broadcast a claim by adding it to the node's mempool.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -259,13 +259,13 @@ class hsd:
 
     def getFeeEstimate(self, _blocks:int):
         """
-        Description:
+        DESCRIPTION:
 
             Estimate the fee required (in dollarydoos per kB) for a
             transaction to be confirmed by the network within a targeted
             number of blocks (default 1).
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -279,7 +279,7 @@ class hsd:
 
     def postReset(self, _height:int):
         """
-        Description:
+        DESCRIPTION:
 
             Triggers a hard-reset of the blockchain. All blocks are disconnected
             from the tip down to the provided height. Indexes and Chain Entries
@@ -287,7 +287,7 @@ class hsd:
             no blocks stored on disk, the only way to rescan the blockchain is to
             re-request [merkle]blocks from peers.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -302,12 +302,12 @@ class hsd:
 
     def getCoinByHashIndex(self, _txhash:str, _index:int):
         """
-        Description:
+        DESCRIPTION:
 
             Get coin by outpoint (hash and index). Returns coin in hsd coin
             JSON format. value is always expressed in subunits.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -323,11 +323,11 @@ class hsd:
 
     def getCoinByAddress(self, _address:str):
         """
-        Description:
+        DESCRIPTION:
 
             Get coin objects array by address.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -341,11 +341,11 @@ class hsd:
 
     def getTxByHash(self, _txhash:str):
         """
-        Description:
+        DESCRIPTION:
 
            Returns transaction objects array by hash
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -359,11 +359,11 @@ class hsd:
 
     def getTxByAddress(self, _address:str):
         """
-        Description:
+        DESCRIPTION:
 
            Returns transaction objects array by address.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -377,11 +377,11 @@ class hsd:
 
     def rpc_postStop(self):
         """
-        Description:
+        DESCRIPTION:
 
             Stops the running node.
         
-        Params:
+        PARAMS:
 
             None
         """
@@ -394,11 +394,11 @@ class hsd:
 
     def rpc_getInfo(self):
         """
-        Description:
+        DESCRIPTION:
 
             Returns general info.
         
-        Params:
+        PARAMS:
 
             None 
         """
@@ -411,11 +411,11 @@ class hsd:
 
     def rpc_getMemoryInfo(self):
         """
-        Description:
+        DESCRIPTION:
 
             Returns Memory usage info.
         
-        Params:
+        PARAMS:
 
             None
         """
@@ -428,11 +428,11 @@ class hsd:
 
     def rpc_setLogLevel(self, _params:str=['NONE']): # _params = ['NONE', 'ERROR', 'WARNING', 'INFO', 'DEBUG', 'SPAM']
         """
-        Description:
+        DESCRIPTION:
 
             Change Log level of the running node.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -448,11 +448,11 @@ class hsd:
 
     def rpc_validateAddress(self, _address:str):
         """
-        Description:
+        DESCRIPTION:
 
             Validates address.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -467,11 +467,11 @@ class hsd:
 
     def rpc_createMultiSig(self, _nrequired:int, _keyDict:str):
         """
-        Description:
+        DESCRIPTION:
 
             Create multisig address.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -488,11 +488,11 @@ class hsd:
 
     def rpc_signMessageWithPrivKey(self, _privkey:str, _message:str):
         """
-        Description:
+        DESCRIPTION:
 
             Signs message with private key. 
         
-        Params:
+        PARAMS:
         (*) Denotes required argument
         
         (*) _privkey : Private key.
@@ -508,11 +508,11 @@ class hsd:
 
     def rpc_verifyMessage(self, _address:str, _signature:str, _message:str):
         """
-        Description:
+        DESCRIPTION:
 
             Verify signature.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -531,11 +531,11 @@ class hsd:
 
     def rpc_verifyMessageWithName(self, _name:str, _signature:str, _message:str):
         """
-        Description:
+        DESCRIPTION:
 
             Retrieves the address that owns a name and verifies signature.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -554,11 +554,11 @@ class hsd:
 
     def rpc_setMockTime(self, _timestamp:int):
         """
-        Description:
+        DESCRIPTION:
 
             Changes network time (This is consensus-critical)
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -573,11 +573,11 @@ class hsd:
 
     def rpc_pruneBlockchain(self):
         """
-        Description:
+        DESCRIPTION:
 
             Prunes the blockchain, it will keep blocks specified in Network Configurations.
         
-        Params:
+        PARAMS:
 
             None
         """
@@ -590,14 +590,14 @@ class hsd:
     
     def rpc_invalidateBlock(self, _blockhash:str):
         """
-        Description:
+        DESCRIPTION:
 
             Invalidates the block in the chain. It will rewind network to
             blockhash and invalidate it. It won't accept that block as valid.
             Invalidation will work while running,restarting node will remove
             invalid block from list.
         
-        Params:
+        PARAMS:
         
         (*) Denotes required argument
         
@@ -612,11 +612,11 @@ class hsd:
     
     def rpc_reconsiderBlock(self, _blockhash:str):
         """
-        Description:
+        DESCRIPTION:
 
             This rpc command will remove block from invalid block set.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -631,11 +631,11 @@ class hsd:
 
     def rpc_getBlockchainInfo(self):
         """
-        Description:
+        DESCRIPTION:
 
             Returns blockchain information.
         
-        Params:
+        PARAMS:
 
             None
         """
@@ -648,11 +648,11 @@ class hsd:
     
     def rpc_getBestBlockHash(self):
         """
-        Description:
+        DESCRIPTION:
 
             Returns Block Hash of the tip.
         
-        Params:
+        PARAMS:
 
             None
         """
@@ -665,11 +665,11 @@ class hsd:
     
     def rpc_getBlockCount(self):
         """
-        Description:
+        DESCRIPTION:
 
             Returns block count.
         
-        Params:
+        PARAMS:
 
             None
         """
@@ -682,11 +682,11 @@ class hsd:
     
     def rpc_getBlock(self, _blockhash:str, _verbose:bool=True, _details:bool=False):
         """
-        Description:
+        DESCRIPTION:
 
             Returns information about block.
 
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -718,11 +718,11 @@ class hsd:
     
     def rpc_getBlockByHeight(self, _blockheight:int, _verbose:bool=True, _details:bool=False):
         """
-        Description:
+        DESCRIPTION:
 
             Returns information about block by height.
 
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -754,11 +754,11 @@ class hsd:
     
     def rpc_getBlockHash(self, _blockheight:int):
         """
-        Description:
+        DESCRIPTION:
 
             Returns block's hash given its height.
 
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -773,11 +773,11 @@ class hsd:
     
     def rpc_getBlockHeader(self, _blockhash:str, _verbose:bool=True):
         """
-        Description:
+        DESCRIPTION:
 
             Returns a block's header given its hash.
 
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -801,11 +801,11 @@ class hsd:
     
     def rpc_getChainTips(self):
         """
-        Description:
+        DESCRIPTION:
 
             Returns chaintips.
         
-        Params:
+        PARAMS:
 
             None
         """
@@ -818,11 +818,11 @@ class hsd:
     
     def rpc_getDifficulty(self):
         """
-        Description:
+        DESCRIPTION:
 
             Returns current difficulty level.
         
-        Params:
+        PARAMS:
 
             None
         """
@@ -835,11 +835,11 @@ class hsd:
     
     def rpc_getMemPoolInfo(self):
         """
-        Description:
+        DESCRIPTION:
 
             Returns informations about mempool.
         
-        Params:
+        PARAMS:
 
             None
         """
@@ -852,11 +852,11 @@ class hsd:
     
     def rpc_getMemPoolAncestors(self, _txhash:str, _verbose:bool=False):
         """
-        Description:
+        DESCRIPTION:
 
             Returns all in-mempool ancestors for a transaction in the mempool.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -880,11 +880,11 @@ class hsd:
     
     def rpc_getMemPoolDescendants(self, _txhash:str, _verbose:bool=False):
         """
-        Description:
+        DESCRIPTION:
 
             Returns all in-mempool descendants for a transaction in the mempool.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -908,11 +908,11 @@ class hsd:
     
     def rpc_getMemPoolEntry(self, _txhash:str):
         """
-        Description:
+        DESCRIPTION:
 
             Returns mempool transaction info by its hash.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -927,11 +927,11 @@ class hsd:
     
     def rpc_getRawMemPool(self, _verbose:bool=False):
         """
-        Description:
+        DESCRIPTION:
 
             Returns mempool detailed information (on verbose). Or mempool tx list.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -953,14 +953,14 @@ class hsd:
     
     def rpc_prioritiseTransaction(self, _txhash:str, _priorityDelta:int, _feeDelta:int):
         """
-        Description:
+        DESCRIPTION:
 
             Prioritises the transaction.
 
             Note: Changing fee or priority will only trick local miner (using this mempool) into
                 accepting Transaction(s) into the block. (even if Priority/Fee doen't qualify)
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -979,11 +979,11 @@ class hsd:
     
     def rpc_estimateFee(self, _nblocks:int=1):
         """
-        Description:
+        DESCRIPTION:
 
             Estimates fee to be paid for transaction.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -998,13 +998,13 @@ class hsd:
     
     def rpc_estimatePriority(self, _nblocks:int=1):
         """
-        Description:
+        DESCRIPTION:
 
             Estimates the priority (coin age) that a transaction
             needs in order to be included within a certain number
             of blocks as a free high-priority transaction.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -1019,11 +1019,11 @@ class hsd:
     
     def rpc_estimateSmartFee(self, _nblocks:int=1):
         """
-        Description:
+        DESCRIPTION:
 
             Estimates smart fee to be paid for transaction.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -1038,13 +1038,13 @@ class hsd:
     
     def rpc_estimateSmartPriority(self, _nblocks:int=1):
         """
-        Description:
+        DESCRIPTION:
 
             Estimates smart priority (coin age) that a transaction
             needs in order to be included within a certain number
             of blocks as a free high-priority transaction.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -1059,11 +1059,11 @@ class hsd:
     
     def rpc_getTxOut(self, _txhash:str, _index:int, _includemempool:int=1):
         """
-        Description:
+        DESCRIPTION:
 
             Get outpoint of the transaction.
         
-        Params:
+        PARAMS:
         
         (*) Denotes required argument
         
@@ -1082,11 +1082,11 @@ class hsd:
     
     def rpc_getTxOutSetInfo(self):
         """
-        Description:
+        DESCRIPTION:
 
             Returns information about UTXO's from Chain.
         
-        Params:
+        PARAMS:
 
             None
         """
@@ -1099,11 +1099,11 @@ class hsd:
     
     def rpc_getRawTransaction(self, _txhash:str, _verbose:bool=False):
         """
-        Description:
+        DESCRIPTION:
 
             Returns raw transaction
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -1127,11 +1127,11 @@ class hsd:
     
     def rpc_decodeRawTransaction(self, _rawtx:str):
         """
-        Description:
+        DESCRIPTION:
 
             Decodes raw tx and provide chain info.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -1146,11 +1146,11 @@ class hsd:
     
     def rpc_decodeScript(self, _script:str):
         """
-        Description:
+        DESCRIPTION:
 
             Decodes script.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -1165,11 +1165,11 @@ class hsd:
     
     def rpc_sendRawTransaction(self, _rawtx:str):
         """
-        Description:
+        DESCRIPTION:
 
             Sends raw transaction without verification.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -1184,11 +1184,11 @@ class hsd:
     
     def rpc_createRawTransaction(self, _txhash:str, _txindex:int, _address:str, _amount:int, _data:str):
         """
-        Description:
+        DESCRIPTION:
 
             Creates raw, unsigned transaction without any formal verification.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -1209,11 +1209,11 @@ class hsd:
     
     def rpc_signRawTransaction(self, _rawtx:str, _txhash:str, _txindex:int, _address:str, _amount:int, _privkey:str):
         """
-        Description:
+        DESCRIPTION:
 
             Creates raw, unsigned transaction without any formal verification.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -1240,11 +1240,11 @@ class hsd:
     
     def rpc_getTxOutProof(self, _txidlist:str):
         """
-        Description:
+        DESCRIPTION:
 
             Checks if transactions are within block. Returns proof of transaction inclusion (raw MerkleBlock).
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -1259,11 +1259,11 @@ class hsd:
     
     def rpc_verifyTxOutProof(self, _proof:str):
         """
-        Description:
+        DESCRIPTION:
 
             Checks the proof for transaction inclusion. Returns transaction hash if valid.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -1278,11 +1278,11 @@ class hsd:
     
     def rpc_getNetworkHashPerSec(self, _blocks:int=120, _height:int=1):
         """
-        Description:
+        DESCRIPTION:
 
             Returns the estimated current or historical network hashes per second, based on last blocks.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -1299,7 +1299,7 @@ class hsd:
     
     def rpc_getMiningInfo(self):
         """
-        Description:
+        DESCRIPTION:
 
             Returns mining info.
 
@@ -1307,7 +1307,7 @@ class hsd:
                   returned when there's active work. generate - is true when hsd itself
                   is mining.
         
-        Params:
+        PARAMS:
 
             None
         """
@@ -1320,11 +1320,11 @@ class hsd:
     
     def rpc_getWork(self, _data:str=[]):
         """
-        Description:
+        DESCRIPTION:
 
             Returns hashing work to be solved by miner. Or submits solved block.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -1339,14 +1339,14 @@ class hsd:
     
     def rpc_getWorkLP(self):
         """
-        Description:
+        DESCRIPTION:
 
             Long polling for new work.
 
             Returns new work, whenever new TX is received in the mempoolor new
             block has been discovered. So miner can restart mining on new data.
         
-        Params:
+        PARAMS:
 
             None
         """
@@ -1359,11 +1359,11 @@ class hsd:
     
     def rpc_getBlockTemplate(self):
         """
-        Description:
+        DESCRIPTION:
 
             Returns block template or proposal for use with mining. Also validates proposal if mode is specified as proposal.
         
-        Params:
+        PARAMS:
 
             None
         """
@@ -1376,11 +1376,11 @@ class hsd:
     
     def rpc_submitBlock(self, _blockdata:str):
         """
-        Description:
+        DESCRIPTION:
 
             Adds block to chain.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -1395,11 +1395,11 @@ class hsd:
     
     def rpc_verifyBlock(self, _blockdata:str):
         """
-        Description:
+        DESCRIPTION:
 
             Verifies the block data.
         
-        Params:
+        PARAMS:
         (*) Denotes required argument
         
         (*) _blockdata : Mined block data (hex).
@@ -1413,11 +1413,11 @@ class hsd:
     
     def rpc_setGenerate(self, _mining:int=0, _proclimit:int=0):
         """
-        Description:
+        DESCRIPTION:
 
             Will start the mining on CPU.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -1434,11 +1434,11 @@ class hsd:
     
     def rpc_getGenerate(self):
         """
-        Description:
+        DESCRIPTION:
 
             Returns status of mining on Node.
         
-        Params:
+        PARAMS:
 
             None
         """
@@ -1451,11 +1451,11 @@ class hsd:
     
     def rpc_Generate(self, _numblocks:int=1):
         """
-        Description:
+        DESCRIPTION:
 
             Mines numblocks number of blocks. Will return once all blocks are mined. CLI command may timeout before that happens.
         
-        Params:
+        PARAMS:
         (*) Denotes required argument
         
         (*) _numblocks : Number of blocks to mine.
@@ -1469,11 +1469,11 @@ class hsd:
     
     def rpc_GenerateToAddress(self, _address:str, _numblocks:int=1):
         """
-        Description:
+        DESCRIPTION:
 
             Mines numblocks blocks, with address as coinbase.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -1490,11 +1490,11 @@ class hsd:
     
     def rpc_getConnectionCount(self):
         """
-        Description:
+        DESCRIPTION:
 
             Returns connection count.
         
-        Params:
+        PARAMS:
 
             None
         """
@@ -1507,11 +1507,11 @@ class hsd:
     
     def rpc_ping(self):
         """
-        Description:
+        DESCRIPTION:
 
             Will send ping request to every connected peer.
         
-        Params:
+        PARAMS:
 
             None
         """
@@ -1524,11 +1524,11 @@ class hsd:
     
     def rpc_getPeerInfo(self):
         """
-        Description:
+        DESCRIPTION:
 
             Returns information about all connected peers.
         
-        Params:
+        PARAMS:
 
             None
         """
@@ -1541,11 +1541,11 @@ class hsd:
     
     def rpc_addNode(self, _nodeAddress:str, _cmd:str):
         """
-        Description:
+        DESCRIPTION:
 
             Adds or removes peers in Host List. 
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -1566,11 +1566,11 @@ class hsd:
     
     def rpc_disconnectNode(self, _nodeAddress:str):
         """
-        Description:
+        DESCRIPTION:
 
             Disconnects node.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -1585,11 +1585,11 @@ class hsd:
     
     def rpc_getAddedNodeInfo(self, _nodeAddress:str):
         """
-        Description:
+        DESCRIPTION:
 
             Returns node information from host list.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -1604,11 +1604,11 @@ class hsd:
     
     def rpc_getNetTotals(self):
         """
-        Description:
+        DESCRIPTION:
 
             Returns information about used network resources.
         
-        Params:
+        PARAMS:
 
             None
         """
@@ -1621,11 +1621,11 @@ class hsd:
     
     def rpc_getNetworkInfo(self):
         """
-        Description:
+        DESCRIPTION:
 
             Returns local node's network information.
         
-        Params:
+        PARAMS:
 
             None
         """
@@ -1638,11 +1638,11 @@ class hsd:
     
     def rpc_setBan(self, _nodeAddress:str, _cmd:str):
         """
-        Description:
+        DESCRIPTION:
 
             Adds or removes nodes from banlist.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -1661,11 +1661,11 @@ class hsd:
     
     def rpc_listBan(self):
         """
-        Description:
+        DESCRIPTION:
 
             Lists all banned peers.
         
-        Params:
+        PARAMS:
 
             None
         """
@@ -1678,11 +1678,11 @@ class hsd:
     
     def rpc_clearBanned(self):
         """
-        Description:
+        DESCRIPTION:
 
             Removes all banned peers.
         
-        Params:
+        PARAMS:
 
             None
         """
@@ -1695,11 +1695,11 @@ class hsd:
     
     def rpc_getNameInfo(self, _name:str):
         """
-        Description:
+        DESCRIPTION:
 
             Returns information on a given name. Use this function to query any name in any state.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
 
@@ -1714,11 +1714,11 @@ class hsd:
     
     def rpc_getNameByHash(self, _namehash:str):
         """
-        Description:
+        DESCRIPTION:
 
             Returns the name for a from a given name hash.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
 
@@ -1733,11 +1733,11 @@ class hsd:
     
     def rpc_getNameResource(self, _name:str):
         """
-        Description:
+        DESCRIPTION:
 
             Returns the resource records for the given name (added to the trie by the name owner using sendupdate).
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
 
@@ -1752,11 +1752,11 @@ class hsd:
     
     def rpc_getNameProof(self, _name:str):
         """
-        Description:
+        DESCRIPTION:
 
             Returns the merkle tree proof for a given name.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
 
@@ -1771,7 +1771,7 @@ class hsd:
     
     def rpc_sendRawClaim(self, _base64_string:str):
         """
-        Description:
+        DESCRIPTION:
 
             If you already have DNSSEC setup, you can avoid publishing a
             TXT record publicly by creating the proof locally. This requires
@@ -1779,7 +1779,7 @@ class hsd:
             private keys themselves must be stored in BIND's private key
             format and naming convention.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
 
@@ -1794,11 +1794,11 @@ class hsd:
     
     def rpc_getDnsSecProof(self, _name:str, _estimate:bool=False, _verbose:bool=True):
         """
-        Description:
+        DESCRIPTION:
 
             Adds or removes nodes from banlist.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
         
@@ -1830,12 +1830,12 @@ class hsd:
     
     def rpc_sendRawAirdrop(self, _base64_string:str):
         """
-        Description:
+        DESCRIPTION:
 
             Airdrop proofs create brand new coins directly
             to a Handshake address.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
 
@@ -1850,11 +1850,11 @@ class hsd:
     
     def rpc_grindName(self, _length:int=10):
         """
-        Description:
+        DESCRIPTION:
 
             Grind a rolled-out available name.
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
 
@@ -1883,11 +1883,11 @@ class hsw:
 
     def __init__(self, _api_key:str, _ipaddress:str='127.0.0.1', _port:int=12039):
         """
-        Description:
+        DESCRIPTION:
 
             Initialization of the hsw class
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
 
@@ -1905,18 +1905,18 @@ class hsw:
 
     def get(self, _endpoint:str):
         """
-        Description:
+        DESCRIPTION:
 
             GET (json) response from API
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
 
         (*) _endpoint : API endpoint to send GET request.
         """
 
-        url = "http://x:" + self.API_KEY + "@" + self.ADDRESS + ":" + self.PORT + _endpoint
+        url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + _endpoint
         getResponse = requests.get(url)
         response = getResponse.json()
         return response # Returned as json
@@ -1924,11 +1924,11 @@ class hsw:
 
     def post(self, _endpoint:str, _post_message:str):
         """
-        Description:
+        DESCRIPTION:
 
             POST (json) message to API
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
 
@@ -1937,7 +1937,7 @@ class hsw:
         (*) _post_message : Message to be sent.
         """
         
-        url = "http://x:" + self.API_KEY + "@" + self.ADDRESS + ":" + self.PORT + _endpoint
+        url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + _endpoint
         postRequest = requests.post(url, _post_message)
         response = postRequest.json()
         return response # Returned as json
@@ -1945,11 +1945,11 @@ class hsw:
 
     def put(self, _endpoint:str, _put_message:str):
         """
-        Description:
+        DESCRIPTION:
 
             PUT (json) message to API
         
-        Params:
+        PARAMS:
 
         (*) Denotes required argument
 
@@ -1958,7 +1958,7 @@ class hsw:
         (*) _post_message : Message to be sent.
         """
         
-        url = "http://x:" + self.API_KEY + "@" + self.ADDRESS + ":" + self.PORT + _endpoint
+        url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + _endpoint
         putRequest = requests.put(url, _put_message)
         response = putRequest.json()
         return response # Returned as json
@@ -1967,11 +1967,11 @@ class hsw:
     def createWallet(self, _passphrase:str, _id:str='primary', _accountkey:str='', _type:str='pubkeyhash',
                     _mnemonic:str='',_master:str='', _watchonly:bool=True, _m:int=1, _n:int=1):
         """
-        Description:
+        DESCRIPTION:
 
             Create a new wallet with a specified ID.
         
-        Params:
+        PARAMS:
 
             (*) Denotes required argument
 
@@ -2013,11 +2013,11 @@ class hsw:
 
     def resetAuthToken(self, _passphrase:str, _id:str='primary'):
         """
-        Description:
+        DESCRIPTION:
 
             Create a new wallet with a specified ID.
         
-        Params:
+        PARAMS:
 
             (*) Denotes required argument
 
@@ -2026,7 +2026,7 @@ class hsw:
             (*) _passphrase : A strong passphrase used to encrypt the wallet.
         """
         
-        endpoint = '/wallet/' + _id + "/retoken"
+        endpoint = '/wallet/' + _id + '/retoken'
 
         post_message = '{"passphrase":"' + _passphrase + '"}'
 
@@ -2036,11 +2036,11 @@ class hsw:
 
     def getWalletInfo(self, _id:str=''):
         """
-        Description:
+        DESCRIPTION:
 
             Get wallet info by ID. If no id is passed in the CLI it assumes an id of primary.
         
-        Params:
+        PARAMS:
 
             (*) Denotes required argument
 
@@ -2054,30 +2054,30 @@ class hsw:
 
     def getMasterHDKey(self, _id:str='primary'):
         """
-        Description:
+        DESCRIPTION:
 
             Get wallet master HD key. This is normally censored in the
             wallet info route.The provided API key must have admin access.
         
-        Params:
+        PARAMS:
 
             (*) Denotes required argument
 
             (*) _id : Name of the wallet whose info you would like to retrieve.
         """
         
-        endpoint = '/wallet/' + _id + "/master"
+        endpoint = '/wallet/' + _id + '/master'
         response = self.get(endpoint)
         return response
     ### END METHOD ################################### getMasterHDKey(self, _id:str='')
 
     def changePassword(self, _new_passphrase:str, _id:str='primary', _old_passphrase:str=''):
         """
-        Description:
+        DESCRIPTION:
 
             Change wallet passphrase. Encrypt if unencrypted.
         
-        Params:
+        PARAMS:
 
             (*) Denotes required argument
 
@@ -2088,7 +2088,7 @@ class hsw:
             (*) _new_passphrase : New passphrase.
         """
         
-        endpoint = '/wallet/' + _id + "/passphrase"
+        endpoint = '/wallet/' + _id + '/passphrase'
 
         post_message = '{"old":"' + _old_passphrase + '", "passphrase":"' + _new_passphrase + '"}'
 
@@ -2098,7 +2098,7 @@ class hsw:
 
     def signTransaction(self, _passphrase:str, _tx_hex:str, _id:str='primary'):
         """
-        Description:
+        DESCRIPTION:
 
             Sign a templated transaction (useful for multisig).
  
@@ -2109,7 +2109,7 @@ class hsw:
             (*) _tx_hex     : The hex of the transaction you would like to sign.
         """
         
-        endpoint = '/wallet/' + _id + "/sign"
+        endpoint = '/wallet/' + _id + '/sign'
 
         post_message = '{"tx":"' + _tx_hex + '", "passphrase":"' + _passphrase + '"}'
 
@@ -2119,11 +2119,11 @@ class hsw:
 
     def zapTransactions(self, _account:str, _id:str='primary', _age:int=0):
         """
-        Description:
+        DESCRIPTION:
 
             Remove all pending transactions older than a specified age.
         
-        Params:
+        PARAMS:
 
             (*) Denotes required argument
 
@@ -2134,7 +2134,7 @@ class hsw:
             (*) _age     : Age threshold to zap up to (seconds).
         """
         
-        endpoint = '/wallet/' + _id + "/zap"
+        endpoint = '/wallet/' + _id + '/zap'
 
         post_message = '{"account":"' + _account + '", "age":"' + _age + '"}'
 
@@ -2144,18 +2144,18 @@ class hsw:
 
     def lockWallet(self, _id:str='primary'):
         """
-        Description:
+        DESCRIPTION:
 
             If unlock was called, zero the derived AES key and revert to normal behavior.
         
-        Params:
+        PARAMS:
 
             (*) Denotes required argument
 
             ( ) _id : Name ID of wallet to lock.
         """
         
-        endpoint = '/wallet/' + _id + "/lock"
+        endpoint = '/wallet/' + _id + '/lock'
 
         post_message = ''
 
@@ -2165,7 +2165,7 @@ class hsw:
 
     def importPublicKey(self, _account:str, _pub_key:str, _id:str='primary'):
         """
-        Description:
+        DESCRIPTION:
 
             Import a standard (public) WIF key.
 
@@ -2175,7 +2175,7 @@ class hsw:
                   associated with accounts but will not be properly backed up with only the
                   mnemonic. 
         
-        Params:
+        PARAMS:
 
             (*) Denotes required argument
 
@@ -2184,7 +2184,7 @@ class hsw:
             ( ) _pub_key : Hex encoded public key.
         """
         
-        endpoint = '/wallet/' + _id + "/import"
+        endpoint = '/wallet/' + _id + '/import'
 
         post_message = '{"account":"' + _account + '", "publicKey":"' + _pub_key + '"}'
 
@@ -2194,7 +2194,7 @@ class hsw:
 
     def importPrivateKey(self, _account:str, _priv_key:str, _id:str='primary'):
         """
-        Description:
+        DESCRIPTION:
 
             Import a standard (private) WIF key.
 
@@ -2204,7 +2204,7 @@ class hsw:
                   associated with accounts but will not be properly backed up with only the
                   mnemonic. 
         
-        Params:
+        PARAMS:
 
             (*) Denotes required argument
 
@@ -2213,7 +2213,7 @@ class hsw:
             ( ) _priv_key : Hex encoded public key.
         """
         
-        endpoint = '/wallet/' + _id + "/import"
+        endpoint = '/wallet/' + _id + '/import'
 
         post_message = '{"account":"' + _account + '", "privateKey":"' + _priv_key + '"}'
 
@@ -2223,29 +2223,29 @@ class hsw:
 
     def getBlocksWithWalletTX(self, _id:str='primary'):
         """
-        Description:
+        DESCRIPTION:
 
             List all block heights which contain any wallet transactions. Returns an array of block heights.
         
-        Params:
+        PARAMS:
 
             (*) Denotes required argument
 
             (*) _id : Name of the wallet.
         """
         
-        endpoint = '/wallet/' + _id + "/block"
+        endpoint = '/wallet/' + _id + '/block'
         response = self.get(endpoint)
         return response
     ### END METHOD ################################### getBlocksWithWalletTX(self, _id:str='primary')
 
     def getWalletBlockByHeight(self, _height:int, _id:str='primary'):
         """
-        Description:
+        DESCRIPTION:
 
             Get block info by height.
         
-        Params:
+        PARAMS:
 
             (*) Denotes required argument
 
@@ -2254,18 +2254,51 @@ class hsw:
             ( ) _id     : Name of the wallet.
         """
         
-        endpoint = '/wallet/' + _id + "/block/" + str(_height)
+        endpoint = '/wallet/' + _id + '/block/' + str(_height)
         response = self.get(endpoint)
         return response
     ### END METHOD ################################### getWalletBlockByHeight(self, _id:str='primary')
 
+    def addXPubKey(self, _accountkey:str, _account:str='default'):
+        """
+        DESCRIPTION:
+
+            Add a shared xpubkey to wallet. Must be a multisig wallet.
+
+            Note: Since it must be a multisig, the wallet on creation should
+            be set with m and n where n is greater than 1 (since the first key
+            is always that wallet's own xpubkey). Creating new addresses from
+            this account will not be possible until n number of xpubkeys are
+            added to the account.
+
+            Response will return addedKey: true true if key was added on this
+            request. Returns false if key already added, but will still return
+            success: true with status 200.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _accountkey : xpubkey to add to the multisig wallet.
+
+            ( ) _account    : Multisig account to add the xpubkey to (default='default').
+        """
+
+        endpoint = '/wallet/multisig3/shared-key/'
+
+        put_message = '{"accountKey":"' + _accountkey + '", "account":"' + _account + '"}'
+
+        response = self.put(endpoint, put_message)
+        return response
+    ### END METHOD ################################### addXPubKey(self, _accountkey:str, _account:str='default')
+
     def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
-        Description:
+        DESCRIPTION:
 
             Create account with specified account name.
         
-        Params:
+        PARAMS:
 
             (*) Denotes required argument
 
@@ -2286,7 +2319,7 @@ class hsw:
             ( ) _n          : 'n' value for multisig (m-of-n)
         """
         
-        endpoint = '/wallet/' + _id + "/account/" + _name
+        endpoint = '/wallet/' + _id + '/account/' + _name
 
         put_message = '{"type":"' + _type + '", "passphrase":"' + _passphrase + '", "accountKey":"' + _accountkey + '", "m": ' + str(_m) + ', "n": ' + str(_n) + '}'
 
