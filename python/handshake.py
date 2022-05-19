@@ -2507,6 +2507,24 @@ class hsw:
         return response
     ### END METHOD ################################### lockCoinOutpoints(self, _txhash:str, _index:str='0', _id:str='primary')
 
+    def getLockedOutpoints(self, _id:str='primary'):
+        """
+        DESCRIPTION:
+
+            Get all locked outpoints.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _id : ID of wallet to check for outpoints.
+        """
+        
+        endpoint = '/wallet/' + _id + '/locked'
+        response = self.get(endpoint)
+        return response
+    ### END METHOD ################################### getLockedOutpoints(self, _id:str='primary')
+
     def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
         DESCRIPTION:
