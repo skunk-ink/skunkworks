@@ -86,7 +86,7 @@ class hsd:
         return response # Returned as json
     ### END METHOD ################################### get(self, _endpoint:str)
 
-    def post(self, _endpoint:str, _post_message:str):
+    def post(self, _endpoint:str, _message:str):
         """
         DESCRIPTION:
 
@@ -96,16 +96,16 @@ class hsd:
 
         (*) Denotes required argument
 
-        (*) _endpoint     : API endpoint to send POST message.
+        (*) _endpoint : API endpoint to send POST message.
 
-        (*) _post_message : Message to be sent.
+        (*) _message  : Message to be sent.
         """
         
         url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + _endpoint
-        postRequest = requests.post(url, _post_message)
+        postRequest = requests.post(url, _message)
         response = postRequest.json()
         return response # Returned as json
-    ### END METHOD ################################### post(self, _endpoint:str, _post_message:str)
+    ### END METHOD ################################### post(self, _endpoint:str, _message:str)
 
     def getInfo(self):
         """
@@ -233,8 +233,8 @@ class hsd:
         """
         
         endpoint = '/broadcast/'
-        post_message = '{"tx": "' + _tx + '"}'
-        response = self.post(endpoint, post_message)
+        _message = '{"tx": "' + _tx + '"}'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### postBroadcast(self, _tx:str)
 
@@ -252,8 +252,8 @@ class hsd:
         """
         
         endpoint = '/claim/'
-        post_message = '{ "claim": "' + _claim + '" }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "claim": "' + _claim + '" }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### postBroadcastClaim(self, _claim:str)
 
@@ -295,8 +295,8 @@ class hsd:
         """
         
         endpoint = '/reset'
-        post_message = '{ "height": ' + str(_height) + '}'
-        response = self.post(endpoint, post_message)
+        _message = '{ "height": ' + str(_height) + '}'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### postReset(self, _height:int)
 
@@ -387,8 +387,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "stop" }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "stop" }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_postStop(self)
 
@@ -404,8 +404,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "getinfo" }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getinfo" }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getInfo(self)
 
@@ -421,8 +421,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "getmemoryinfo" }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getmemoryinfo" }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getMemoryInfo(self)
 
@@ -441,8 +441,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "setloglevel", "params": [ "' + _params + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "setloglevel", "params": [ "' + _params + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_setLogLevel(self, _params:str=['NONE'])
 
@@ -460,8 +460,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "validateaddress": "", "params": [ "' + _address + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "validateaddress": "", "params": [ "' + _address + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_validateAddress(self, _address:str)
 
@@ -481,8 +481,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "createmultisig", "params": [ ' + str(_nrequired) + ', "' + _keyDict + ' ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "createmultisig", "params": [ ' + str(_nrequired) + ', "' + _keyDict + ' ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_createMultiSig(self, _nrequired:int, _keyDict:str)
 
@@ -501,8 +501,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "signmessagewithprivkey", "params": [ "' + _privkey + '", "' + _message + ' ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "signmessagewithprivkey", "params": [ "' + _privkey + '", "' + _message + ' ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_signMessageWithPrivKey(self, _privkey:str, _message:str)
 
@@ -524,8 +524,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "verifymessage", "params": [ "' + _address + '", "' + _signature + '", "' + _message + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "verifymessage", "params": [ "' + _address + '", "' + _signature + '", "' + _message + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_verifyMessage(self, _address:str, _signature:str, _message:str)
 
@@ -547,8 +547,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "verifymessagewithname", "params": [ "' + _name + '", "' + _signature + '", "' + _message + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "verifymessagewithname", "params": [ "' + _name + '", "' + _signature + '", "' + _message + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_verifyMessageWithName(self, _name:str, _signature:str, _message:str)
 
@@ -566,8 +566,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "setmocktime", "params": [ ' + str(_timestamp) + ' ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "setmocktime", "params": [ ' + str(_timestamp) + ' ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_setMockTime(self, _timestamp:int)
 
@@ -583,8 +583,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "pruneblockchain", "params": [] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "pruneblockchain", "params": [] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_postPruneBlockchain(self)
     
@@ -605,8 +605,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "", "params": [ "' + _blockhash + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "", "params": [ "' + _blockhash + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_invalidateBlock(self, _blockhash:str)
     
@@ -624,8 +624,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "reconsiderblock", "params": [ "' + _blockhash + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "reconsiderblock", "params": [ "' + _blockhash + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_reconsiderBlock(self, _blockhash:str)
 
@@ -641,8 +641,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "getblockchaininfo" }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getblockchaininfo" }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getBlockchainInfo(self)
     
@@ -658,8 +658,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "getbestblockhash" }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getbestblockhash" }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getBestBlockHash(self)
     
@@ -675,8 +675,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "getblockcount" }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getblockcount" }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getBlockCount(self)
     
@@ -711,8 +711,8 @@ class hsd:
             details = '0'
         
         endpoint = '/'
-        post_message = '{ "method": "getblock", "params": [ "' + _blockhash + '", ' + verbose + ', ' + details + ' ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getblock", "params": [ "' + _blockhash + '", ' + verbose + ', ' + details + ' ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getBlock(self, _blockhash:str, _verbose:bool=True, _details:bool=False)
     
@@ -747,8 +747,8 @@ class hsd:
             details = '0'
         
         endpoint = '/'
-        post_message = '{ "method": "getblockbyheight", "params": [ ' + str(_blockheight) + ', ' + verbose + ', ' + details + ' ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getblockbyheight", "params": [ ' + str(_blockheight) + ', ' + verbose + ', ' + details + ' ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getBlockByHeight(self, _blockheight:int, _verbose:bool=True, _details:bool=False)
     
@@ -766,8 +766,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "getblockhash", "params": [ ' + str(_blockheight) + ' ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getblockhash", "params": [ ' + str(_blockheight) + ' ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getBlockHash(self, _blockheight:int)
     
@@ -794,8 +794,8 @@ class hsd:
             verbose = '0'
         
         endpoint = '/'
-        post_message = '{ "method": "getblockheader", "params": [ "' + _blockhash + '", ' + verbose + ' ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getblockheader", "params": [ "' + _blockhash + '", ' + verbose + ' ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getBlockHeader(self, _blockhash:str, _verbose:bool=True)
     
@@ -811,8 +811,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "getchaintips" }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getchaintips" }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getChainTips(self)
     
@@ -828,8 +828,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "getdifficulty" }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getdifficulty" }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getDifficulty(self)
     
@@ -845,8 +845,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "getmempoolinfo" }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getmempoolinfo" }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getMemPoolInfo(self)
     
@@ -873,8 +873,8 @@ class hsd:
             verbose = '0'
         
         endpoint = '/'
-        post_message = '{ "method": "getmempoolancestors", "params": [ "' + _txhash + '", ' + verbose + ' ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getmempoolancestors", "params": [ "' + _txhash + '", ' + verbose + ' ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getMemPoolAncestors(self, _txhash:str, _verbose:bool=False)
     
@@ -901,8 +901,8 @@ class hsd:
             verbose = '0'
         
         endpoint = '/'
-        post_message = '{ "method": "getmempooldescendants", "params": [ "' + _txhash + '", ' + verbose + ' ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getmempooldescendants", "params": [ "' + _txhash + '", ' + verbose + ' ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getMemPoolDescendants(self, _txhash:str, _verbose:bool=False)
     
@@ -920,8 +920,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "getmempoolentry", "params": [ "' + _txhash + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getmempoolentry", "params": [ "' + _txhash + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getMemPoolEntry(self, _txhash:str)
     
@@ -946,8 +946,8 @@ class hsd:
             verbose = '0'
         
         endpoint = '/'
-        post_message = '{ "method": "getrawmempool", "params": [ ' + verbose + ' ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getrawmempool", "params": [ ' + verbose + ' ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getRawMemPool(self, _verbose:bool=False)
     
@@ -972,8 +972,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "prioritisetransaction", "params": [ "' + _txhash + '", "' + str(_priorityDelta) + '", "' + str(_feeDelta) + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "prioritisetransaction", "params": [ "' + _txhash + '", "' + str(_priorityDelta) + '", "' + str(_feeDelta) + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_prioritiseTransaction(self, _txhash:str, _priorityDelta:int, _feeDelta:int)
     
@@ -991,8 +991,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "estimatefee", "params": [ ' + str(_nblocks) + ' ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "estimatefee", "params": [ ' + str(_nblocks) + ' ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_estimateFee(self, _nblocks:int=1)
     
@@ -1012,8 +1012,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "estimatepriority", "params": [ ' + str(_nblocks) + ' ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "estimatepriority", "params": [ ' + str(_nblocks) + ' ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_estimatePriority(self, _nblocks:int=1)
     
@@ -1031,8 +1031,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "estimatesmartfee", "params": [ ' + str(_nblocks) + ' ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "estimatesmartfee", "params": [ ' + str(_nblocks) + ' ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_estimateSmartFee(self, _nblocks:int=1)
     
@@ -1052,8 +1052,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "estimatesmartpriority", "params": [ ' + str(_nblocks) + ' ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "estimatesmartpriority", "params": [ ' + str(_nblocks) + ' ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_estimateSmartPriority(self, _nblocks:int=1)
     
@@ -1075,8 +1075,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "gettxout", "params": [ "' + _txhash + '", ' + str(_index) + ', ' + str(_includemempool) + ' ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "gettxout", "params": [ "' + _txhash + '", ' + str(_index) + ', ' + str(_includemempool) + ' ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getTxOut(self, _txhash:str, _index:int, _includemempool:int=1)
     
@@ -1092,8 +1092,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "gettxoutsetinfo", "params": [] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "gettxoutsetinfo", "params": [] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getTxOutSetInfo(self)
     
@@ -1120,8 +1120,8 @@ class hsd:
             verbose = '0'
         
         endpoint = '/'
-        post_message = '{ "method": "getrawtransaction", "params": [ "' + _txhash + '", ' + verbose + ' ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getrawtransaction", "params": [ "' + _txhash + '", ' + verbose + ' ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getRawTransaction(self, _txhash:str, _verbose:bool=False)
     
@@ -1139,8 +1139,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "decoderawtransaction", "params": [ "' + _rawtx + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "decoderawtransaction", "params": [ "' + _rawtx + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_decodeRawTransaction(self, _rawtx:str)
     
@@ -1158,8 +1158,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "decodescript", "params": [ "' + _script + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "decodescript", "params": [ "' + _script + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_decodeScript(self, _script:str)
     
@@ -1177,8 +1177,8 @@ class hsd:
         """
         
         endpoint = '/'
-        post_message = '{ "method": "sendrawtransaction", "params": [ "' + _rawtx + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "sendrawtransaction", "params": [ "' + _rawtx + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_sendRawTransaction(self, _rawtx:str)
     
@@ -1202,8 +1202,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "createrawtransaction", "params": [[{ "txid": "' + _txhash + '", "vout": ' + str(_txindex) + ' }], { "' + _address + '": ' + str(_amount) + ', "data": "' + _data + '" }] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "createrawtransaction", "params": [[{ "txid": "' + _txhash + '", "vout": ' + str(_txindex) + ' }], { "' + _address + '": ' + str(_amount) + ', "data": "' + _data + '" }] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_createRawTransaction(self, _txhash:str, _txindex:int, _address:str, _amount:int, _data:str)
     
@@ -1233,8 +1233,8 @@ class hsd:
         self.rpc_createRawTransaction()
 
         endpoint = '/'
-        post_message = '{ "method": "signrawtransaction", "params": [ "' + _rawtx + '", [{ "txid": "' + _txhash + '", "vout": ' + str(_txindex) + ', "address": "' + _address + '", "amount": ' + str(_amount) + ' }], [ "' + _privkey + '" ]] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "signrawtransaction", "params": [ "' + _rawtx + '", [{ "txid": "' + _txhash + '", "vout": ' + str(_txindex) + ', "address": "' + _address + '", "amount": ' + str(_amount) + ' }], [ "' + _privkey + '" ]] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_signRawTransaction(self, _rawtx:str, _txhash:str, _txindex:int, _address:str, _amount:int, _privkey:str)
     
@@ -1252,8 +1252,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "gettxoutproof", "params": [ "' + _txidlist + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "gettxoutproof", "params": [ "' + _txidlist + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getTxOutProof(self, _txidlist:str)
     
@@ -1271,8 +1271,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "verifytxoutproof", "params": [ "' + _proof + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "verifytxoutproof", "params": [ "' + _proof + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_verifyTxOutProof(self, _proof)
     
@@ -1292,8 +1292,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "getnetworkhashps", "params": [ ' + str(_blocks) + ', ' + str(_height) + ' ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getnetworkhashps", "params": [ ' + str(_blocks) + ', ' + str(_height) + ' ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getNetworkHashPerSec(self, _blocks:int=120, _height:int=1)
     
@@ -1313,8 +1313,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "getmininginfo", "params": [] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getmininginfo", "params": [] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getMiningInfo(self)
     
@@ -1332,8 +1332,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "getworklp", "params": [ "' + _data + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getworklp", "params": [ "' + _data + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getWorkLP(self)
     
@@ -1352,8 +1352,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "getworklp", "params": [] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getworklp", "params": [] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getWorkLP(self)
     
@@ -1369,8 +1369,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "getblocktemplate", "params": [] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getblocktemplate", "params": [] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getBlockTemplate(self):
     
@@ -1388,8 +1388,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "submitblock", "params": [ "' + _blockdata + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "submitblock", "params": [ "' + _blockdata + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_submitBlock(self, _blockdata:str)
     
@@ -1406,8 +1406,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "verifyblock", "params": [ "' + _blockdata + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "verifyblock", "params": [ "' + _blockdata + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_verifyBlock(self, _blockdata:str)
     
@@ -1427,8 +1427,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "setgenerate", "params": [ ' + str(_mining) + ', ' + str(_proclimit) + ' ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "setgenerate", "params": [ ' + str(_mining) + ', ' + str(_proclimit) + ' ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_setGenerate(self, _mining:int=0, _proclimit:int=0)
     
@@ -1444,8 +1444,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "getgenerate", "params": [] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getgenerate", "params": [] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getGenerate(self)
     
@@ -1462,8 +1462,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "generate", "params": [' + str(_numblocks) + '] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "generate", "params": [' + str(_numblocks) + '] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_Generate(self, _numblocks:int=1)
     
@@ -1483,8 +1483,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "generatetoaddress", "params": [ ' + str(_numblocks) + ', "' + _address + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "generatetoaddress", "params": [ ' + str(_numblocks) + ', "' + _address + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_GenerateToAddress(self, _address:str, _numblocks:int=1)
     
@@ -1500,8 +1500,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "getconnectioncount", "params": [] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getconnectioncount", "params": [] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getConnectionCount(self)
     
@@ -1517,8 +1517,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "ping", "params": [] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "ping", "params": [] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_ping(self)
     
@@ -1534,8 +1534,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "getpeerinfo", "params": [] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getpeerinfo", "params": [] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getPeerInfo(self)
     
@@ -1559,8 +1559,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "addnode", "params": [ "' + _nodeAddress + '", "' + _cmd + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "addnode", "params": [ "' + _nodeAddress + '", "' + _cmd + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_addNode(self, _nodeAddress:str, _cmd:str)
     
@@ -1578,8 +1578,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "disconnectnode", "params": [ "' + _nodeAddress + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "disconnectnode", "params": [ "' + _nodeAddress + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_disconnectNode(self, _nodeAddress:str)
     
@@ -1597,8 +1597,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "getaddednodeinfo", "params": [ "' + _nodeAddress + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getaddednodeinfo", "params": [ "' + _nodeAddress + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getAddedNodeInfo(self, _nodeAddress:str)
     
@@ -1614,8 +1614,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "getnettotals", "params": [] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getnettotals", "params": [] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getNetTotals(self)
     
@@ -1631,8 +1631,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "getnetworkinfo", "params": [] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getnetworkinfo", "params": [] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### def rpc_getNetworkInfo(self)
     
@@ -1654,8 +1654,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "setban", "params": ["' + _nodeAddress + '", "' + _cmd + '"] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "setban", "params": ["' + _nodeAddress + '", "' + _cmd + '"] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_setBan(self, _nodeAddress:str, _cmd:str)
     
@@ -1671,8 +1671,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "listbanned", "params": [] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "listbanned", "params": [] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_listBan(self)
     
@@ -1688,8 +1688,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "clearbanned", "params": [] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "clearbanned", "params": [] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_clearBanned(self)
     
@@ -1707,8 +1707,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "getnameinfo", "params": [ "' + _name + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getnameinfo", "params": [ "' + _name + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getNameInfo(self, _name:str)
     
@@ -1726,8 +1726,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "getnamebyhash", "params": [ "' + _namehash + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getnamebyhash", "params": [ "' + _namehash + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ###################################  rpc_getNameByHash(self, _namehash:str)
     
@@ -1745,8 +1745,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "getnameresource", "params": [ "' + _name + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getnameresource", "params": [ "' + _name + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getNameResource(self, _name:str)
     
@@ -1764,8 +1764,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "getnameproof", "params": [ "' + _name + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getnameproof", "params": [ "' + _name + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getNameProof(self, _name:str)
     
@@ -1787,8 +1787,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "sendrawclaim", "params": [ "' + _base64_string + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "sendrawclaim", "params": [ "' + _base64_string + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_sendRawClaim(self, _base64_string:str)
     
@@ -1823,8 +1823,8 @@ class hsd:
             estimate = '0'
 
         endpoint = '/'
-        post_message = '{ "method": "getdnssecproof", "params": ["' + _name + '", ' + estimate + ', ' + verbose + '] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "getdnssecproof", "params": ["' + _name + '", ' + estimate + ', ' + verbose + '] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_getDnsSecProof(self, _name:str, _estimate:bool=False, _verbose:bool=True)
     
@@ -1843,8 +1843,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "sendrawairdrop", "params": [ "' + _base64_string + '" ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "sendrawairdrop", "params": [ "' + _base64_string + '" ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_sendRawAirdrop(self, _base64_string:str)
     
@@ -1862,8 +1862,8 @@ class hsd:
         """
 
         endpoint = '/'
-        post_message = '{ "method": "grindname", "params": [ ' + str(_length) + ' ] }'
-        response = self.post(endpoint, post_message)
+        _message = '{ "method": "grindname", "params": [ ' + str(_length) + ' ] }'
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### rpc_grindName(self, _length:int=10)
 
@@ -1922,7 +1922,7 @@ class hsw:
         return response # Returned as json
     ### END METHOD ################################### get(self, _endpoint:str)
 
-    def post(self, _endpoint:str, _post_message:str):
+    def post(self, _endpoint:str, _message:str):
         """
         DESCRIPTION:
 
@@ -1932,18 +1932,18 @@ class hsw:
 
         (*) Denotes required argument
 
-        (*) _endpoint     : API endpoint to send POST message.
+        (*) _endpoint : API endpoint to send POST message.
 
-        (*) _post_message : Message to be sent.
+        (*) _message  : Message to be sent.
         """
         
         url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + _endpoint
-        postRequest = requests.post(url, _post_message)
+        postRequest = requests.post(url, _message)
         response = postRequest.json()
         return response # Returned as json
-    ### END METHOD ################################### post(self, _endpoint:str, _post_message:str)
+    ### END METHOD ################################### post(self, _endpoint:str, _message:str)
 
-    def put(self, _endpoint:str, _put_message:str):
+    def put(self, _endpoint:str, _message:str):
         """
         DESCRIPTION:
 
@@ -1953,16 +1953,37 @@ class hsw:
 
         (*) Denotes required argument
 
-        (*) _endpoint     : API endpoint to send POST message.
+        (*) _endpoint : API endpoint to send POST message.
 
-        (*) _post_message : Message to be sent.
+        (*) _message  : Message to be sent.
         """
         
         url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + _endpoint
-        putRequest = requests.put(url, _put_message)
+        putRequest = requests.put(url, _message)
         response = putRequest.json()
         return response # Returned as json
-    ### END METHOD ################################### put(self, _endpoint:str, _put_message:str)
+    ### END METHOD ################################### put(self, _endpoint:str, _message:str)
+
+    def delete(self, _endpoint:str, _message:str):
+        """
+        DESCRIPTION:
+
+            PUT (json) message to API
+        
+        PARAMS:
+
+        (*) Denotes required argument
+
+        (*) _endpoint : API endpoint to send POST message.
+
+        (*) _message  : Message to be sent.
+        """
+        
+        url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + _endpoint
+        putRequest = requests.delete(url, _message)
+        response = putRequest.json()
+        return response # Returned as json
+    ### END METHOD ################################### put(self, _endpoint:str, _message:str)
 
     def createWallet(self, _passphrase:str, _id:str='primary', _accountkey:str='', _type:str='pubkeyhash',
                     _mnemonic:str='',_master:str='', _watchonly:bool=True, _m:int=1, _n:int=1):
@@ -2003,10 +2024,10 @@ class hsw:
 
         endpoint = '/wallet/' + _id
 
-        put_message = '{"passphrase":"' + _passphrase + '", "watchOnly": ' + watchonly + ', "accountKey":"' + _accountkey + \
+        _message = '{"passphrase":"' + _passphrase + '", "watchOnly": ' + watchonly + ', "accountKey":"' + _accountkey + \
                        '", "type":"' + _type + '", "master":"' + _master + '", "m": ' + str(_m) + ', "n": ' + str(_n) + ', "mnemonic":"' + _mnemonic + '"}'
 
-        response = self.put(endpoint, put_message)
+        response = self.put(endpoint, _message)
         return response
     ### END METHOD ################################### createWallet(self, _id:str='primary', _passphrase:str, _accountkey:str='', _type:str='pubkeyhash',
     #                                                               _mnemonic:str='',_master:str=None, _watchonly:bool=True, _m:int=1, _n:int=1)
@@ -2028,9 +2049,9 @@ class hsw:
         
         endpoint = '/wallet/' + _id + '/retoken'
 
-        post_message = '{"passphrase":"' + _passphrase + '"}'
+        _message = '{"passphrase":"' + _passphrase + '"}'
 
-        response = self.post(endpoint, post_message)
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### resetAuthToken(self, _id:str='primary', _passphrase:str)
 
@@ -2090,9 +2111,9 @@ class hsw:
         
         endpoint = '/wallet/' + _id + '/passphrase'
 
-        post_message = '{"old":"' + _old_passphrase + '", "passphrase":"' + _new_passphrase + '"}'
+        _message = '{"old":"' + _old_passphrase + '", "passphrase":"' + _new_passphrase + '"}'
 
-        response = self.post(endpoint, post_message)
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### changePassword(self, _id:str='primary', _new_passphrase:str, _old_passphrase:str='')
 
@@ -2111,9 +2132,9 @@ class hsw:
         
         endpoint = '/wallet/' + _id + '/sign'
 
-        post_message = '{"tx":"' + _tx_hex + '", "passphrase":"' + _passphrase + '"}'
+        _message = '{"tx":"' + _tx_hex + '", "passphrase":"' + _passphrase + '"}'
 
-        response = self.post(endpoint, post_message)
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### signTransaction(self, _id:str='primary', _passphrase:str, _tx_hex:str)
 
@@ -2136,9 +2157,9 @@ class hsw:
         
         endpoint = '/wallet/' + _id + '/zap'
 
-        post_message = '{"account":"' + _account + '", "age":"' + _age + '"}'
+        _message = '{"account":"' + _account + '", "age":"' + _age + '"}'
 
-        response = self.post(endpoint, post_message)
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### zapTransactions(self, _account:str, _id:str='primary', _age:int=0)
 
@@ -2157,9 +2178,9 @@ class hsw:
         
         endpoint = '/wallet/' + _id + '/lock'
 
-        post_message = ''
+        _message = ''
 
-        response = self.post(endpoint, post_message)
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### lockWallet(self, _id:str='primary')
 
@@ -2186,9 +2207,9 @@ class hsw:
         
         endpoint = '/wallet/' + _id + '/import'
 
-        post_message = '{"account":"' + _account + '", "publicKey":"' + _pub_key + '"}'
+        _message = '{"account":"' + _account + '", "publicKey":"' + _pub_key + '"}'
 
-        response = self.post(endpoint, post_message)
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### importPublicKey(self, _account:str, _pub_key:str, _id:str='primary')
 
@@ -2215,9 +2236,9 @@ class hsw:
         
         endpoint = '/wallet/' + _id + '/import'
 
-        post_message = '{"account":"' + _account + '", "privateKey":"' + _priv_key + '"}'
+        _message = '{"account":"' + _account + '", "privateKey":"' + _priv_key + '"}'
 
-        response = self.post(endpoint, post_message)
+        response = self.post(endpoint, _message)
         return response
     ### END METHOD ################################### importPrivateKey(self, _account:str, _priv_key:str, _id:str='primary')
 
@@ -2266,14 +2287,14 @@ class hsw:
             Add a shared xpubkey to wallet. Must be a multisig wallet.
 
             Note: Since it must be a multisig, the wallet on creation should
-            be set with m and n where n is greater than 1 (since the first key
+            be set with `m` and `n` where `n` is greater than 1 (since the first key
             is always that wallet's own xpubkey). Creating new addresses from
-            this account will not be possible until n number of xpubkeys are
+            this account will not be possible until `n` number of xpubkeys are
             added to the account.
 
-            Response will return addedKey: true true if key was added on this
-            request. Returns false if key already added, but will still return
-            success: true with status 200.
+            Response will return `addedKey: true` if key was added on this
+            request. Returns `addedKey: false` if key already added, but
+            will still return `success: true` with status `200`.
         
         PARAMS:
 
@@ -2286,11 +2307,44 @@ class hsw:
 
         endpoint = '/wallet/multisig3/shared-key/'
 
-        put_message = '{"accountKey":"' + _accountkey + '", "account":"' + _account + '"}'
+        _message = '{"accountKey":"' + _accountkey + '", "account":"' + _account + '"}'
 
-        response = self.put(endpoint, put_message)
+        response = self.put(endpoint, _message)
         return response
     ### END METHOD ################################### addXPubKey(self, _accountkey:str, _account:str='default')
+
+    def removeXPubKey(self, _accountkey:str, _account:str='default'):
+        """
+        DESCRIPTION:
+
+            Remove shared xpubkey from wallet if present.
+
+            Response will return `removedKey: true` if key was removed on
+            this request. Returns `removedKey: false` if key was already removed, but will
+            still return `success: true` with status `200`.
+
+            Note: Remove Key is only available to a multisig wallet that is
+            not yet "complete" -- as in, `n-1` number of keys have not yet been
+            added to the wallet's own original key. Once a multisig wallet
+            has the right number of keys to create m-of-n addresses, this
+            function will return an error
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _accountkey : xpubkey to add to the multisig wallet.
+
+            ( ) _account    : Multisig account to remove the xpubkey from (default='default').
+        """
+
+        endpoint = '/wallet/multisig3/shared-key/'
+
+        _message = '{"accountKey":"' + _accountkey + '", "account":"' + _account + '"}'
+
+        response = self.delete(endpoint, _message)
+        return response
+    ### END METHOD ################################### removeXPubKey(self, _accountkey:str, _account:str='default')
 
     def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
@@ -2321,9 +2375,9 @@ class hsw:
         
         endpoint = '/wallet/' + _id + '/account/' + _name
 
-        put_message = '{"type":"' + _type + '", "passphrase":"' + _passphrase + '", "accountKey":"' + _accountkey + '", "m": ' + str(_m) + ', "n": ' + str(_n) + '}'
+        _message = '{"type":"' + _type + '", "passphrase":"' + _passphrase + '", "accountKey":"' + _accountkey + '", "m": ' + str(_m) + ', "n": ' + str(_n) + '}'
 
-        response = self.put(endpoint, put_message)
+        response = self.put(endpoint, _message)
         return response
     ### END METHOD ################################### createAccount(self, _id:str='primary', _passphrase:str, _name:str='', _accountkey:str='',
     #                                                                _type:str='pubkeyhash', _m:int=1, _n:int=1)
