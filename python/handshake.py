@@ -1450,7 +1450,7 @@ class hsd:
         return response
     ### END METHOD ################################### rpc_getGenerate(self)
     
-    def rpc_Generate(self, _numblocks:int=1):
+    def rpc_generate(self, _numblocks:int=1):
         """
         DESCRIPTION:
 
@@ -1466,9 +1466,9 @@ class hsd:
         _message = '{ "method": "generate", "params": [' + str(_numblocks) + '] }'
         response = self.post(endpoint, _message)
         return response
-    ### END METHOD ################################### rpc_Generate(self, _numblocks:int=1)
+    ### END METHOD ################################### rpc_generate(self, _numblocks:int=1)
     
-    def rpc_GenerateToAddress(self, _address:str, _numblocks:int=1):
+    def rpc_generateToAddress(self, _address:str, _numblocks:int=1):
         """
         DESCRIPTION:
 
@@ -1498,7 +1498,7 @@ class hsd:
                 print('hsd.rpc_GenerateToAddress() Error: The key ' + str(e) + " was not located in JSON.")
 
         return response
-    ### END METHOD ################################### rpc_GenerateToAddress(self, _address:str, _numblocks:int=1)
+    ### END METHOD ################################### rpc_generateToAddress(self, _address:str, _numblocks:int=1)
     
     def rpc_getConnectionCount(self):
         """
