@@ -2346,6 +2346,26 @@ class hsw:
         return response
     ### END METHOD ################################### removeXPubKey(self, _accountkey:str, _account:str='default')
 
+    def getPublicKeyByAddress(self, _address:str, _id:str='primary'):
+        """
+        DESCRIPTION:
+
+            Get wallet key by address. Returns wallet information with address and public key.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _address : Bech32 encoded address to get corresponding public key for.
+
+            ( ) _id      : Name of wallet that holds the address being queried.
+        """
+        
+        endpoint = '/wallet/' + _id + '/key/' + _address
+        response = self.get(endpoint)
+        return response
+    ### END METHOD ################################### getPublicKeyByAddress(self, _address:str, _id:str='primary')
+
     def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
         DESCRIPTION:
