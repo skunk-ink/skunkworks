@@ -87,7 +87,7 @@ class hsd:
         return response # Returned as json
     ### END METHOD ################################### get(self, _endpoint:str)
 
-    def post(self, _endpoint:str, _message:str):
+    def post(self, _endpoint:str, _message:str=''):
         """
         DESCRIPTION:
 
@@ -106,7 +106,7 @@ class hsd:
         postRequest = requests.post(url, _message)
         response = postRequest.json()
         return response # Returned as json
-    ### END METHOD ################################### post(self, _endpoint:str, _message:str)
+    ### END METHOD ################################### post(self, _endpoint:str, _message:str='')
 
     def getInfo(self):
         """
@@ -1932,7 +1932,7 @@ class hsw:
         return response # Returned as json
     ### END METHOD ################################### get(self, _endpoint:str)
 
-    def post(self, _endpoint:str, _message:str):
+    def post(self, _endpoint:str, _message:str=''):
         """
         DESCRIPTION:
 
@@ -1951,7 +1951,7 @@ class hsw:
         postRequest = requests.post(url, _message)
         response = postRequest.json()
         return response # Returned as json
-    ### END METHOD ################################### post(self, _endpoint:str, _message:str)
+    ### END METHOD ################################### post(self, _endpoint:str, _message:str='')
 
     def put(self, _endpoint:str, _message:str=''):
         """
@@ -1972,9 +1972,9 @@ class hsw:
         putRequest = requests.put(url, _message)
         response = putRequest.json()
         return response # Returned as json
-    ### END METHOD ################################### put(self, _endpoint:str, _message:str)
+    ### END METHOD ################################### put(self, _endpoint:str, _message:str='')
 
-    def delete(self, _endpoint:str, _message:str):
+    def delete(self, _endpoint:str, _message:str=''):
         """
         DESCRIPTION:
 
@@ -1993,7 +1993,7 @@ class hsw:
         putRequest = requests.delete(url, _message)
         response = putRequest.json()
         return response # Returned as json
-    ### END METHOD ################################### put(self, _endpoint:str, _message:str)
+    ### END METHOD ################################### put(self, _endpoint:str, _message:str='')
 
     def createWallet(self, _passphrase:str, _id:str='primary', _accountkey:str='', _type:str='pubkeyhash',
                     _mnemonic:str='',_master:str='', _watchonly:bool=True, _m:int=1, _n:int=1):
@@ -2567,6 +2567,22 @@ class hsw:
         _message = '{"height": ' + str(_height) + ' }'
 
         response = self.post(endpoint, _message)
+        return response
+    ### END METHOD ################################### walletRescan(self, _height:int)
+
+    def walletResend(self):
+        """
+        DESCRIPTION:
+
+            Rebroadcast all pending transactions in all wallets.
+        
+        PARAMS:
+
+            None.
+        """
+        
+        endpoint = '/resend/'
+        response = self.post(endpoint)
         return response
     ### END METHOD ################################### walletRescan(self, _height:int)
 
