@@ -1943,7 +1943,7 @@ class hsw:
         return response # Returned as json
     ### END METHOD ################################### post(self, _endpoint:str, _message:str)
 
-    def put(self, _endpoint:str, _message:str):
+    def put(self, _endpoint:str, _message:str=''):
         """
         DESCRIPTION:
 
@@ -2467,13 +2467,35 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _id         : Wallet ID.
+            ( ) _id : Wallet ID.
         """
         
         endpoint = '/wallet/' + _id + '/coin'
         response = self.get(endpoint)
         return response
     ### END METHOD ################################### listCoins(self, _id:str='primary')
+
+    def lockCoinOutputs(self, _txhash:str, _index:str='0', _id:str='primary'):
+        """
+        DESCRIPTION:
+
+            Lock outpoints.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _txhash : Hash of transaction that created the outpoint.
+
+            ( ) _index  : Index of the output in the transaction being referenced. Default = '0'
+
+            ( ) _id     : ID of wallet that contains the outpoint. Default = 'primary'
+        """
+
+        endpoint = '/wallet/' + _id + '/locked/' + _txhash + '/' + _index
+        response = self.put(endpoint)
+        return response
+    ### END METHOD ################################### lockCoinOutputs(self, _txhash:str, _index:str='0', _id:str='primary')
 
     def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
