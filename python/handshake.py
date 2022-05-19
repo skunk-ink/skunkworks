@@ -2231,13 +2231,33 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id : Name of the wallet whose info you would like to retrieve.
+            (*) _id : Name of the wallet.
         """
         
         endpoint = '/wallet/' + _id + "/block"
         response = self.get(endpoint)
         return response
     ### END METHOD ################################### getBlocksWithWalletTX(self, _id:str='primary')
+
+    def getWalletBlockByHeight(self, _height:int, _id:str='primary'):
+        """
+        Description:
+
+            Get block info by height.
+        
+        Params:
+
+            (*) Denotes required argument
+
+            (*) _height : Height of block being queried.
+
+            ( ) _id     : Name of the wallet.
+        """
+        
+        endpoint = '/wallet/' + _id + "/block/" + str(_height)
+        response = self.get(endpoint)
+        return response
+    ### END METHOD ################################### getWalletBlockByHeight(self, _id:str='primary')
 
     def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
