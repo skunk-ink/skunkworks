@@ -31,9 +31,6 @@
 
 import requests
 
-API_KEY = ''
-ADDRESS = ''
-
 ########################################################################################################
 ########################################################################################################
 ####                                                                                                ####
@@ -44,6 +41,8 @@ ADDRESS = ''
 
 class hsd:
 
+    API_KEY = ''
+    ADDRESS = ''
     PORT = ''
 
     def __init__(self, _api_key:str, _ipaddress:str='127.0.0.1', _port:int=12037):
@@ -62,13 +61,10 @@ class hsd:
 
         (*) _port      : HSD node port. Defualt = 12037
         """
-        global API_KEY
-        global ADDRESS
-        global PORT
 
-        API_KEY = _api_key
-        ADDRESS = _ipaddress
-        PORT = str(_port)
+        self.API_KEY = _api_key
+        self.ADDRESS = _ipaddress
+        self.PORT = str(_port)
     ### END METHOD ################################### __init__(self, _api_key:str, _ipaddress:str='127.0.0.1', _port:int=12037)
 
     def get(self, _endpoint:str):
@@ -84,7 +80,7 @@ class hsd:
         (*) _endpoint : API endpoint to send GET request.
         """
 
-        url = "http://x:" + API_KEY + "@" + ADDRESS + ":" + PORT + _endpoint
+        url = "http://x:" + self.API_KEY + "@" + self.ADDRESS + ":" + self.PORT + _endpoint
         getResponse = requests.get(url)
         response = getResponse.json()
         return response # Returned as json
@@ -105,7 +101,7 @@ class hsd:
         (*) _post_message : Message to be sent.
         """
         
-        url = "http://x:" + API_KEY + "@" + ADDRESS + ":" + PORT + _endpoint
+        url = "http://x:" + self.API_KEY + "@" + self.ADDRESS + ":" + self.PORT + _endpoint
         postRequest = requests.post(url, _post_message)
         response = postRequest.json()
         return response # Returned as json
@@ -1881,7 +1877,8 @@ class hsd:
 ########################################################################################################
 
 class hsw:
-
+    API_KEY = ''
+    ADDRESS = ''
     PORT = ''
 
     def __init__(self, _api_key:str, _ipaddress:str='127.0.0.1', _port:int=12039):
@@ -1900,13 +1897,10 @@ class hsw:
 
         ( ) _port      : HSW node port. Default = 12039
         """
-        global API_KEY
-        global ADDRESS
-        global PORT
 
-        API_KEY = _api_key
-        ADDRESS = _ipaddress
-        PORT = str(_port)
+        self.API_KEY = _api_key
+        self.ADDRESS = _ipaddress
+        self.PORT = str(_port)
     ### END METHOD ################################### __init__(self, _api_key:str, _ipaddress:str='127.0.0.1', _port:int=12039):
 
     def get(self, _endpoint:str):
@@ -1922,7 +1916,7 @@ class hsw:
         (*) _endpoint : API endpoint to send GET request.
         """
 
-        url = "http://x:" + API_KEY + "@" + ADDRESS + ":" + PORT + _endpoint
+        url = "http://x:" + self.API_KEY + "@" + self.ADDRESS + ":" + self.PORT + _endpoint
         getResponse = requests.get(url)
         response = getResponse.json()
         return response # Returned as json
@@ -1943,7 +1937,7 @@ class hsw:
         (*) _post_message : Message to be sent.
         """
         
-        url = "http://x:" + API_KEY + "@" + ADDRESS + ":" + PORT + _endpoint
+        url = "http://x:" + self.API_KEY + "@" + self.ADDRESS + ":" + self.PORT + _endpoint
         postRequest = requests.post(url, _post_message)
         response = postRequest.json()
         return response # Returned as json
@@ -1964,7 +1958,7 @@ class hsw:
         (*) _post_message : Message to be sent.
         """
         
-        url = "http://x:" + API_KEY + "@" + ADDRESS + ":" + PORT + _endpoint
+        url = "http://x:" + self.API_KEY + "@" + self.ADDRESS + ":" + self.PORT + _endpoint
         putRequest = requests.put(url, _put_message)
         response = putRequest.json()
         return response # Returned as json
