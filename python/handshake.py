@@ -2434,6 +2434,29 @@ class hsw:
         return response
     ### END METHOD ################################### generateChangeAddress(self, _account:str='default', _id:str='primary')
 
+    def getBalance(self, _account:str='', _id:str='primary'):
+        """
+        DESCRIPTION:
+
+            Get wallet or account balance. If no account option is passed,
+            the call defaults to wallet balance (with account index of -1).
+            Balance values for `unconfirmed` and `confirmed` are expressed in
+            subunits..
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _account    : Address to get corresponding private key for.
+
+            ( ) _id         : Wallet ID.
+        """
+        
+        endpoint = '/wallet/' + _id + '/balance?account=' + _account
+        response = self.get(endpoint)
+        return response
+    ### END METHOD ################################### getBalance(self, _account:str='', _id:str='primary')
+
     def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
         DESCRIPTION:
