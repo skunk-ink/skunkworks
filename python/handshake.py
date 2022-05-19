@@ -1212,7 +1212,7 @@ class hsd:
         """
         DESCRIPTION:
 
-            Creates raw, unsigned transaction without any formal verification.
+            Signs raw transaction.
         
         PARAMS:
 
@@ -1230,8 +1230,6 @@ class hsd:
 
         ( ) _privkey : List of private keys.
         """
-
-        self.rpc_createRawTransaction()
 
         endpoint = '/'
         _message = '{ "method": "signrawtransaction", "params": [ "' + _rawtx + '", [{ "txid": "' + _txhash + '", "vout": ' + str(_txindex) + ', "address": "' + _address + '", "amount": ' + str(_amount) + ' }], [ "' + _privkey + '" ]] }'
