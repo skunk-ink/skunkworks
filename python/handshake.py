@@ -1420,9 +1420,9 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _mining    : 1 will start mining, 0 will stop.
+        ( ) _mining    : 1 will start mining, 0 will stop. Default = 0
 
-        (*) _proclimit : 1 will set processor limit, 0 will remove limit.
+        ( ) _proclimit : 1 will set processor limit, 0 will remove limit. Default = 0
         """
 
         endpoint = '/'
@@ -1457,7 +1457,7 @@ class hsd:
         PARAMS:
         (*) Denotes required argument
         
-        (*) _numblocks : Number of blocks to mine.
+        ( ) _numblocks : Number of blocks to mine.
         """
 
         endpoint = '/'
@@ -1478,7 +1478,7 @@ class hsd:
         
         (*) _address   : Coinbase address for new blocks.
 
-        (*) _numblocks : Number of blocks to mine.
+        ( ) _numblocks : Number of blocks to mine.
         """
         response = ""
 
@@ -2524,6 +2524,28 @@ class hsw:
         response = self.get(endpoint)
         return response
     ### END METHOD ################################### getLockedOutpoints(self, _id:str='primary')
+
+    def getWalletCoin(self, _txhash:str, _index:str='0', _id:str='primary'):
+        """
+        DESCRIPTION:
+
+            Get wallet coin.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _txhash : ID of wallet that contains the outpoint.
+
+            ( ) _index : Hash of transaction that created the outpoint.
+
+            ( ) _id : Index of the output in the transaction being referenced.
+        """
+        
+        endpoint = '/wallet/' + _id + '/coin/' + _txhash + '/' + _index
+        response = self.get(endpoint)
+        return response
+    ### END METHOD ################################### getWalletCoin(self, _txhash:str, _index:str='0', _id:str='primary')
 
     def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
