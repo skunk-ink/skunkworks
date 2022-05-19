@@ -87,7 +87,7 @@ class hsd:
         return response # Returned as json
     ### END METHOD ################################### get(self, _endpoint:str)
 
-    def post(self, _endpoint:str, _message:str):
+    def post(self, _endpoint:str, _message:str=''):
         """
         DESCRIPTION:
 
@@ -1932,7 +1932,7 @@ class hsw:
         return response # Returned as json
     ### END METHOD ################################### get(self, _endpoint:str)
 
-    def post(self, _endpoint:str, _message:str):
+    def post(self, _endpoint:str, _message:str=''):
         """
         DESCRIPTION:
 
@@ -1974,7 +1974,7 @@ class hsw:
         return response # Returned as json
     ### END METHOD ################################### put(self, _endpoint:str, _message:str)
 
-    def delete(self, _endpoint:str, _message:str):
+    def delete(self, _endpoint:str, _message:str=''):
         """
         DESCRIPTION:
 
@@ -2506,6 +2506,29 @@ class hsw:
         response = self.put(endpoint)
         return response
     ### END METHOD ################################### lockCoinOutpoints(self, _txhash:str, _index:str='0', _id:str='primary')
+
+    def unlockCoinOutpoints(self, _txhash:str, _index:str='0', _id:str='primary'):
+        """
+        DESCRIPTION:
+
+            Unlock outpoints.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _txhash : Hash of transaction that created the outpoint.
+
+            ( ) _index  : Index of the output in the transaction being referenced. Default = '0'
+
+            ( ) _id     : ID of wallet that contains the outpoint. Default = 'primary'
+        """
+
+        endpoint = '/wallet/' + _id + '/locked/' + _txhash + '/' + _index
+
+        response = self.delete(endpoint)
+        return response
+    ### END METHOD ################################### unlockCoinOutpoints(self, _txhash:str, _index:str='0', _id:str='primary')
 
     def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
