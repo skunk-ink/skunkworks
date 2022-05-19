@@ -2221,7 +2221,7 @@ class hsw:
         return response
     ### END METHOD ################################### importPrivateKey(self, _account:str, _priv_key:str, _id:str='primary')
 
-    def getBlockByWalletTX(self, _id:str='primary'):
+    def getBlocksWithWalletTX(self, _id:str='primary'):
         """
         Description:
 
@@ -2237,7 +2237,7 @@ class hsw:
         endpoint = '/wallet/' + _id + "/block"
         response = self.get(endpoint)
         return response
-    ### END METHOD ################################### getBlockByWalletTX(self, _id:str='primary')
+    ### END METHOD ################################### getBlocksWithWalletTX(self, _id:str='primary')
 
     def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
