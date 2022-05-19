@@ -2152,7 +2152,7 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _id : Wallet ID.
+            ( ) _id : Name ID of wallet to lock.
         """
         
         endpoint = '/wallet/' + _id + "/lock"
@@ -2179,7 +2179,7 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id      : Wallet ID.
+            (*) _id      : ID of target wallet to import key into.
 
             ( ) _pub_key : Hex encoded public key.
         """
@@ -2208,7 +2208,7 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id       : Wallet ID.
+            (*) _id       : ID of target wallet to import key into.
 
             ( ) _priv_key : Hex encoded public key.
         """
@@ -2220,6 +2220,24 @@ class hsw:
         response = self.post(endpoint, post_message)
         return response
     ### END METHOD ################################### importPrivateKey(self, _account:str, _priv_key:str, _id:str='primary')
+
+    def getBlockByWalletTX(self, _id:str='primary'):
+        """
+        Description:
+
+            List all block heights which contain any wallet transactions. Returns an array of block heights.
+        
+        Params:
+
+            (*) Denotes required argument
+
+            (*) _id : Name of the wallet whose info you would like to retrieve.
+        """
+        
+        endpoint = '/wallet/' + _id + "/block"
+        response = self.get(endpoint)
+        return response
+    ### END METHOD ################################### getBlockByWalletTX(self, _id:str='primary')
 
     def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
