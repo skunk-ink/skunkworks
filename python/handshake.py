@@ -2358,13 +2358,35 @@ class hsw:
 
             (*) _address : Bech32 encoded address to get corresponding public key for.
 
-            ( ) _id      : Name of wallet that holds the address being queried.
+            ( ) _id      : Name of wallet.
         """
         
         endpoint = '/wallet/' + _id + '/key/' + _address
         response = self.get(endpoint)
         return response
     ### END METHOD ################################### getPublicKeyByAddress(self, _address:str, _id:str='primary')
+
+    def getPrivateKeyByAddress(self, _address:str, _passphrase:str, _id:str='primary'):
+        """
+        DESCRIPTION:
+
+            Get wallet private key (WIF format) by address. Returns just the private key.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _address    : Address to get corresponding private key for.
+
+            (*) _passphrase : Address to get corresponding private key for.
+
+            ( ) _id         : Name of wallet.
+        """
+        
+        endpoint = '/wallet/' + _id + '/wif/' + _address + '?passphrase=' + _passphrase
+        response = self.get(endpoint)
+        return response
+    ### END METHOD ################################### getPrivateKeyByAddress(self, _address:str, _passphrase:str, _id:str='primary')
 
     def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
