@@ -29,6 +29,7 @@
                                    `"             `""""`  `""""""`      
 """
 
+from multiprocessing.sharedctypes import Value
 import requests
 
 ########################################################################################################
@@ -1481,10 +1482,21 @@ class hsd:
 
         (*) _numblocks : Number of blocks to mine.
         """
+        response = ""
 
-        endpoint = '/'
-        _message = '{ "method": "generatetoaddress", "params": [ ' + str(_numblocks) + ', "' + _address + '" ] }'
-        response = self.post(endpoint, _message)
+        try:
+            endpoint = '/'
+            _message = '{ "method": "generatetoaddress", "params": [ ' + str(_numblocks) + ', "' + _address + '" ] }'
+            response = self.post(endpoint, _message)
+        except (ValueError, TypeError):
+            endpoint = '/'
+            try:
+                address = _address['result']
+                _message = '{ "method": "generatetoaddress", "params": [ ' + str(_numblocks) + ', "' + address + '" ] }'
+                response = self.post(endpoint, _message)
+            except KeyError as e:
+                print('hsd.rpc_GenerateToAddress() Error: The key ' + str(e) + " was not located in JSON.")
+
         return response
     ### END METHOD ################################### rpc_GenerateToAddress(self, _address:str, _numblocks:int=1)
     
