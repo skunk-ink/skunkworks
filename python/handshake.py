@@ -2032,7 +2032,7 @@ class hsw:
             (*) _passphrase : A strong passphrase used to encrypt the wallet.
         """
         
-        endpoint = '/wallet/' + _id + "/retoken"
+        endpoint = '/wallet/' + _id + '/retoken'
 
         post_message = '{"passphrase":"' + _passphrase + '"}'
 
@@ -2072,7 +2072,7 @@ class hsw:
             (*) _id : Name of the wallet whose info you would like to retrieve.
         """
         
-        endpoint = '/wallet/' + _id + "/master"
+        endpoint = '/wallet/' + _id + '/master'
         response = self.get(endpoint)
         return response
     ### END METHOD ################################### getMasterHDKey(self, _id:str='')
@@ -2094,7 +2094,7 @@ class hsw:
             (*) _new_passphrase : New passphrase.
         """
         
-        endpoint = '/wallet/' + _id + "/passphrase"
+        endpoint = '/wallet/' + _id + '/passphrase'
 
         post_message = '{"old":"' + _old_passphrase + '", "passphrase":"' + _new_passphrase + '"}'
 
@@ -2115,7 +2115,7 @@ class hsw:
             (*) _tx_hex     : The hex of the transaction you would like to sign.
         """
         
-        endpoint = '/wallet/' + _id + "/sign"
+        endpoint = '/wallet/' + _id + '/sign'
 
         post_message = '{"tx":"' + _tx_hex + '", "passphrase":"' + _passphrase + '"}'
 
@@ -2140,7 +2140,7 @@ class hsw:
             (*) _age     : Age threshold to zap up to (seconds).
         """
         
-        endpoint = '/wallet/' + _id + "/zap"
+        endpoint = '/wallet/' + _id + '/zap'
 
         post_message = '{"account":"' + _account + '", "age":"' + _age + '"}'
 
@@ -2161,7 +2161,7 @@ class hsw:
             ( ) _id : Wallet ID.
         """
         
-        endpoint = '/wallet/' + _id + "/lock"
+        endpoint = '/wallet/' + _id + '/lock'
 
         post_message = ''
 
@@ -2190,7 +2190,7 @@ class hsw:
             ( ) _pub_key : Hex encoded public key.
         """
         
-        endpoint = '/wallet/' + _id + "/import"
+        endpoint = '/wallet/' + _id + '/import'
 
         post_message = '{"account":"' + _account + '", "publicKey":"' + _pub_key + '"}'
 
@@ -2219,13 +2219,39 @@ class hsw:
             ( ) _priv_key : Hex encoded public key.
         """
         
-        endpoint = '/wallet/' + _id + "/import"
+        endpoint = '/wallet/' + _id + '/import'
 
         post_message = '{"account":"' + _account + '", "privateKey":"' + _priv_key + '"}'
 
         response = self.post(endpoint, post_message)
         return response
     ### END METHOD ################################### importPrivateKey(self, _account:str, _priv_key:str, _id:str='primary')
+
+    def importAddress(self, _account:str, _address:str):
+        """
+        Description:
+
+            Import a Bech32 encoded address. Addresses (like public keys)
+            can only be imported into watch-only wallets
+
+            The HTTP endpoint is the same as for key imports.
+        
+        Params:
+
+            (*) Denotes required argument
+
+            (*) _account : Wallet ID.
+
+            ( ) _address : Hex encoded public key.
+        """
+        
+        endpoint = '/wallet/watchonly1/import'
+
+        post_message = '{"account":"' + _account + '", "address":"' + _address + '"}'
+
+        response = self.post(endpoint, post_message)
+        return response
+    ### END METHOD ################################### importAddress(self, _account:str, _address:str)
 
     def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
