@@ -2378,7 +2378,7 @@ class hsw:
 
             (*) _address    : Address to get corresponding private key for.
 
-            (*) _passphrase : Address to get corresponding private key for.
+            (*) _passphrase : Passphrase of wallet.
 
             ( ) _id         : Name of wallet.
         """
@@ -2387,6 +2387,29 @@ class hsw:
         response = self.get(endpoint)
         return response
     ### END METHOD ################################### getPrivateKeyByAddress(self, _address:str, _passphrase:str, _id:str='primary')
+
+    def generateReceivingAddress(self, _account:str, _id:str='primary'):
+        """
+        DESCRIPTION:
+
+            Derive new receiving address for account.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _id       : Name of wallet.
+
+            ( ) _account  : BIP44 account to generate address from.
+        """
+        
+        endpoint = '/wallet/' + _id + '/address'
+
+        _message = '{"account":"' + _account + '"}'
+
+        response = self.post(endpoint, _message)
+        return response
+    ### END METHOD ################################### importPrivateKey(self, _account:str, _priv_key:str, _id:str='primary')
 
     def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
