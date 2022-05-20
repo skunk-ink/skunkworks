@@ -3913,12 +3913,63 @@ class hsw:
             response = self.post(endpoint, _message)
             for key in response:
                 if 'error' in key:
-                    response[key] = "{'message': 'Failed to RENEW '" + _name + "'}"
+                    response[key] = "{'message': 'Failed to RENEW domain '" + _name + "'}"
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to RENEW '" + _name + "'}"
+            response['error'] = "{'message': 'Failed to RENEW domain '" + _name + "'}"
         return response
     ### END METHOD ################################### sendRENEW(self, _id:str, _passphrase:str, _name:str, _sign:bool=True, _broadcast:bool=True)
+
+    def sendTRANSFER(self, _id:str, _passphrase:str, _name:str, _address:str, _sign:bool=True, _broadcast:bool=True):
+        """
+        DESCRIPTION:
+
+            Create, sign, and send a TRANSFER.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _id         : Wallet ID.
+
+            (*) _passphrase : Passphrase to unlock the wallet.
+
+            ( ) _name       : Name to TRANSFER.
+
+            ( ) _address    : Address to transfer name ownership to.
+
+            ( ) _sign       : Whether to sign the transaction. Default = True
+
+            ( ) _broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
+        """
+
+        sign = ''
+        broadcast = ''
+
+        if _sign == True:
+            sign = '1'
+        else:
+            sign = '0'
+
+        if _broadcast == True:
+            broadcast = '1'
+        else:
+            broadcast = '0'
+        
+        endpoint = '/wallet/' + _id + '/transfer'
+
+        _message = '{ "passphrase":"' + _passphrase + '", "name":"' + _name + '", "broadcast":' + broadcast + ', "sign":' + sign + ', "address": "' + _address + '" }'
+        
+        try:
+            response = self.post(endpoint, _message)
+            for key in response:
+                if 'error' in key:
+                    response[key] = "{'message': 'Failed to TRANSFER domain '" + _name + "'}"
+        except:
+            response = {}
+            response['error'] = "{'message': 'Failed to TRANSFER domain '" + _name + "'}"
+        return response
+    ### END METHOD ################################### sendTRANSFER(self, _id:str, _passphrase:str, _name:str, _address:str, _sign:bool=True, _broadcast:bool=True)
 
     def rpc_getNewAddress(self, _account:str=''):
         """
