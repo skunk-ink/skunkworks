@@ -2650,6 +2650,23 @@ class hsw:
         return response
     ### END METHOD ################################### listWallets(self)
 
+    def getWalletAccountList(self, _id:str='primary'):
+        """
+        DESCRIPTION:
+
+            List all account names (array indices map directly to bip44
+            account indices) associated with a specific wallet id.
+        
+        PARAMS:
+
+            ( ) _id : ID of wallet you would like to retrieve the account list for. Default = 'primary'
+        """
+        
+        endpoint = '/wallet/' + _id + '/account'
+        response = self.get(endpoint)
+        return response
+    ### END METHOD ################################### getWalletAccountList(self, _id:str='primary')
+
     def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
         DESCRIPTION:
