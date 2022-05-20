@@ -3125,6 +3125,28 @@ class hsw:
             print('ERROR: Failed to delete transaction in "' + _id + '" wallet.')
     ### END METHOD ################################### deleteTransaction(self, _id:str='primary', _txhash:str='')
 
+    def getWalletTxHistory(self, _id:str='primary'):
+        """
+        DESCRIPTION:
+
+            Get wallet TX history. Returns array of tx details.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _id : ID of wallet to get history of. Default = 'primary'
+        """
+        
+        endpoint = '/wallet/' + _id + '/tx/history'
+
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get transaction history for "' + _id + '" wallet.')
+    ### END METHOD ################################### getWalletTxHistory(self, _id:str='primary')
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
