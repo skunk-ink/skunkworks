@@ -3310,7 +3310,7 @@ class hsw:
 
             ( ) _id  : ID of wallet. Default = 'primary'
 
-            (*) _own : Whether to only show bids from this wallet.
+            ( ) _own : Whether to only show bids from this wallet.
         """
         own = ''
 
