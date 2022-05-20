@@ -3246,6 +3246,31 @@ class hsw:
             print('ERROR: Failed to get status of wallet named "' + _name + '".')
     ### END METHOD ################################### getWalletName(self, _name:str='', _id:str='primary')
 
+    def getWalletAuctions(self, _id:str='primary'):
+        """
+        DESCRIPTION:
+
+            List the states of all auctions known to the wallet.
+
+            Note: If no wallet is specified, all auctions for the
+                  `primary` wallet will be returned by default.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _id : ID of wallet. Default = 'primary'
+        """
+        
+        endpoint = '/wallet/' + _id + '/auction'
+
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get auctions for "' + _id + '" wallet.')
+    ### END METHOD ################################### getWalletAuctions(self, _id:str='primary')
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
