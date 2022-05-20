@@ -4133,7 +4133,7 @@ class hsw:
         """
         DESCRIPTION:
 
-            Returns info on each domain name in your wallet. 
+            Returns the domain names associated with your wallet. 
         
         PARAMS:
 
