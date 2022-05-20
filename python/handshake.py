@@ -4024,6 +4024,55 @@ class hsw:
         return response
     ### END METHOD ################################### cancelTRANSFER(self, _id:str, _passphrase:str, _name:str, _sign:bool=True, _broadcast:bool=True)
 
+    def sendFINALIZE(self, _id:str, _passphrase:str, _name:str, _sign:bool=True, _broadcast:bool=True):
+        """
+        DESCRIPTION:
+
+            Create, sign, and send a FINALIZE.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _id         : Wallet ID.
+
+            (*) _passphrase : Passphrase to unlock the wallet.
+
+            (*) _name       : Name in transferred state to finalize transfer for.
+
+            ( ) _sign       : Whether to sign the transaction. Default = True
+
+            ( ) _broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
+        """
+
+        sign = ''
+        broadcast = ''
+
+        if _sign == True:
+            sign = '1'
+        else:
+            sign = '0'
+
+        if _broadcast == True:
+            broadcast = '1'
+        else:
+            broadcast = '0'
+        
+        endpoint = '/wallet/' + _id + '/finalize'
+
+        _message = '{ "passphrase":"' + _passphrase + '", "name":"' + _name + '", "broadcast":' + broadcast + ', "sign":' + sign + '" }'
+        
+        try:
+            response = self.post(endpoint, _message)
+            for key in response:
+                if 'error' in key:
+                    response[key] = "{'message': 'Failed to FINALIZE transfer of '" + _name + "'}"
+        except:
+            response = {}
+            response['error'] = "{'message': 'Failed to FINALIZE transfer of '" + _name + "'}"
+        return response
+    ### END METHOD ################################### sendFINALIZE(self, _id:str, _passphrase:str, _name:str, _sign:bool=True, _broadcast:bool=True)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
