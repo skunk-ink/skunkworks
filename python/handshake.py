@@ -217,7 +217,7 @@ class hsd:
             response = self.get(endpoint)
             return response
         except:
-            print('ERROR: Failed to get block by has or height.')
+            print('ERROR: Failed to get block by hash or height.')
     ### END METHOD ################################### getBlockByHashOrHeight(self, _blockHashOrHeight:str)
 
     def getHeaderByHashOrHeight(self, _headerHashOrHeight:str):
