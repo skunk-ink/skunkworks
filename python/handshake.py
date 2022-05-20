@@ -2612,6 +2612,28 @@ class hsw:
         return response
     ### END METHOD ################################### walletBackup(self, _path:str='')
 
+    def walletMasterHDKeyBackup(self, _id:str='primary'):
+        """
+        DESCRIPTION:
+
+            Export the wallet's master hd private key. This is normally
+            censored in the wallet info route. The provided API key must
+            have admin access.
+            
+            Note: Once a passphrase has been set for a wallet, the API
+            will not reveal the unencrypted master hd private key or seed
+            phrase. Be sure you back it up right away! 
+        
+        PARAMS:
+
+            ( ) _id : Wallet ID. Default = 'primary'
+        """
+        
+        endpoint = '/wallet/' + _id + '/master'
+        response = self.get(endpoint)
+        return response
+    ### END METHOD ################################### walletMasterHDKeyBackup(self, _id:str='primary')
+
     def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
         DESCRIPTION:
