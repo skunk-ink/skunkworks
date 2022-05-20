@@ -3295,6 +3295,39 @@ class hsw:
             print('ERROR: Failed to get auctions for the wallet "' + _name + '".')
     ### END METHOD ################################### getWalletAuctionByName(self, _name:str='', _id:str='primary')
 
+    def getWalletBids(self, _id:str='primary', _own:bool=True):
+        """
+        DESCRIPTION:
+
+            List all bids for all names known to the wallet.
+
+            Note: If no wallet is specified bids for the `primary`
+                  wallet will be returned.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _id  : ID of wallet. Default = 'primary'
+
+            (*) _own : Whether to only show bids from this wallet.
+        """
+        own = ''
+
+        if _own == True:
+            own = '1'
+        else:
+            own = '0'
+        
+        endpoint = '/wallet/' + _id + '/bid?own=' + own
+
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get bids for the wallet "' + _id + '".')
+    ### END METHOD ################################### getWalletBids(self, _id:str='primary', _own:bool=True)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
