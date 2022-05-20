@@ -3971,6 +3971,59 @@ class hsw:
         return response
     ### END METHOD ################################### sendTRANSFER(self, _id:str, _passphrase:str, _name:str, _address:str, _sign:bool=True, _broadcast:bool=True)
 
+    def cancelTRANSFER(self, _id:str, _passphrase:str, _name:str, _sign:bool=True, _broadcast:bool=True):
+        """
+        DESCRIPTION:
+
+            Create, sign, and send a transaction that cancels a TRANSFER.
+
+            This transaction is not a unique covenant type, but spends from
+            a TRANSFER to an UPDATE covenant (with an empty resource object)
+            in order to cancel a transfer already in progress.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _id         : Wallet ID.
+
+            (*) _passphrase : Passphrase to unlock the wallet.
+
+            (*) _name       : Name in transferred state to cancel transfer for.
+
+            ( ) _sign       : Whether to sign the transaction. Default = True
+
+            ( ) _broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
+        """
+
+        sign = ''
+        broadcast = ''
+
+        if _sign == True:
+            sign = '1'
+        else:
+            sign = '0'
+
+        if _broadcast == True:
+            broadcast = '1'
+        else:
+            broadcast = '0'
+        
+        endpoint = '/wallet/' + _id + '/cancel'
+
+        _message = '{ "passphrase":"' + _passphrase + '", "name":"' + _name + '", "broadcast":' + broadcast + ', "sign":' + sign + '" }'
+        
+        try:
+            response = self.post(endpoint, _message)
+            for key in response:
+                if 'error' in key:
+                    response[key] = "{'message': 'Failed to cancel transfer of '" + _name + "'}"
+        except:
+            response = {}
+            response['error'] = "{'message': 'Failed to cancel transfer of '" + _name + "'}"
+        return response
+    ### END METHOD ################################### cancelTRANSFER(self, _id:str, _passphrase:str, _name:str, _sign:bool=True, _broadcast:bool=True)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
