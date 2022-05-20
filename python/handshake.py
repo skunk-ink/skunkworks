@@ -85,6 +85,7 @@ class hsd:
         """
 
         url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + _endpoint
+
         getResponse = requests.get(url)
         response = getResponse.json()
         return response # Returned as json
@@ -94,7 +95,7 @@ class hsd:
         """
         DESCRIPTION:
 
-            POST (json) message to API
+            Send POST (json) message to API
         
         PARAMS:
 
@@ -106,6 +107,7 @@ class hsd:
         """
         
         url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + _endpoint
+ 
         postRequest = requests.post(url, _message)
         response = postRequest.json()
         return response # Returned as json
@@ -123,8 +125,11 @@ class hsd:
         """
 
         endpoint = '/'
-        response = self.get(endpoint)
-        return response
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get server info.')
     ### END METHOD ################################### getInfo(self)
 
     def getMemPool(self):
@@ -139,8 +144,11 @@ class hsd:
         """
         
         endpoint = '/mempool'
-        response = self.get(endpoint)
-        return response
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get snapshot of mempool.')
     ### END METHOD ################################### getMemPool(self)
 
     def getMemPoolInvalid(self, _verbose:bool=False):
@@ -162,8 +170,11 @@ class hsd:
         else:
             endpoint = '/mempool/invalid'
 
-        response = self.get(endpoint)
-        return response
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get invalid mempool transaction hashes.')
     ### END METHOD ################################### getMemPoolInvalid(self, _verbose:bool=False)
 
     def getMemPoolInvalidHash(self, _txhash:str):
@@ -181,11 +192,14 @@ class hsd:
         """
         
         endpoint = '/mempool/invalid/' + _txhash
-        response = self.get(endpoint)
-        return response
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to check mempool for invalid hash.')
     ### END METHOD ################################### getMemPoolInvalidHash(self, _txhash:str)
 
-    def getBlockHashOrHeight(self, _blockHashOrHeight:str):
+    def getBlockByHashOrHeight(self, _blockHashOrHeight:str):
         """
         DESCRIPTION:
 
@@ -199,11 +213,14 @@ class hsd:
         """
         
         endpoint = '/block/' + _blockHashOrHeight
-        response = self.get(endpoint)
-        return response
-    ### END METHOD ################################### getBlockHashOrHeight(self, _blockHashOrHeight:str)
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get block by has or height.')
+    ### END METHOD ################################### getBlockByHashOrHeight(self, _blockHashOrHeight:str)
 
-    def getHeaderHashOrHeight(self, _headerHashOrHeight:str):
+    def getHeaderByHashOrHeight(self, _headerHashOrHeight:str):
         """
         DESCRIPTION:
 
@@ -217,11 +234,14 @@ class hsd:
         """
         
         endpoint = '/header/' + _headerHashOrHeight
-        response = self.get(endpoint)
-        return response
-    ### END METHOD ################################### getHeaderHashOrHeight(self, _headerHashOrHeight:str)
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get header by hash or height.')
+    ### END METHOD ################################### getHeaderByHashOrHeight(self, _headerHashOrHeight:str)
 
-    def postBroadcast(self, _tx:str):
+    def broadcast(self, _tx:str):
         """
         DESCRIPTION:
 
@@ -238,11 +258,14 @@ class hsd:
         
         endpoint = '/broadcast/'
         _message = '{"tx": "' + _tx + '"}'
-        response = self.post(endpoint, _message)
-        return response
-    ### END METHOD ################################### postBroadcast(self, _tx:str)
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: Failed to broadcast transaction.')
+    ### END METHOD ################################### broadcast(self, _tx:str)
 
-    def postBroadcastClaim(self, _claim:str):
+    def broadcastClaim(self, _claim:str):
         """
         DESCRIPTION:
 
@@ -257,9 +280,12 @@ class hsd:
         
         endpoint = '/claim/'
         _message = '{ "claim": "' + _claim + '" }'
-        response = self.post(endpoint, _message)
-        return response
-    ### END METHOD ################################### postBroadcastClaim(self, _claim:str)
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: Failed to broadcast claim.')
+    ### END METHOD ################################### broadcastClaim(self, _claim:str)
 
     def getFeeEstimate(self, _blocks:int):
         """
@@ -277,11 +303,14 @@ class hsd:
         """
         
         endpoint = '/fee?blocks=' + str(_blocks)
-        response = self.get(endpoint)
-        return response
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to estimate fee required for "' + _blocks + '" blocks.')
     ### END METHOD ################################### getFeeEstimate(self, _blocks:int)
 
-    def postReset(self, _height:int):
+    def reset(self, _height:int):
         """
         DESCRIPTION:
 
@@ -300,9 +329,12 @@ class hsd:
         
         endpoint = '/reset'
         _message = '{ "height": ' + str(_height) + '}'
-        response = self.post(endpoint, _message)
-        return response
-    ### END METHOD ################################### postReset(self, _height:int)
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: Failed to hard-reset blockchain.')
+    ### END METHOD ################################### reset(self, _height:int)
 
     def getCoinByHashIndex(self, _txhash:str, _index:int):
         """
@@ -321,8 +353,11 @@ class hsd:
         """
         
         endpoint = '/coin/' + hash + '/' + _txhash + '/' + str(_index)
-        response = self.get(endpoint)
-        return response
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get coin from hash and index.')
     ### END METHOD ################################### getCoinByHashIndex(self, _txhash:str, _index:int)
 
     def getCoinByAddress(self, _address:str):
@@ -339,8 +374,11 @@ class hsd:
         """
         
         endpoint = '/coin/address/' + _address
-        response = self.get(endpoint)
-        return response
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get coins for address "' + _address + '".')
     ### END METHOD ################################### getCoinByAddress(self, _address:str)
 
     def getTxByHash(self, _txhash:str):
@@ -357,8 +395,11 @@ class hsd:
         """
         
         endpoint = '/tx/' + _txhash
-        response = self.get(endpoint)
-        return response
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get transactions for hash "' + _txhash + '".')
     ### END METHOD ################################### getTxByHash(self, _txhash:str)
 
     def getTxByAddress(self, _address:str):
@@ -375,11 +416,14 @@ class hsd:
         """
         
         endpoint = '/tx/address/' + _address
-        response = self.get(endpoint)
-        return response
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get transactions for address "' + _address + '".')
     ### END METHOD ################################### getTxByAddress(self, _address:str)
 
-    def rpc_postStop(self):
+    def rpc_stop(self):
         """
         DESCRIPTION:
 
@@ -392,9 +436,12 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "stop" }'
-        response = self.post(endpoint, _message)
-        return response
-    ### END METHOD ################################### rpc_postStop(self)
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to stop node.')
+    ### END METHOD ################################### rpc_stop(self)
 
     def rpc_getInfo(self):
         """
@@ -409,8 +456,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "getinfo" }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get information.')
     ### END METHOD ################################### rpc_getInfo(self)
 
     def rpc_getMemoryInfo(self):
@@ -426,8 +476,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "getmemoryinfo" }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get memory usage information.')
     ### END METHOD ################################### rpc_getMemoryInfo(self)
 
     def rpc_setLogLevel(self, _params:str=['NONE']): # _params = ['NONE', 'ERROR', 'WARNING', 'INFO', 'DEBUG', 'SPAM']
@@ -446,8 +499,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "setloglevel", "params": [ "' + _params + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to set log level to "' + _params + '".')
     ### END METHOD ################################### rpc_setLogLevel(self, _params:str=['NONE'])
 
     def rpc_validateAddress(self, _address:str):
@@ -465,8 +521,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "validateaddress": "", "params": [ "' + _address + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to validate address "' + _address + '".')
     ### END METHOD ################################### rpc_validateAddress(self, _address:str)
 
     def rpc_createMultiSig(self, _nrequired:int, _keyDict:str):
@@ -486,8 +545,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "createmultisig", "params": [ ' + str(_nrequired) + ', "' + _keyDict + ' ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to create multisig address.')
     ### END METHOD ################################### rpc_createMultiSig(self, _nrequired:int, _keyDict:str)
 
     def rpc_signMessageWithPrivKey(self, _privkey:str, _message:str):
@@ -506,8 +568,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "signmessagewithprivkey", "params": [ "' + _privkey + '", "' + _message + ' ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to sign message with private key.')
     ### END METHOD ################################### rpc_signMessageWithPrivKey(self, _privkey:str, _message:str)
 
     def rpc_verifyMessage(self, _address:str, _signature:str, _message:str):
@@ -529,8 +594,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "verifymessage", "params": [ "' + _address + '", "' + _signature + '", "' + _message + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to verify signature of address "' + _address + '".')
     ### END METHOD ################################### rpc_verifyMessage(self, _address:str, _signature:str, _message:str)
 
     def rpc_verifyMessageWithName(self, _name:str, _signature:str, _message:str):
@@ -552,8 +620,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "verifymessagewithname", "params": [ "' + _name + '", "' + _signature + '", "' + _message + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to verify message for the name "' + _name + '".')
     ### END METHOD ################################### rpc_verifyMessageWithName(self, _name:str, _signature:str, _message:str)
 
     def rpc_setMockTime(self, _timestamp:int):
@@ -571,8 +642,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "setmocktime", "params": [ ' + str(_timestamp) + ' ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to set network time to "' + _timestamp + '".')
     ### END METHOD ################################### rpc_setMockTime(self, _timestamp:int)
 
     def rpc_pruneBlockchain(self):
@@ -588,9 +662,12 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "pruneblockchain", "params": [] }'
-        response = self.post(endpoint, _message)
-        return response
-    ### END METHOD ################################### rpc_postPruneBlockchain(self)
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to prune the blockchain.')
+    ### END METHOD ################################### rpc_pruneBlockchain(self)
     
     def rpc_invalidateBlock(self, _blockhash:str):
         """
@@ -610,8 +687,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "", "params": [ "' + _blockhash + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to invalidate block hash "' + _blockhash + '".')
     ### END METHOD ################################### rpc_invalidateBlock(self, _blockhash:str)
     
     def rpc_reconsiderBlock(self, _blockhash:str):
@@ -629,8 +709,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "reconsiderblock", "params": [ "' + _blockhash + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to remove block from hash "' + _blockhash + '".')
     ### END METHOD ################################### rpc_reconsiderBlock(self, _blockhash:str)
 
     def rpc_getBlockchainInfo(self):
@@ -646,8 +729,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "getblockchaininfo" }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get blockchain information.')
     ### END METHOD ################################### rpc_getBlockchainInfo(self)
     
     def rpc_getBestBlockHash(self):
@@ -663,8 +749,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "getbestblockhash" }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get block hash at the tip.')
     ### END METHOD ################################### rpc_getBestBlockHash(self)
     
     def rpc_getBlockCount(self):
@@ -680,8 +769,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "getblockcount" }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to retreive current block count.')
     ### END METHOD ################################### rpc_getBlockCount(self)
     
     def rpc_getBlock(self, _blockhash:str, _verbose:bool=True, _details:bool=False):
@@ -716,8 +808,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "getblock", "params": [ "' + _blockhash + '", ' + verbose + ', ' + details + ' ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get information for the block hash "' + _blockhash + '".')
     ### END METHOD ################################### rpc_getBlock(self, _blockhash:str, _verbose:bool=True, _details:bool=False)
     
     def rpc_getBlockByHeight(self, _blockheight:int, _verbose:bool=True, _details:bool=False):
@@ -752,8 +847,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "getblockbyheight", "params": [ ' + str(_blockheight) + ', ' + verbose + ', ' + details + ' ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get block at height "' + _blockheight + '".')
     ### END METHOD ################################### rpc_getBlockByHeight(self, _blockheight:int, _verbose:bool=True, _details:bool=False)
     
     def rpc_getBlockHash(self, _blockheight:int):
@@ -771,8 +869,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "getblockhash", "params": [ ' + str(_blockheight) + ' ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get hash for the block at height "' + _blockheight + '".')
     ### END METHOD ################################### rpc_getBlockHash(self, _blockheight:int)
     
     def rpc_getBlockHeader(self, _blockhash:str, _verbose:bool=True):
@@ -799,8 +900,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "getblockheader", "params": [ "' + _blockhash + '", ' + verbose + ' ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get block header for hash "' + _blockhash + '".')
     ### END METHOD ################################### rpc_getBlockHeader(self, _blockhash:str, _verbose:bool=True)
     
     def rpc_getChainTips(self):
@@ -816,8 +920,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "getchaintips" }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get chaintips.')
     ### END METHOD ################################### rpc_getChainTips(self)
     
     def rpc_getDifficulty(self):
@@ -833,8 +940,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "getdifficulty" }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get current difficulty level.')
     ### END METHOD ################################### rpc_getDifficulty(self)
     
     def rpc_getMemPoolInfo(self):
@@ -850,8 +960,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "getmempoolinfo" }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get information about mempool.')
     ### END METHOD ################################### rpc_getMemPoolInfo(self)
     
     def rpc_getMemPoolAncestors(self, _txhash:str, _verbose:bool=False):
@@ -878,8 +991,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "getmempoolancestors", "params": [ "' + _txhash + '", ' + verbose + ' ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get mempool ancestors for transaction hash "' + _txhash + '".')
     ### END METHOD ################################### rpc_getMemPoolAncestors(self, _txhash:str, _verbose:bool=False)
     
     def rpc_getMemPoolDescendants(self, _txhash:str, _verbose:bool=False):
@@ -906,8 +1022,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "getmempooldescendants", "params": [ "' + _txhash + '", ' + verbose + ' ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get mempool descendants for transaction hash "' + _txhash + '".')
     ### END METHOD ################################### rpc_getMemPoolDescendants(self, _txhash:str, _verbose:bool=False)
     
     def rpc_getMemPoolEntry(self, _txhash:str):
@@ -925,8 +1044,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "getmempoolentry", "params": [ "' + _txhash + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get mempool entry for the transaction hash "' + _txhash + '".')
     ### END METHOD ################################### rpc_getMemPoolEntry(self, _txhash:str)
     
     def rpc_getRawMemPool(self, _verbose:bool=False):
@@ -951,8 +1073,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "getrawmempool", "params": [ ' + verbose + ' ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get raw mempool data.')
     ### END METHOD ################################### rpc_getRawMemPool(self, _verbose:bool=False)
     
     def rpc_prioritiseTransaction(self, _txhash:str, _priorityDelta:int, _feeDelta:int):
@@ -977,8 +1102,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "prioritisetransaction", "params": [ "' + _txhash + '", "' + str(_priorityDelta) + '", "' + str(_feeDelta) + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to prioritize the transaction hash "' + _txhash + '".')
     ### END METHOD ################################### rpc_prioritiseTransaction(self, _txhash:str, _priorityDelta:int, _feeDelta:int)
     
     def rpc_estimateFee(self, _nblocks:int=1):
@@ -996,8 +1124,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "estimatefee", "params": [ ' + str(_nblocks) + ' ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to estimate fee for transaction of "' + _nblocks + '" blocks.')
     ### END METHOD ################################### rpc_estimateFee(self, _nblocks:int=1)
     
     def rpc_estimatePriority(self, _nblocks:int=1):
@@ -1017,8 +1148,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "estimatepriority", "params": [ ' + str(_nblocks) + ' ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to estimate the priority of "' + _nblocks + '" blocks.')
     ### END METHOD ################################### rpc_estimatePriority(self, _nblocks:int=1)
     
     def rpc_estimateSmartFee(self, _nblocks:int=1):
@@ -1036,8 +1170,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "estimatesmartfee", "params": [ ' + str(_nblocks) + ' ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to estimate the smart fee for "' + _nblocks + '" blocks.')
     ### END METHOD ################################### rpc_estimateSmartFee(self, _nblocks:int=1)
     
     def rpc_estimateSmartPriority(self, _nblocks:int=1):
@@ -1057,8 +1194,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "estimatesmartpriority", "params": [ ' + str(_nblocks) + ' ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to estimate the smart priority for "' + _nblocks + '" blocks.')
     ### END METHOD ################################### rpc_estimateSmartPriority(self, _nblocks:int=1)
     
     def rpc_getTxOut(self, _txhash:str, _index:int, _includemempool:int=1):
@@ -1080,8 +1220,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "gettxout", "params": [ "' + _txhash + '", ' + str(_index) + ', ' + str(_includemempool) + ' ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get oupoint for the transaction hash "' + _txhash + '".')
     ### END METHOD ################################### rpc_getTxOut(self, _txhash:str, _index:int, _includemempool:int=1)
     
     def rpc_getTxOutSetInfo(self):
@@ -1097,8 +1240,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "gettxoutsetinfo", "params": [] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get UTXO information from chain.')
     ### END METHOD ################################### rpc_getTxOutSetInfo(self)
     
     def rpc_getRawTransaction(self, _txhash:str, _verbose:bool=False):
@@ -1125,8 +1271,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "getrawtransaction", "params": [ "' + _txhash + '", ' + verbose + ' ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get raw transaction for hash "' + _txhash + '".')
     ### END METHOD ################################### rpc_getRawTransaction(self, _txhash:str, _verbose:bool=False)
     
     def rpc_decodeRawTransaction(self, _rawtx:str):
@@ -1144,8 +1293,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "decoderawtransaction", "params": [ "' + _rawtx + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to decode raw transcation "' + _rawtx + '".')
     ### END METHOD ################################### rpc_decodeRawTransaction(self, _rawtx:str)
     
     def rpc_decodeScript(self, _script:str):
@@ -1163,8 +1315,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "decodescript", "params": [ "' + _script + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to decond script "' + _script + '".')
     ### END METHOD ################################### rpc_decodeScript(self, _script:str)
     
     def rpc_sendRawTransaction(self, _rawtx:str):
@@ -1182,8 +1337,11 @@ class hsd:
         
         endpoint = '/'
         _message = '{ "method": "sendrawtransaction", "params": [ "' + _rawtx + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to send raw transaction without verification.')
     ### END METHOD ################################### rpc_sendRawTransaction(self, _rawtx:str)
     
     def rpc_createRawTransaction(self, _txhash:str, _txindex:int, _address:str, _amount:int, _data:str):
@@ -1207,8 +1365,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "createrawtransaction", "params": [[{ "txid": "' + _txhash + '", "vout": ' + str(_txindex) + ' }], { "' + _address + '": ' + str(_amount) + ', "data": "' + _data + '" }] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to create raw unsigned transaction.')
     ### END METHOD ################################### rpc_createRawTransaction(self, _txhash:str, _txindex:int, _address:str, _amount:int, _data:str)
     
     def rpc_signRawTransaction(self, _rawtx:str, _txhash:str, _txindex:int, _address:str, _amount:int, _privkey:str):
@@ -1236,8 +1397,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "signrawtransaction", "params": [ "' + _rawtx + '", [{ "txid": "' + _txhash + '", "vout": ' + str(_txindex) + ', "address": "' + _address + '", "amount": ' + str(_amount) + ' }], [ "' + _privkey + '" ]] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to sign raw transaction.')
     ### END METHOD ################################### rpc_signRawTransaction(self, _rawtx:str, _txhash:str, _txindex:int, _address:str, _amount:int, _privkey:str)
     
     def rpc_getTxOutProof(self, _txidlist:str):
@@ -1255,8 +1419,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "gettxoutproof", "params": [ "' + _txidlist + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get proof for transactions "' + _txidlist + '".')
     ### END METHOD ################################### rpc_getTxOutProof(self, _txidlist:str)
     
     def rpc_verifyTxOutProof(self, _proof:str):
@@ -1274,8 +1441,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "verifytxoutproof", "params": [ "' + _proof + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to verify proof "' + _proof + '".')
     ### END METHOD ################################### rpc_verifyTxOutProof(self, _proof)
     
     def rpc_getNetworkHashPerSec(self, _blocks:int=120, _height:int=1):
@@ -1295,8 +1465,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "getnetworkhashps", "params": [ ' + str(_blocks) + ', ' + str(_height) + ' ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to retreive historical hashes per second estimation.')
     ### END METHOD ################################### rpc_getNetworkHashPerSec(self, _blocks:int=120, _height:int=1)
     
     def rpc_getMiningInfo(self):
@@ -1316,8 +1489,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "getmininginfo", "params": [] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get mining information.')
     ### END METHOD ################################### rpc_getMiningInfo(self)
     
     def rpc_getWork(self, _data:str=[]):
@@ -1335,9 +1511,12 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "getworklp", "params": [ "' + _data + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
-    ### END METHOD ################################### rpc_getWorkLP(self)
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get hashing work.')
+    ### END METHOD ################################### rpc_getWork(self, _data:str=[])
     
     def rpc_getWorkLP(self):
         """
@@ -1355,8 +1534,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "getworklp", "params": [] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get work from long polling.')
     ### END METHOD ################################### rpc_getWorkLP(self)
     
     def rpc_getBlockTemplate(self):
@@ -1372,8 +1554,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "getblocktemplate", "params": [] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get block template.')
     ### END METHOD ################################### rpc_getBlockTemplate(self):
     
     def rpc_submitBlock(self, _blockdata:str):
@@ -1391,8 +1576,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "submitblock", "params": [ "' + _blockdata + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to add block to chain.')
     ### END METHOD ################################### rpc_submitBlock(self, _blockdata:str)
     
     def rpc_verifyBlock(self, _blockdata:str):
@@ -1409,8 +1597,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "verifyblock", "params": [ "' + _blockdata + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to verify block data.')
     ### END METHOD ################################### rpc_verifyBlock(self, _blockdata:str)
     
     def rpc_setGenerate(self, _mining:int=0, _proclimit:int=0):
@@ -1430,8 +1621,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "setgenerate", "params": [ ' + str(_mining) + ', ' + str(_proclimit) + ' ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to set mining status.')
     ### END METHOD ################################### rpc_setGenerate(self, _mining:int=0, _proclimit:int=0)
     
     def rpc_getGenerate(self):
@@ -1447,8 +1641,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "getgenerate", "params": [] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to return status of the mining node.')
     ### END METHOD ################################### rpc_getGenerate(self)
     
     def rpc_generate(self, _numblocks:int=1):
@@ -1465,8 +1662,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "generate", "params": [' + str(_numblocks) + '] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to generate "' + _numblocks + '" blocks.')
     ### END METHOD ################################### rpc_generate(self, _numblocks:int=1)
     
     def rpc_generateToAddress(self, _address:str, _numblocks:int=1):
@@ -1497,6 +1697,9 @@ class hsd:
                 response = self.post(endpoint, _message)
             except KeyError as e:
                 print('hsd.rpc_GenerateToAddress() Error: The key ' + str(e) + " was not located in JSON.")
+            except:
+                print('ERROR: RPC failed to generate "' + _numblocks + '" blocks for the address "' + address + '".')
+
 
         return response
     ### END METHOD ################################### rpc_generateToAddress(self, _address:str, _numblocks:int=1)
@@ -1514,8 +1717,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "getconnectioncount", "params": [] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get peer connection count.')
     ### END METHOD ################################### rpc_getConnectionCount(self)
     
     def rpc_ping(self):
@@ -1531,8 +1737,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "ping", "params": [] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to ping connected peers.')
     ### END METHOD ################################### rpc_ping(self)
     
     def rpc_getPeerInfo(self):
@@ -1548,8 +1757,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "getpeerinfo", "params": [] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get information for connected peers.')
     ### END METHOD ################################### rpc_getPeerInfo(self)
     
     def rpc_addNode(self, _nodeAddress:str, _cmd:str):
@@ -1573,8 +1785,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "addnode", "params": [ "' + _nodeAddress + '", "' + _cmd + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to "' + _cmd + '" node for address "' + _nodeAddress + '".')
     ### END METHOD ################################### rpc_addNode(self, _nodeAddress:str, _cmd:str)
     
     def rpc_disconnectNode(self, _nodeAddress:str):
@@ -1592,8 +1807,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "disconnectnode", "params": [ "' + _nodeAddress + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to disconnect node at address "' + _nodeAddress + '".')
     ### END METHOD ################################### rpc_disconnectNode(self, _nodeAddress:str)
     
     def rpc_getAddedNodeInfo(self, _nodeAddress:str):
@@ -1611,8 +1829,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "getaddednodeinfo", "params": [ "' + _nodeAddress + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get node information for the node address "' + _nodeAddress + '".')
     ### END METHOD ################################### rpc_getAddedNodeInfo(self, _nodeAddress:str)
     
     def rpc_getNetTotals(self):
@@ -1628,8 +1849,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "getnettotals", "params": [] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get information about used network resources.')
     ### END METHOD ################################### rpc_getNetTotals(self)
     
     def rpc_getNetworkInfo(self):
@@ -1645,8 +1869,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "getnetworkinfo", "params": [] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get network info for local node.')
     ### END METHOD ################################### def rpc_getNetworkInfo(self)
     
     def rpc_setBan(self, _nodeAddress:str, _cmd:str):
@@ -1668,8 +1895,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "setban", "params": ["' + _nodeAddress + '", "' + _cmd + '"] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to ' + _cmd + ' ban for node at address "' + _nodeAddress + '".')
     ### END METHOD ################################### rpc_setBan(self, _nodeAddress:str, _cmd:str)
     
     def rpc_listBan(self):
@@ -1685,8 +1915,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "listbanned", "params": [] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get list of banned peers.')
     ### END METHOD ################################### rpc_listBan(self)
     
     def rpc_clearBanned(self):
@@ -1702,11 +1935,14 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "clearbanned", "params": [] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: PRC failed to remove banned peers.')
     ### END METHOD ################################### rpc_clearBanned(self)
     
-    def rpc_getNameInfo(self, _name:str):
+    def rpc_getNameInfo(self, _name:str=''):
         """
         DESCRIPTION:
 
@@ -1721,11 +1957,14 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "getnameinfo", "params": [ "' + _name + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
-    ### END METHOD ################################### rpc_getNameInfo(self, _name:str)
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get information for name "' + _name + '".')
+    ### END METHOD ################################### rpc_getNameInfo(self, _name:str='')
     
-    def rpc_getNameByHash(self, _namehash:str):
+    def rpc_getNameByHash(self, _namehash:str=''):
         """
         DESCRIPTION:
 
@@ -1740,11 +1979,14 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "getnamebyhash", "params": [ "' + _namehash + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
-    ### END METHOD ###################################  rpc_getNameByHash(self, _namehash:str)
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get the name for the hash "' + _namehash + '".')
+    ### END METHOD ###################################  rpc_getNameByHash(self, _namehash:str='')
     
-    def rpc_getNameResource(self, _name:str):
+    def rpc_getNameResource(self, _name:str=''):
         """
         DESCRIPTION:
 
@@ -1759,11 +2001,14 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "getnameresource", "params": [ "' + _name + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
-    ### END METHOD ################################### rpc_getNameResource(self, _name:str)
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get resource records for name "' + _name + '".')
+    ### END METHOD ################################### rpc_getNameResource(self, _name:str='')
     
-    def rpc_getNameProof(self, _name:str):
+    def rpc_getNameProof(self, _name:str=''):
         """
         DESCRIPTION:
 
@@ -1778,9 +2023,12 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "getnameproof", "params": [ "' + _name + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
-    ### END METHOD ################################### rpc_getNameProof(self, _name:str)
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get name proof for name "' + _name + '".')
+    ### END METHOD ################################### rpc_getNameProof(self, _name:str='')
     
     def rpc_sendRawClaim(self, _base64_string:str):
         """
@@ -1801,11 +2049,14 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "sendrawclaim", "params": [ "' + _base64_string + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
-    ### END METHOD ################################### rpc_sendRawClaim(self, _base64_string:str)
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to send raw claim.')
+    ### END METHOD ################################### rpc_sendRawClaim(self, _base64_string:str='')
     
-    def rpc_getDnsSecProof(self, _name:str, _estimate:bool=False, _verbose:bool=True):
+    def rpc_getDnsSecProof(self, _name:str='', _estimate:bool=False, _verbose:bool=True):
         """
         DESCRIPTION:
 
@@ -1837,11 +2088,14 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "getdnssecproof", "params": ["' + _name + '", ' + estimate + ', ' + verbose + '] }'
-        response = self.post(endpoint, _message)
-        return response
-    ### END METHOD ################################### rpc_getDnsSecProof(self, _name:str, _estimate:bool=False, _verbose:bool=True)
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get DNS security proof.')
+    ### END METHOD ################################### rpc_getDnsSecProof(self, _name:str='', _estimate:bool=False, _verbose:bool=True)
     
-    def rpc_sendRawAirdrop(self, _base64_string:str):
+    def rpc_sendRawAirdrop(self, _base64_string:str=''):
         """
         DESCRIPTION:
 
@@ -1857,9 +2111,12 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "sendrawairdrop", "params": [ "' + _base64_string + '" ] }'
-        response = self.post(endpoint, _message)
-        return response
-    ### END METHOD ################################### rpc_sendRawAirdrop(self, _base64_string:str)
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to send raw airdrom')
+    ### END METHOD ################################### rpc_sendRawAirdrop(self, _base64_string:str='')
     
     def rpc_grindName(self, _length:int=10):
         """
@@ -1876,8 +2133,11 @@ class hsd:
 
         endpoint = '/'
         _message = '{ "method": "grindname", "params": [ ' + str(_length) + ' ] }'
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to grind name.')
     ### END METHOD ################################### rpc_grindName(self, _length:int=10)
 
 
@@ -1930,6 +2190,7 @@ class hsw:
         """
 
         url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + _endpoint
+
         getResponse = requests.get(url)
         response = getResponse.json()
         return response # Returned as json
@@ -1951,6 +2212,7 @@ class hsw:
         """
         
         url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + _endpoint
+
         postRequest = requests.post(url, _message)
         response = postRequest.json()
         return response # Returned as json
@@ -1960,7 +2222,7 @@ class hsw:
         """
         DESCRIPTION:
 
-            PUT (json) message to API
+            Send PUT (json) message to API
         
         PARAMS:
 
@@ -1972,6 +2234,7 @@ class hsw:
         """
         
         url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + _endpoint
+
         putRequest = requests.put(url, _message)
         response = putRequest.json()
         return response # Returned as json
@@ -1981,7 +2244,7 @@ class hsw:
         """
         DESCRIPTION:
 
-            PUT (json) message to API
+            Send DELETE (json) message to API
         
         PARAMS:
 
@@ -1993,10 +2256,11 @@ class hsw:
         """
         
         url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + _endpoint
+    
         putRequest = requests.delete(url, _message)
         response = putRequest.json()
         return response # Returned as json
-    ### END METHOD ################################### put(self, _endpoint:str, _message:str='')
+    ### END METHOD ################################### delete(self, _endpoint:str, _message:str='')
 
     def createWallet(self, _passphrase:str, _id:str='primary', _accountkey:str='', _type:str='pubkeyhash',
                     _mnemonic:str='',_master:str='', _watchonly:bool=True, _m:int=1, _n:int=1):
@@ -2039,9 +2303,11 @@ class hsw:
 
         _message = '{"passphrase":"' + _passphrase + '", "watchOnly": ' + watchonly + ', "accountKey":"' + _accountkey + \
                        '", "type":"' + _type + '", "master":"' + _master + '", "m": ' + str(_m) + ', "n": ' + str(_n) + ', "mnemonic":"' + _mnemonic + '"}'
-
-        response = self.put(endpoint, _message)
-        return response
+        try:
+            response = self.put(endpoint, _message)
+            return response
+        except:
+            print('ERROR: Failed to create new wallet.')
     ### END METHOD ################################### createWallet(self, _id:str='primary', _passphrase:str, _accountkey:str='', _type:str='pubkeyhash',
     #                                                               _mnemonic:str='',_master:str=None, _watchonly:bool=True, _m:int=1, _n:int=1)
 
@@ -2063,9 +2329,11 @@ class hsw:
         endpoint = '/wallet/' + _id + '/retoken'
 
         _message = '{"passphrase":"' + _passphrase + '"}'
-
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: Failed to reset auth token for the wallet "' + _id + '".')
     ### END METHOD ################################### resetAuthToken(self, _id:str='primary', _passphrase:str)
 
     def getWalletInfo(self, _id:str=''):
@@ -2082,8 +2350,11 @@ class hsw:
         """
         
         endpoint = '/wallet/' + _id
-        response = self.get(endpoint)
-        return response
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get info for wallet "' + _id + '".')
     ### END METHOD ################################### getWalletInfo(self, _id:str='')
 
     def getMasterHDKey(self, _id:str='primary'):
@@ -2101,8 +2372,11 @@ class hsw:
         """
         
         endpoint = '/wallet/' + _id + '/master'
-        response = self.get(endpoint)
-        return response
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get master HD key.')
     ### END METHOD ################################### getMasterHDKey(self, _id:str='')
 
     def changePassword(self, _new_passphrase:str, _id:str='primary', _old_passphrase:str=''):
@@ -2125,12 +2399,14 @@ class hsw:
         endpoint = '/wallet/' + _id + '/passphrase'
 
         _message = '{"old":"' + _old_passphrase + '", "passphrase":"' + _new_passphrase + '"}'
-
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: Failed to change password.')
     ### END METHOD ################################### changePassword(self, _id:str='primary', _new_passphrase:str, _old_passphrase:str='')
 
-    def signTransaction(self, _passphrase:str, _tx_hex:str, _id:str='primary'):
+    def signTransaction(self, _passphrase:str, _txhex:str, _id:str='primary'):
         """
         DESCRIPTION:
 
@@ -2140,16 +2416,18 @@ class hsw:
 
             (*) _passphrase : Passphrase to unlock the wallet.
 
-            (*) _tx_hex     : The hex of the transaction you would like to sign.
+            (*) _txhex     : The (hex) of the transaction you would like to sign.
         """
         
         endpoint = '/wallet/' + _id + '/sign'
 
-        _message = '{"tx":"' + _tx_hex + '", "passphrase":"' + _passphrase + '"}'
-
-        response = self.post(endpoint, _message)
-        return response
-    ### END METHOD ################################### signTransaction(self, _id:str='primary', _passphrase:str, _tx_hex:str)
+        _message = '{"tx":"' + _txhex + '", "passphrase":"' + _passphrase + '"}'
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: Failed to sign transaction (hex) "' + _txhex + '".')
+    ### END METHOD ################################### signTransaction(self, _id:str='primary', _passphrase:str, _txhex:str)
 
     def zapTransactions(self, _account:str, _id:str='primary', _age:int=0):
         """
@@ -2171,9 +2449,11 @@ class hsw:
         endpoint = '/wallet/' + _id + '/zap'
 
         _message = '{"account":"' + _account + '", "age":"' + _age + '"}'
-
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: Failed to zap transaction for account "' + _account + '".')
     ### END METHOD ################################### zapTransactions(self, _account:str, _id:str='primary', _age:int=0)
 
     def lockWallet(self, _id:str='primary'):
@@ -2192,9 +2472,11 @@ class hsw:
         endpoint = '/wallet/' + _id + '/lock'
 
         _message = ''
-
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: Failed to lock wallet "' + _id + '".')
     ### END METHOD ################################### lockWallet(self, _id:str='primary')
 
     def importPublicKey(self, _account:str, _pub_key:str, _id:str='primary'):
@@ -2221,9 +2503,11 @@ class hsw:
         endpoint = '/wallet/' + _id + '/import'
 
         _message = '{"account":"' + _account + '", "publicKey":"' + _pub_key + '"}'
-
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: Failed to import public key for account "' + _account + '".')
     ### END METHOD ################################### importPublicKey(self, _account:str, _pub_key:str, _id:str='primary')
 
     def importPrivateKey(self, _account:str, _priv_key:str, _id:str='primary'):
@@ -2250,9 +2534,11 @@ class hsw:
         endpoint = '/wallet/' + _id + '/import'
 
         _message = '{"account":"' + _account + '", "privateKey":"' + _priv_key + '"}'
-
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: Failed to import private key for account "' + _account + '".')
     ### END METHOD ################################### importPrivateKey(self, _account:str, _priv_key:str, _id:str='primary')
 
     def getBlocksWithWalletTX(self, _id:str='primary'):
@@ -2269,8 +2555,11 @@ class hsw:
         """
         
         endpoint = '/wallet/' + _id + '/block'
-        response = self.get(endpoint)
-        return response
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get blocks with existing wallet transactions.')
     ### END METHOD ################################### getBlocksWithWalletTX(self, _id:str='primary')
 
     def getWalletBlockByHeight(self, _height:int, _id:str='primary'):
@@ -2289,9 +2578,12 @@ class hsw:
         """
         
         endpoint = '/wallet/' + _id + '/block/' + str(_height)
-        response = self.get(endpoint)
-        return response
-    ### END METHOD ################################### getWalletBlockByHeight(self, _id:str='primary')
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get wallet block at height "' + _height + '".')
+    ### END METHOD ################################### getWalletBlockByHeight(self, _height:int, _id:str='primary')
 
     def addXPubKey(self, _accountkey:str, _account:str='default'):
         """
@@ -2321,9 +2613,11 @@ class hsw:
         endpoint = '/wallet/multisig3/shared-key/'
 
         _message = '{"accountKey":"' + _accountkey + '", "account":"' + _account + '"}'
-
-        response = self.put(endpoint, _message)
-        return response
+        try:
+            response = self.put(endpoint, _message)
+            return response
+        except:
+            print('ERROR: Failed to add xpubkey "' + _accountkey + '" for account "' + _account + '".')
     ### END METHOD ################################### addXPubKey(self, _accountkey:str, _account:str='default')
 
     def removeXPubKey(self, _accountkey:str, _account:str='default'):
@@ -2354,9 +2648,11 @@ class hsw:
         endpoint = '/wallet/multisig3/shared-key/'
 
         _message = '{"accountKey":"' + _accountkey + '", "account":"' + _account + '"}'
-
-        response = self.delete(endpoint, _message)
-        return response
+        try:
+            response = self.delete(endpoint, _message)
+            return response
+        except:
+            print('ERROR: Failed to remove xpubkey "' + _accountkey + '" for account "' + _account + '".')
     ### END METHOD ################################### removeXPubKey(self, _accountkey:str, _account:str='default')
 
     def getPublicKeyByAddress(self, _address:str, _id:str='primary'):
@@ -2375,8 +2671,11 @@ class hsw:
         """
         
         endpoint = '/wallet/' + _id + '/key/' + _address
-        response = self.get(endpoint)
-        return response
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get public key for address "' + _address + '".')
     ### END METHOD ################################### getPublicKeyByAddress(self, _address:str, _id:str='primary')
 
     def getPrivateKeyByAddress(self, _address:str, _passphrase:str, _id:str='primary'):
@@ -2397,8 +2696,11 @@ class hsw:
         """
         
         endpoint = '/wallet/' + _id + '/wif/' + _address + '?passphrase=' + _passphrase
-        response = self.get(endpoint)
-        return response
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get private key for address "' + _address + '".')
     ### END METHOD ################################### getPrivateKeyByAddress(self, _address:str, _passphrase:str, _id:str='primary')
 
     def generateReceivingAddress(self, _account:str, _id:str='primary'):
@@ -2419,9 +2721,11 @@ class hsw:
         endpoint = '/wallet/' + _id + '/address'
 
         _message = '{"account":"' + _account + '"}'
-
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: Failed to generate receiving address for account "' + _account + '".')
     ### END METHOD ################################### generateReceivingAddress(self, _account:str, _id:str='primary')
 
     def generateChangeAddress(self, _account:str='default', _id:str='primary'):
@@ -2442,9 +2746,11 @@ class hsw:
         endpoint = '/wallet/' + _id + '/change'
 
         _message = '{"account":"' + _account + '"}'
-
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: Failed to generate change address for account "' + _account + '".')
     ### END METHOD ################################### generateChangeAddress(self, _account:str='default', _id:str='primary')
 
     def getBalance(self, _account:str='', _id:str='primary'):
@@ -2466,8 +2772,11 @@ class hsw:
         """
         
         endpoint = '/wallet/' + _id + '/balance?account=' + _account
-        response = self.get(endpoint)
-        return response
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get balance for account "' + _account + '".')
     ### END METHOD ################################### getBalance(self, _account:str='', _id:str='primary')
 
     def listCoins(self, _id:str='primary'):
@@ -2484,8 +2793,11 @@ class hsw:
         """
         
         endpoint = '/wallet/' + _id + '/coin'
-        response = self.get(endpoint)
-        return response
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to list coins for wallet ID "' + _id + '".')
     ### END METHOD ################################### listCoins(self, _id:str='primary')
 
     def lockCoinOutpoints(self, _txhash:str, _index:str='0', _id:str='primary'):
@@ -2506,8 +2818,11 @@ class hsw:
         """
 
         endpoint = '/wallet/' + _id + '/locked/' + _txhash + '/' + _index
-        response = self.put(endpoint)
-        return response
+        try:
+            response = self.put(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to lock coin outpoint for transaction "' + _txhash + '" at index "' + _index + '".')
     ### END METHOD ################################### lockCoinOutpoints(self, _txhash:str, _index:str='0', _id:str='primary')
 
     def getLockedOutpoints(self, _id:str='primary'):
@@ -2524,8 +2839,11 @@ class hsw:
         """
         
         endpoint = '/wallet/' + _id + '/locked'
-        response = self.get(endpoint)
-        return response
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get list of locked outpoints.')
     ### END METHOD ################################### getLockedOutpoints(self, _id:str='primary')
 
     def getWalletCoin(self, _txhash:str, _index:str='0', _id:str='primary'):
@@ -2546,8 +2864,11 @@ class hsw:
         """
         
         endpoint = '/wallet/' + _id + '/coin/' + _txhash + '/' + _index
-        response = self.get(endpoint)
-        return response
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get coin for transaction hash "' + _txhash + '" at index "' + _index + '".')
     ### END METHOD ################################### getWalletCoin(self, _txhash:str, _index:str='0', _id:str='primary')
 
     def walletRescan(self, _height:int):
@@ -2569,8 +2890,11 @@ class hsw:
 
         _message = '{"height": ' + str(_height) + ' }'
 
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: Failed to rescan wallet')
     ### END METHOD ################################### walletRescan(self, _height:int)
 
     def walletResend(self):
@@ -2585,8 +2909,11 @@ class hsw:
         """
         
         endpoint = '/resend/'
-        response = self.post(endpoint)
-        return response
+        try:
+            response = self.post(endpoint)
+            return response
+        except:
+            print('ERROR: Faild to rebroadcast transactions')
     ### END METHOD ################################### walletResend(self)
 
     def walletBackup(self, _path:str=''):
@@ -2603,13 +2930,17 @@ class hsw:
         """
         
         endpoint = '/backup?path=' + _path
-        response = self.post(endpoint)
 
-        for key in response:
-            if 'error' in key:
-                response[key] = "{'message': 'Path is required for wallet backup'}"
+        try:
+            response = self.post(endpoint)
 
-        return response
+            for key in response:
+                if 'error' in key:
+                    response[key] = "{'message': 'Path is required for wallet backup'}"
+
+            return response
+        except:
+            print('ERROR: Failed to back up wallet.')
     ### END METHOD ################################### walletBackup(self, _path:str='')
 
     def walletMasterHDKeyBackup(self, _id:str='primary'):
@@ -2630,8 +2961,11 @@ class hsw:
         """
         
         endpoint = '/wallet/' + _id + '/master'
-        response = self.get(endpoint)
-        return response
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to back up master HD private key')
     ### END METHOD ################################### walletMasterHDKeyBackup(self, _id:str='primary')
 
     def listWallets(self):
@@ -2646,8 +2980,12 @@ class hsw:
         """
         
         endpoint = '/wallet/'
-        response = self.get(endpoint)
-        return response
+        
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Cannot fetch list of wallets.')
     ### END METHOD ################################### listWallets(self)
 
     def getWalletAccountList(self, _id:str='primary'):
@@ -2663,9 +3001,33 @@ class hsw:
         """
         
         endpoint = '/wallet/' + _id + '/account'
-        response = self.get(endpoint)
-        return response
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Cannot get account list.')
     ### END METHOD ################################### getWalletAccountList(self, _id:str='primary')
+
+    def getAccountInfo(self, _id:str='primary', _account:str='default'):
+        """
+        DESCRIPTION:
+
+            Get account info.
+        
+        PARAMS:
+
+            ( ) _id : ID of wallet you would like to query. Default = 'primary'
+            ( ) _account : ID of account you would to retrieve information for. Default = 'default'
+        """
+        
+        endpoint = '/wallet/' + _id + '/account/' + _account
+
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Cannot get account info.')
+    ### END METHOD ################################### getAccountInfo(self, _id:str='primary', _account:str='default')
 
     def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
@@ -2697,9 +3059,11 @@ class hsw:
         endpoint = '/wallet/' + _id + '/account/' + _name
 
         _message = '{"type":"' + _type + '", "passphrase":"' + _passphrase + '", "accountKey":"' + _accountkey + '", "m": ' + str(_m) + ', "n": ' + str(_n) + '}'
-
-        response = self.put(endpoint, _message)
-        return response
+        try:
+            response = self.put(endpoint, _message)
+            return response
+        except:
+            print('ERROR: Failed to create account "' + _name + '".')
     ### END METHOD ################################### createAccount(self, _id:str='primary', _passphrase:str, _name:str='', _accountkey:str='',
     #                                                                _type:str='pubkeyhash', _m:int=1, _n:int=1)
 
@@ -2719,7 +3083,9 @@ class hsw:
         endpoint = '/'
 
         _message = '{ "method": "getnewaddress", "params": [ "' + _account +'" ] }'
-
-        response = self.post(endpoint, _message)
-        return response
+        try:
+            response = self.post(endpoint, _message)
+            return response
+        except:
+            print('ERROR: RPC failed to get new receiving address.')
     ### END METHOD ################################### rpc_getNewAddress(self, _account:str='')
