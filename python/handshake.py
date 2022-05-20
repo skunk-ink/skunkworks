@@ -4129,6 +4129,31 @@ class hsw:
         return response
     ### END METHOD ################################### sendREVOKE(self, _id:str, _passphrase:str, _name:str, _sign:bool=True, _broadcast:bool=True)
 
+    def rpc_getAuctionInfo(self, _name:str):
+        """
+        DESCRIPTION:
+
+            Signs message with private key. 
+        
+        PARAMS:
+        (*) Denotes required argument
+        
+        (*) _name : Name to get auction info of.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "getauctioninfo", "params": [ "' + _name + '" ] }'
+        try:
+            response = self.post(endpoint, _message)
+            for key in response:
+                if 'error' in key:
+                    response[key] = "{'message': 'RPC failed to find auction information for `" + _name + "`'}"
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to find auction information for `" + _name + "`'}"
+        return response
+    ### END METHOD ################################### rpc_getAuctionInfo(self, _name:str)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
