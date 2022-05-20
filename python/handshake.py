@@ -3169,6 +3169,34 @@ class hsw:
             print('ERROR: Failed to get pending transactions for "' + _id + '" wallet.')
     ### END METHOD ################################### getPendingTransactions(self, _id:str='primary')
 
+    def getRangeOfTransactions(self, _start:int=0, _end:int=0, _id:str='primary'):
+        """
+        DESCRIPTION:
+
+            Get range of wallet transactions by timestamp. Returns array of tx details.
+
+            Note: If no `start` or `end` timestamps are give, all transactions will be returned.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _start   : Start time to get range from. Default = 0
+
+            ( ) _end     : End time to get range from. Default = 0
+
+            ( ) _id      : ID of wallet to get transactions from. Default = 'primary'
+        """
+        
+        endpoint = '/wallet/' + _id + '/tx/range?start=' + _start + '&end=' + _end
+
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get transaction range for "' + _id + '" wallet.')
+    ### END METHOD ################################### getRangeOfTransactions(self, _start:int, _end:int, _id:str='primary')
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
