@@ -4178,6 +4178,30 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_getAuctionInfo(self, _name:str)
 
+    def rpc_getBids(self):
+        """
+        DESCRIPTION:
+
+            Returns list of bids placed by your wallet. 
+        
+        PARAMS:
+        
+            None.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "getbids", "params": [] }'
+        try:
+            response = self.post(endpoint, _message)
+            for key in response:
+                if 'error' in key:
+                    response[key] = "{'message': 'RPC failed to find bids places with your wallet'}"
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to find bids places with your wallet'}"
+        return response
+    ### END METHOD ################################### rpc_getBids(self)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
