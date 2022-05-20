@@ -3814,6 +3814,63 @@ class hsw:
         return response
     ### END METHOD ################################### sendREDEEM(self, _id:str, _passphrase:str, _name:str='', _sign:bool=True, _broadcast:bool=True)
 
+    def sendUPDATE(self, _id:str, _passphrase:str, _name:str, _data:str, _sign:bool=True, _broadcast:bool=True):
+        """
+        DESCRIPTION:
+
+            Create, sign, and send an UPDATE. This transaction updates 
+            the resource data associated with a given name.
+
+            Note: Due to behavior of some shells like bash, if your TXT
+                  value contains spaces you may need to add additional
+                  quotes like this: "'"$value"'"
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _id         : Wallet ID.
+
+            (*) _passphrase : Passphrase to unlock the wallet.
+
+            ( ) _name       : Name to UPDATE.
+
+            ( ) _data       : JSON object containing an array of DNS records (resource object).
+                              See https://hsd-dev.org/api-docs/#resource-object for more information.
+
+            ( ) _sign       : Whether to sign the transaction. Default = True
+
+            ( ) _broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
+        """
+
+        sign = ''
+        broadcast = ''
+
+        if _sign == True:
+            sign = '1'
+        else:
+            sign = '0'
+
+        if _broadcast == True:
+            broadcast = '1'
+        else:
+            broadcast = '0'
+        
+        endpoint = '/wallet/' + _id + '/update'
+
+        _message = '{ "passphrase":"' + _passphrase + '", "name":"' + _name + '", "broadcast":' + broadcast + ', "sign":' + sign + ', "data":' + _data + ' }'
+        
+        try:
+            response = self.post(endpoint, _message)
+            for key in response:
+                if 'error' in key:
+                    response[key] = "{'message': 'Failed to UPDATE resource data for '" + _name + "'}"
+        except:
+            response = {}
+            response['error'] = "{'message': 'Failed to UPDATE resource data for '" + _name + "'}"
+        return response
+    ### END METHOD ################################### sendUPDATE(self, _id:str, _passphrase:str, _name:str, _data:str, _sign:bool=True, _broadcast:bool=True)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
