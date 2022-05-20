@@ -3451,6 +3451,42 @@ class hsw:
             print('ERROR: Failed to get data resource associated with the domain "' + _name + '".')
     ### END METHOD ################################### getWalletResourceByName(self, _name:str='', _id:str='primary')
 
+    def getNonceForBid(self, _bid:float, _name:str, _address:str, _id:str='primary'):
+        """
+        DESCRIPTION:
+
+            Deterministically generate a nonce to blind a bid.
+
+            Note: This command involves entering HNS values, be careful
+                  with different formats of values for different APIs. 
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _bid : Value of bid to blind.
+
+            (*) _name : Name of domain.
+
+            (*) _address  : Address controlling bid.
+
+            ( ) _id  : ID of wallet. Default = 'primary'
+        """
+
+        endpoint = '/wallet/' + _id + '/nounce/' + _name + '?address=' + _address + '&bid=' + str(_bid)
+
+        try:
+            response = self.get(endpoint)
+
+            for key in response:
+                if 'error' in key:
+                    response[key] = "{'message': 'Failed to generate nonce for blind bid on '" + _name + "'}"
+
+            return response
+        except:
+            print('ERROR: Failed to generate nonce for blind bid on "' + _name + '".')
+    ### END METHOD ################################### getNonceForBid(self, _bid:float, _name:str, _address:str, _id:str='primary')
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
