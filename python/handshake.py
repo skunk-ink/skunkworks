@@ -4157,12 +4157,12 @@ class hsw:
         """
         DESCRIPTION:
 
-            Signs message with private key. 
+            Returns information on auction. 
         
         PARAMS:
         (*) Denotes required argument
         
-        (*) _name : Name to get auction info of.
+        (*) _name : Name to get auction information for.
         """
         
         endpoint = '/'
