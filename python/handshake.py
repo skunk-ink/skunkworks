@@ -3387,8 +3387,40 @@ class hsw:
             response = self.get(endpoint)
             return response
         except:
-            print('ERROR: Failed to get reveals know to the wallet "' + _id + '".')
+            print('ERROR: Failed to get reveals known to the wallet "' + _id + '".')
     ### END METHOD ################################### getWalletReveals(self, _id:str='primary', _own:bool=False)
+
+    def getWalletRevealsByName(self, _name:str='', _id:str='primary', _own:bool=False):
+        """
+        DESCRIPTION:
+
+            List all reveals for all names known to the wallet.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _name : Name of domain to get reveals for.
+
+            ( ) _id  : ID of wallet. Default = 'primary'
+
+            ( ) _own : Whether to only show reveals from this wallet. Default = False
+        """
+        own = ''
+
+        if _own == True:
+            own = '1'
+        else:
+            own = '0'
+        
+        endpoint = '/wallet/' + _id + '/reveal/' + _name + '?own=' + own
+
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get reveals for the domain "' + _name + '".')
+    ### END METHOD ################################### getWalletRevealsByName(self, _name:str='', _id:str='primary', _own:bool=False)
 
     def rpc_getNewAddress(self, _account:str=''):
         """
