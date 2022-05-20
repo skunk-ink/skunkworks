@@ -4202,6 +4202,30 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_getBids(self)
 
+    def rpc_getReveals(self):
+        """
+        DESCRIPTION:
+
+            Returns all the reveal transactions sent by the wallet.
+        
+        PARAMS:
+        
+            None.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "getreveals", "params": [] }'
+        try:
+            response = self.post(endpoint, _message)
+            for key in response:
+                if 'error' in key:
+                    response[key] = "{'message': 'RPC failed to find any reveal transactions sent by your wallet'}"
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to find any reveal transactions sent by your wallet'}"
+        return response
+    ### END METHOD ################################### rpc_getReveals(self)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
