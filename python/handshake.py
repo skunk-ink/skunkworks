@@ -2642,7 +2642,7 @@ class hsw:
         
         PARAMS:
 
-            ( ) _id : Wallet ID. Default = 'primary'
+            None.
         """
         
         endpoint = '/wallet/'
