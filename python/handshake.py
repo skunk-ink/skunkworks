@@ -2957,6 +2957,8 @@ class hsw:
         
         PARAMS:
 
+            (*) Denotes required argument
+
             ( ) _id : Wallet ID. Default = 'primary'
         """
         
@@ -2997,6 +2999,8 @@ class hsw:
         
         PARAMS:
 
+            (*) Denotes required argument
+
             ( ) _id : ID of wallet you would like to retrieve the account list for. Default = 'primary'
         """
         
@@ -3015,6 +3019,8 @@ class hsw:
             Get account info.
         
         PARAMS:
+
+            (*) Denotes required argument
 
             ( ) _id : ID of wallet you would like to query. Default = 'primary'
             ( ) _account : ID of account you would to retrieve information for. Default = 'default'
@@ -3066,6 +3072,34 @@ class hsw:
             print('ERROR: Failed to create account "' + _name + '".')
     ### END METHOD ################################### createAccount(self, _id:str='primary', _passphrase:str, _name:str='', _accountkey:str='',
     #                                                                _type:str='pubkeyhash', _m:int=1, _n:int=1)
+
+    def getWalletTxDetails(self, _id:str='primary', _txhash:str=''):
+        """
+        DESCRIPTION:
+
+            Get wallet transaction details.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _id     : ID of wallet that handled the transaction. Default = 'primary'
+            (*) _txhash : ID of account you would to retrieve information for.
+        """
+        
+        endpoint = '/wallet/' + _id + '/tx/' + _txhash
+
+        try:
+            response = self.get(endpoint)
+
+            for key in response:
+                if 'error' in key:
+                    response[key] = "{'message': 'Cannot get transaction details for the wallet '" + _id + "'}"
+
+            return response
+        except:
+            print('ERROR: Cannot get transaction details for the wallet "' + _id + '".')
+    ### END METHOD ################################### getWalletTxDetails(self, _id:str='primary', _txhash:str='')
 
     def rpc_getNewAddress(self, _account:str=''):
         """
