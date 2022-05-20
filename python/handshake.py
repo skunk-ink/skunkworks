@@ -3197,6 +3197,31 @@ class hsw:
             print('ERROR: Failed to get transaction range for "' + _id + '" wallet.')
     ### END METHOD ################################### getRangeOfTransactions(self, _start:int, _end:int, _id:str='primary')
 
+    def getWalletNames(self, _id:str='primary'):
+        """
+        DESCRIPTION:
+
+            List the states of all names known to the wallet.
+
+            Note: If no wallet ID is given, the names of the `primary` wallet
+                  will be returned.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _id : ID of wallet to get transactions from. Default = 'primary'
+        """
+        
+        endpoint = '/wallet/' + _id + '/name'
+
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get list of wallet names for "' + _id + '".')
+    ### END METHOD ################################### getWalletNames(self, _id:str='primary')
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
