@@ -3656,6 +3656,60 @@ class hsw:
         return response
     ### END METHOD ################################### sendOPEN(self, _id:str, _passphrase:str, _name:str, _sign:bool=True, _broadcast:bool=True)
 
+    def sendBID(self, _id:str, _passphrase:str, _name:str, _bid:int, _lockup:int, _sign:bool=True, _broadcast:bool=True):
+        """
+        DESCRIPTION:
+
+            Create, sign, and send a name BID.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _id         : Wallet ID.
+
+            (*) _passphrase : Passphrase to unlock the wallet.
+
+            (*) _name       : Name to BID on.
+
+            (*) _bid        : Value (in dollarydoos) to bid for name.
+
+            (*) _lockup     : Value (in dollarydoos) to actually send in the transaction, blinding the actual bid value.
+
+            (*) _sign       : Whether to sign the transaction. Default = True
+
+            (*) _broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
+        """
+
+        sign = ''
+        broadcast = ''
+
+        if _sign == True:
+            sign = '1'
+        else:
+            sign = '0'
+
+        if _broadcast == True:
+            broadcast = '1'
+        else:
+            broadcast = '0'
+        
+        endpoint = '/wallet/' + _id + '/bid'
+
+        _message = '{ "passphrase":"' + _passphrase + '", "name":"' + _name + '", "broadcast":' + broadcast + \
+                   ', "sign":' + sign + ', "bid":' + str(_bid) + ', "lockup":' + str(_lockup) + ' }'
+        
+        try:
+            response = self.post(endpoint, _message)
+            for key in response:
+                if 'error' in key:
+                    response[key] = "{'message': 'Failed to send BID for '" + _name + "'}"
+        except:
+            response = {}
+            response['error'] = "{'message': 'Failed to send BID for '" + _name + "'}"
+        return response
+    ### END METHOD ################################### sendBID(self, _id:str, _passphrase:str, _name:str, _bid:int, _lockup:int, _sign:bool=True, _broadcast:bool=True)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
