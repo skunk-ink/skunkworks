@@ -3271,6 +3271,30 @@ class hsw:
             print('ERROR: Failed to get auctions for "' + _id + '" wallet.')
     ### END METHOD ################################### getWalletAuctions(self, _id:str='primary')
 
+    def getWalletAuctionByName(self, _name:str='', _id:str='primary'):
+        """
+        DESCRIPTION:
+
+            List the states of all auctions known to the wallet.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _name : Name of wallet.
+
+            ( ) _id   : ID of wallet. Default = 'primary'
+        """
+        
+        endpoint = '/wallet/' + _id + '/auction/' + _name
+
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get auctions for the wallet "' + _name + '".')
+    ### END METHOD ################################### getWalletAuctionByName(self, _name:str='', _id:str='primary')
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
