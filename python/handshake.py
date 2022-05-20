@@ -4294,7 +4294,7 @@ class hsw:
             The BIDDING period is followed by the REVEAL period, during which bidders
             must reveal their bids.
 
-            Note: If not domain name is specified then a REVEAL will be sent to all names
+            Note: If not domain name is specified then a REVEAL will be sent to all names.
         
         PARAMS:
 
@@ -4319,6 +4319,38 @@ class hsw:
             response['error'] = "{'message': 'RPC failed to start REVEAL phase of auction for the domain `" + _name + "`'}"
         return response
     ### END METHOD ################################### rpc_sendREVEAL(self, _name:str='')
+
+    def rpc_sendREDEEM(self, _name:str=''):
+        """
+        DESCRIPTION:
+
+            After the REVEAL period, the auction is CLOSED. The value locked
+            up by losing bids can be spent using a REDEEM covenant like any
+            other coin. The winning bid can not be redeemed.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _name : Domain name to REDEEM bid for (`null` for all names).
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "sendredeem", "params": [ "' + _name + '" ] }'
+
+        if _name == '':
+            _name = '[ALL]'
+
+        try:
+            response = self.post(endpoint, _message)
+            for key in response:
+                if 'error' in key:
+                    response[key] = "{'message': 'RPC failed to start REDEEM the domain `" + _name + "`'}"
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to start REDEEM the domain `" + _name + "`'}"
+        return response
+    ### END METHOD ################################### rpc_sendREDEEM(self, _name:str='')
 
     def rpc_getNewAddress(self, _account:str=''):
         """
