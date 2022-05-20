@@ -4073,6 +4073,62 @@ class hsw:
         return response
     ### END METHOD ################################### sendFINALIZE(self, _id:str, _passphrase:str, _name:str, _sign:bool=True, _broadcast:bool=True)
 
+    def sendREVOKE(self, _id:str, _passphrase:str, _name:str, _sign:bool=True, _broadcast:bool=True):
+        """
+        DESCRIPTION:
+
+            Create, sign, and send a REVOKE.
+
+            This method is a fail-safe for name owners whose keys
+            are compromised and lose control of their name. Before
+            the transfer is finalized, a REVOKE can be sent that not
+            only cancels the transfer, but burns the name preventing
+            any further updates or transfers. The name can be
+            reopened with a new auction after a set time.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _id         : Wallet ID.
+
+            (*) _passphrase : Passphrase to unlock the wallet.
+
+            (*) _name       : Name in transferred state to REVOKE transfer for.
+
+            ( ) _sign       : Whether to sign the transaction. Default = True
+
+            ( ) _broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
+        """
+
+        sign = ''
+        broadcast = ''
+
+        if _sign == True:
+            sign = '1'
+        else:
+            sign = '0'
+
+        if _broadcast == True:
+            broadcast = '1'
+        else:
+            broadcast = '0'
+        
+        endpoint = '/wallet/' + _id + '/revoke'
+
+        _message = '{ "passphrase":"' + _passphrase + '", "name":"' + _name + '", "broadcast":' + broadcast + ', "sign":' + sign + '" }'
+        
+        try:
+            response = self.post(endpoint, _message)
+            for key in response:
+                if 'error' in key:
+                    response[key] = "{'message': 'Failed to REVOKE transfer of '" + _name + "'}"
+        except:
+            response = {}
+            response['error'] = "{'message': 'Failed to REVOKE transfer of '" + _name + "'}"
+        return response
+    ### END METHOD ################################### sendREVOKE(self, _id:str, _passphrase:str, _name:str, _sign:bool=True, _broadcast:bool=True)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
