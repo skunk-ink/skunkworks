@@ -3710,6 +3710,57 @@ class hsw:
         return response
     ### END METHOD ################################### sendBID(self, _id:str, _passphrase:str, _name:str, _bid:int, _lockup:int, _sign:bool=True, _broadcast:bool=True)
 
+    def sendREVEAL(self, _id:str, _passphrase:str, _name:str='', _sign:bool=True, _broadcast:bool=True):
+        """
+        DESCRIPTION:
+
+            Create, sign, and send a name REVEAL. If multiple bids were placed on a name,
+            all bids will be revealed by this transaction. If no value is passed in for
+            `name`, all reveals for all names in the wallet will be sent.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _id         : Wallet ID.
+
+            (*) _passphrase : Passphrase to unlock the wallet.
+
+            ( ) _name       : Name to REVEAL bids for (or `null` for all names).
+
+            ( ) _sign       : Whether to sign the transaction. Default = True
+
+            ( ) _broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
+        """
+
+        sign = ''
+        broadcast = ''
+
+        if _sign == True:
+            sign = '1'
+        else:
+            sign = '0'
+
+        if _broadcast == True:
+            broadcast = '1'
+        else:
+            broadcast = '0'
+        
+        endpoint = '/wallet/' + _id + '/reveal'
+
+        _message = '{ "passphrase":"' + _passphrase + '", "name":"' + _name + '", "broadcast":' + broadcast + ', "sign":' + sign + ' }'
+        
+        try:
+            response = self.post(endpoint, _message)
+            for key in response:
+                if 'error' in key:
+                    response[key] = "{'message': 'Failed to send name REVEAL for '" + _name + "'}"
+        except:
+            response = {}
+            response['error'] = "{'message': 'Failed to send name REVEAL for '" + _name + "'}"
+        return response
+    ### END METHOD ################################### sendREVEAL(self, _id:str, _passphrase:str, _name:str='', _sign:bool=True, _broadcast:bool=True)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
