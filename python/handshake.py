@@ -3512,7 +3512,7 @@ class hsw:
         return response
     ### END METHOD ################################### getWalletReveals(self, _id:str='primary', _own:bool=False)
 
-    def getWalletRevealsByName(self, _name:str='', _id:str='primary', _own:bool=False):
+    def getWalletRevealsByName(self, _name:str, _id:str='primary', _own:bool=False):
         """
         DESCRIPTION:
 
@@ -3545,7 +3545,7 @@ class hsw:
         return response
     ### END METHOD ################################### getWalletRevealsByName(self, _name:str='', _id:str='primary', _own:bool=False)
 
-    def getWalletResourceByName(self, _name:str='', _id:str='primary'):
+    def getWalletResourceByName(self, _name:str, _id:str='primary'):
         """
         DESCRIPTION:
 
@@ -3624,9 +3624,9 @@ class hsw:
 
             (*) _name       : Name to OPEN.
 
-            (*) _sign       : Whether to sign the transaction. Default = True
+            ( ) _sign       : Whether to sign the transaction. Default = True
 
-            (*) _broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
+            ( ) _broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
         """
 
         sign = ''
@@ -3676,9 +3676,9 @@ class hsw:
 
             (*) _lockup     : Value (in dollarydoos) to actually send in the transaction, blinding the actual bid value.
 
-            (*) _sign       : Whether to sign the transaction. Default = True
+            ( ) _sign       : Whether to sign the transaction. Default = True
 
-            (*) _broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
+            ( ) _broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
         """
 
         sign = ''
@@ -3760,6 +3760,59 @@ class hsw:
             response['error'] = "{'message': 'Failed to send name REVEAL for '" + _name + "'}"
         return response
     ### END METHOD ################################### sendREVEAL(self, _id:str, _passphrase:str, _name:str='', _sign:bool=True, _broadcast:bool=True)
+
+    def sendREDEEM(self, _id:str, _passphrase:str, _name:str='', _sign:bool=True, _broadcast:bool=True):
+        """
+        DESCRIPTION:
+
+            Create, sign, and send a REDEEM. This transaction sweeps the value
+            from losing bids back into the wallet. If multiple bids (and reveals)
+            were placed on a name, all losing bids will be redeemed by this 
+            ransaction. If no value is passed in for `_name`, all qualifying bids
+            are redeemed.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _id         : Wallet ID.
+
+            (*) _passphrase : Passphrase to unlock the wallet.
+
+            ( ) _name       : Name to REDEEM bids for (or null for all names).
+
+            ( ) _sign       : Whether to sign the transaction. Default = True
+
+            ( ) _broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
+        """
+
+        sign = ''
+        broadcast = ''
+
+        if _sign == True:
+            sign = '1'
+        else:
+            sign = '0'
+
+        if _broadcast == True:
+            broadcast = '1'
+        else:
+            broadcast = '0'
+        
+        endpoint = '/wallet/' + _id + '/redeem'
+
+        _message = '{ "passphrase":"' + _passphrase + '", "name":"' + _name + '", "broadcast":' + broadcast + ', "sign":' + sign + ' }'
+        
+        try:
+            response = self.post(endpoint, _message)
+            for key in response:
+                if 'error' in key:
+                    response[key] = "{'message': 'Failed to REDEEM bids for '" + _name + "'}"
+        except:
+            response = {}
+            response['error'] = "{'message': 'Failed to REDEEM bids for '" + _name + "'}"
+        return response
+    ### END METHOD ################################### sendREDEEM(self, _id:str, _passphrase:str, _name:str='', _sign:bool=True, _broadcast:bool=True)
 
     def rpc_getNewAddress(self, _account:str=''):
         """
