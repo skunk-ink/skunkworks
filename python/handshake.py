@@ -3222,6 +3222,30 @@ class hsw:
             print('ERROR: Failed to get list of wallet names for "' + _id + '".')
     ### END METHOD ################################### getWalletNames(self, _id:str='primary')
 
+    def getWalletName(self, _name:str='', _id:str='primary'):
+        """
+        DESCRIPTION:
+
+            List the status of a single name known to the wallet.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _name : Name of wallet.
+
+            (*) _id   : ID of wallet. Default = 'primary'
+        """
+        
+        endpoint = '/wallet/' + _id + '/name/' + _name
+
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get status of wallet named "' + _name + '".')
+    ### END METHOD ################################### getWalletName(self, _name:str='', _id:str='primary')
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
