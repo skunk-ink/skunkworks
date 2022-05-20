@@ -3310,7 +3310,7 @@ class hsw:
 
             ( ) _id  : ID of wallet. Default = 'primary'
 
-            ( ) _own : Whether to only show bids from this wallet.
+            ( ) _own : Whether to only show bids from this wallet. Default = True
         """
         own = ''
 
@@ -3327,6 +3327,38 @@ class hsw:
         except:
             print('ERROR: Failed to get bids for the wallet "' + _id + '".')
     ### END METHOD ################################### getWalletBids(self, _id:str='primary', _own:bool=True)
+
+    def getWalletBidsByName(self, _name:str='', _id:str='primary', _own:bool=False):
+        """
+        DESCRIPTION:
+
+            List all bids for all names known to the wallet.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _name : Name of domain to display bids for.
+
+            ( ) _id  : ID of wallet. Default = 'primary'
+
+            ( ) _own : Whether to only show bids from this wallet. Default = False
+        """
+        own = ''
+
+        if _own == True:
+            own = '1'
+        else:
+            own = '0'
+        
+        endpoint = '/wallet/' + _id + '/bid/' + _name + '?own=' + own
+
+        try:
+            response = self.get(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to get bids for the domain "' + _name + '".')
+    ### END METHOD ################################### getWalletBidsByName(self, _name:str='', _id:str='primary', _own:bool=False)
 
     def rpc_getNewAddress(self, _account:str=''):
         """
