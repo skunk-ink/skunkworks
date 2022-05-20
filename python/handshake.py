@@ -3101,6 +3101,30 @@ class hsw:
             print('ERROR: Cannot get transaction details for the wallet "' + _id + '".')
     ### END METHOD ################################### getWalletTxDetails(self, _id:str='primary', _txhash:str='')
 
+    def deleteTransaction(self, _id:str='primary', _txhash:str=''):
+        """
+        DESCRIPTION:
+
+            Abandon single pending transaction. Confirmed transactions
+            will throw an error. `TX not eligible`
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _id     : ID of wallet where the transaction is that you want to remove.
+
+            (*) _txhash : Hash of transaction you would like to remove.
+        """
+
+        endpoint = '/wallet/' + _id + '/tx/' + _txhash
+        try:
+            response = self.delete(endpoint)
+            return response
+        except:
+            print('ERROR: Failed to delete transaction in "' + _id + '" wallet.')
+    ### END METHOD ################################### deleteTransaction(self, _id:str='primary', _txhash:str='')
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
