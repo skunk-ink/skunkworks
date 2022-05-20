@@ -4129,6 +4129,30 @@ class hsw:
         return response
     ### END METHOD ################################### sendREVOKE(self, _id:str, _passphrase:str, _name:str, _sign:bool=True, _broadcast:bool=True)
 
+    def rpc_getNames(self):
+        """
+        DESCRIPTION:
+
+            Returns info on each domain name in your wallet. 
+        
+        PARAMS:
+
+            None.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "getnames", "params": [] }'
+        try:
+            response = self.post(endpoint, _message)
+            for key in response:
+                if 'error' in key:
+                    response[key] = "{'message': 'RPC failed to find domain names in wallet'}"
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to get domain names in wallet'}"
+        return response
+    ### END METHOD ################################### rpc_getNames(self)
+
     def rpc_getAuctionInfo(self, _name:str):
         """
         DESCRIPTION:
