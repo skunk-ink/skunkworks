@@ -3422,6 +3422,35 @@ class hsw:
             print('ERROR: Failed to get reveals for the domain "' + _name + '".')
     ### END METHOD ################################### getWalletRevealsByName(self, _name:str='', _id:str='primary', _own:bool=False)
 
+    def getWalletResourceByName(self, _name:str='', _id:str='primary'):
+        """
+        DESCRIPTION:
+
+            Get the data resource associated with a name.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _name : Name of domain.
+
+            ( ) _id  : ID of wallet. Default = 'primary'
+        """
+
+        endpoint = '/wallet/' + _id + '/resource'
+
+        try:
+            response = self.get(endpoint)
+
+            for key in response:
+                if 'error' in key:
+                    response[key] = "{'message': 'Failed to get data resources associated with the domain '" + _name + "'}"
+
+            return response
+        except:
+            print('ERROR: Failed to get data resource associated with the domain "' + _name + '".')
+    ### END METHOD ################################### getWalletResourceByName(self, _name:str='', _id:str='primary')
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
