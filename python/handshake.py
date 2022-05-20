@@ -4178,11 +4178,11 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_getAuctionInfo(self, _name:str)
 
-    def rpc_getBids(self):
+    def rpc_getBIDS(self):
         """
         DESCRIPTION:
 
-            Returns list of bids placed by your wallet. 
+            Returns list of BIDs placed by your wallet. 
         
         PARAMS:
         
@@ -4195,18 +4195,18 @@ class hsw:
             response = self.post(endpoint, _message)
             for key in response:
                 if 'error' in key:
-                    response[key] = "{'message': 'RPC failed to find bids places with your wallet'}"
+                    response[key] = "{'message': 'RPC failed to find BIDs places with your wallet'}"
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to find bids places with your wallet'}"
+            response['error'] = "{'message': 'RPC failed to find BIDs places with your wallet'}"
         return response
-    ### END METHOD ################################### rpc_getBids(self)
+    ### END METHOD ################################### rpc_getBIDS(self)
 
-    def rpc_getReveals(self):
+    def rpc_getREVEALS(self):
         """
         DESCRIPTION:
 
-            Returns all the reveal transactions sent by the wallet.
+            Returns all the REVEAL transactions sent by the wallet.
         
         PARAMS:
         
@@ -4219,14 +4219,14 @@ class hsw:
             response = self.post(endpoint, _message)
             for key in response:
                 if 'error' in key:
-                    response[key] = "{'message': 'RPC failed to find any reveal transactions sent by your wallet'}"
+                    response[key] = "{'message': 'RPC failed to find any REVEAL transactions sent by your wallet'}"
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to find any reveal transactions sent by your wallet'}"
+            response['error'] = "{'message': 'RPC failed to find any REVEAL transactions sent by your wallet'}"
         return response
-    ### END METHOD ################################### rpc_getReveals(self)
+    ### END METHOD ################################### rpc_getREVEALS(self)
 
-    def rpc_sendOpen(self, _name:str):
+    def rpc_sendOPEN(self, _name:str):
         """
         DESCRIPTION:
 
@@ -4245,18 +4245,18 @@ class hsw:
             response = self.post(endpoint, _message)
             for key in response:
                 if 'error' in key:
-                    response[key] = "{'message': 'RPC failed to start opening phase of auction for the domain `" + _name + "`'}"
+                    response[key] = "{'message': 'RPC failed to start OPEN phase of auction for the domain `" + _name + "`'}"
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to start opening phase of auction for the domain `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to start OPEN phase of auction for the domain `" + _name + "`'}"
         return response
-    ### END METHOD ################################### rpc_sendOpen(self, _name:str)
+    ### END METHOD ################################### rpc_sendOPEN(self, _name:str)
 
-    def rpc_sendBid(self, _name:str, _bidAmount:float, _lockupBlind:float):
+    def rpc_sendBID(self, _name:str, _bidAmount:float, _lockupBlind:float):
         """
         DESCRIPTION:
 
-            The OPEN period is followed by the BIDDING period. Use `rpc_sendBid` to place a bid.
+            The OPEN period is followed by the BIDDING period. Use `rpc_sendBID` to place a bid.
 
             Note: This command involves entering HNS values, be careful with different formats
                   of values for different APIs. See https://hsd-dev.org/api-docs/?shell--curl#values
@@ -4280,12 +4280,45 @@ class hsw:
             response = self.post(endpoint, _message)
             for key in response:
                 if 'error' in key:
-                    response[key] = "{'message': 'RPC failed to to place bid for the domain `" + _name + "`'}"
+                    response[key] = "{'message': 'RPC failed to to place BID for the domain `" + _name + "`'}"
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to to place bid for the domain `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to to place BID for the domain `" + _name + "`'}"
         return response
-    ### END METHOD ################################### rpc_sendBid(self, _name:str, _bidAmount:float, _lockupBlind:float)
+    ### END METHOD ################################### rpc_sendBID(self, _name:str, _bidAmount:float, _lockupBlind:float)
+
+    def rpc_sendREVEAL(self, _name:str=''):
+        """
+        DESCRIPTION:
+
+            The BIDDING period is followed by the REVEAL period, during which bidders
+            must reveal their bids.
+
+            Note: If not domain name is specified then a REVEAL will be sent to all names
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _name : Domain name to reveal bid for (`null` for all names).
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "sendreveal", "params": [ "' + _name + '" ] }'
+
+        if _name == '':
+            _name = '[ALL]'
+
+        try:
+            response = self.post(endpoint, _message)
+            for key in response:
+                if 'error' in key:
+                    response[key] = "{'message': 'RPC failed to start REVEAL phase of auction for the domain `" + _name + "`'}"
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to start REVEAL phase of auction for the domain `" + _name + "`'}"
+        return response
+    ### END METHOD ################################### rpc_sendREVEAL(self, _name:str='')
 
     def rpc_getNewAddress(self, _account:str=''):
         """
