@@ -29,8 +29,11 @@
                                    `"             `""""`  `""""""`      
 """
 
-from multiprocessing.sharedctypes import Value
+import os
 import requests
+
+import sys
+from sys import platform
 
 ########################################################################################################
 ########################################################################################################
@@ -2584,7 +2587,30 @@ class hsw:
         endpoint = '/resend/'
         response = self.post(endpoint)
         return response
-    ### END METHOD ################################### walletRescan(self, _height:int)
+    ### END METHOD ################################### walletResend(self)
+
+    def walletBackup(self, _path:str=''):
+        """
+        DESCRIPTION:
+
+            Safely backup the wallet database to specified path (creates a clone of the database).
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _path : Local directory to save backup.
+        """
+        
+        endpoint = '/backup?path=' + _path
+        response = self.post(endpoint)
+
+        for key in response:
+            if 'error' in key:
+                response[key] = "{'message': 'Path is required for wallet backup'}"
+
+        return response
+    ### END METHOD ################################### walletBackup(self, _path:str='')
 
     def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
