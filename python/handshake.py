@@ -4160,9 +4160,9 @@ class hsw:
             Returns information on auction. 
         
         PARAMS:
-        (*) Denotes required argument
+            (*) Denotes required argument
         
-        (*) _name : Name to get auction information for.
+            (*) _name : Name to get auction information for.
         """
         
         endpoint = '/'
@@ -4226,6 +4226,32 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_getReveals(self)
 
+    def rpc_sendOpen(self, _name:str):
+        """
+        DESCRIPTION:
+
+            Once a name is available, a sendopen transaction starts the opening phase.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _name : Domain name to send open transaction for.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "sendopen", "params": [ "' + _name + '" ] }'
+        try:
+            response = self.post(endpoint, _message)
+            for key in response:
+                if 'error' in key:
+                    response[key] = "{'message': 'RPC failed to start opening phase of auction for the domain `" + _name + "`'}"
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to start opening phase of auction for the domain `" + _name + "`'}"
+        return response
+    ### END METHOD ################################### rpc_sendOpen(self, _name:str)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
@@ -4236,7 +4262,7 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _account  : Account name. Default = 'defualt'
+            ( ) _account : Account name. Default = 'defualt'
         """
         
         endpoint = '/'
