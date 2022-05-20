@@ -2634,6 +2634,22 @@ class hsw:
         return response
     ### END METHOD ################################### walletMasterHDKeyBackup(self, _id:str='primary')
 
+    def listWallets(self):
+        """
+        DESCRIPTION:
+
+            List all wallet IDs. Returns an array of strings. 
+        
+        PARAMS:
+
+            ( ) _id : Wallet ID. Default = 'primary'
+        """
+        
+        endpoint = '/wallet/'
+        response = self.get(endpoint)
+        return response
+    ### END METHOD ################################### listWallets(self)
+
     def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
         DESCRIPTION:
