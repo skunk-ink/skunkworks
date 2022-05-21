@@ -4561,6 +4561,38 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_createBID(self, _name:str, _bidAmount:float, _lockupBlind:float, _account:str)
 
+    def rpc_createREVEAL(self, _name:str='', _account:str=''):
+        """
+        DESCRIPTION:
+
+            Create `REVEAL` transaction without signing or broadcasting it.
+
+            Note: If no name is specified a `REVEAL` transaction will be
+                  created for all names.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _name    : Domain name to `REVEAL` bid for (`null` for all names).
+
+            ( ) _account : Account to use.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "createreveal", "params": [ "' + _name + '", "' + _account + '" ] }'
+
+        if _name == '':
+            _name = '[ALL]'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to start REVEAL for domain `" + _name + "`'}"
+        return response
+    ### END METHOD ################################### rpc_createREVEAL(self, _name:str='', _account:str='')
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
