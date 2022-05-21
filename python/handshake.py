@@ -6316,4 +6316,30 @@ class hsw:
             response['error'] = "{'message': 'RPC failed to get memory info'}"
         return response
     ### END METHOD ################################### rpc_getMemoryInfo(self)
+
+    def rpc_setLogLevel(self, _logLevel:str='NONE'):
+        """
+        DESCRIPTION:
+
+            Change Log level of the running node.
+
+            Levels are: `NONE`, `ERROR`, `WARNING`, `INFO`, `DEBUG`, `SPAM`
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _logLevel : Level for the logger. Default = `NONE`
+        """
+        
+        endpoint = '/'
+
+        _message = '{ "method": "setloglevel", "params": [ "' + _logLevel + '" ] }'
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to set log level'}"
+        return response
+    ### END METHOD ################################### rpc_setLogLevel(self, _logLevel:str='NONE')
     
