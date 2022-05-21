@@ -5670,7 +5670,7 @@ class hsw:
         
         endpoint = '/'
 
-        if _minConfirm == None and _watchOnly == None:
+        if _minConfirm == None and _includeEmpty == None and _watchOnly == None:
             _message = '{ "method": "listreceivedbyaccount", "params": [] }'
         else:
             includeEmpty = ''
@@ -5692,13 +5692,10 @@ class hsw:
             else:
                 watchOnly = '0'
 
-            if _minConfirm == None and _includeEmpty == None and _watchOnly == None:
-                _message = '{ "method": "listreceivedbyaccount" }'
-            else:
-                if _minConfirm == None:
+            if _minConfirm == None:
                     _minConfirm = 0
 
-                _message = '{ "method": "listreceivedbyaccount", "params": [ ' + str(_minConfirm) + ', ' + str(includeEmpty) + ', ' + str(watchOnly) + ' ] }'
+            _message = '{ "method": "listreceivedbyaccount", "params": [ ' + str(_minConfirm) + ', ' + str(includeEmpty) + ', ' + str(watchOnly) + ' ] }'
 
         try:
             response = self.post(endpoint, _message)
@@ -5727,7 +5724,7 @@ class hsw:
         
         endpoint = '/'
 
-        if _minConfirm == None and _watchOnly == None:
+        if _minConfirm == None and _includeEmpty == None and _watchOnly == None:
             _message = '{ "method": "listreceivedbyaddress", "params": [] }'
         else:
             includeEmpty = ''
@@ -5749,13 +5746,10 @@ class hsw:
             else:
                 watchOnly = '0'
 
-            if _minConfirm == None and _includeEmpty == None and _watchOnly == None:
-                _message = '{ "method": "listreceivedbyaddress" }'
-            else:
-                if _minConfirm == None:
+            if _minConfirm == None:
                     _minConfirm = 0
 
-                _message = '{ "method": "listreceivedbyaddress", "params": [ ' + str(_minConfirm) + ', ' + str(includeEmpty) + ', ' + str(watchOnly) + ' ] }'
+            _message = '{ "method": "listreceivedbyaddress", "params": [ ' + str(_minConfirm) + ', ' + str(includeEmpty) + ', ' + str(watchOnly) + ' ] }'
 
         try:
             response = self.post(endpoint, _message)
@@ -5764,6 +5758,52 @@ class hsw:
             response['error'] = "{'message': 'RPC failed to get list address balances'}"
         return response
     ### END METHOD ################################### rpc_listReceivedByAddress(self, _minConfirm:int=None, _includeEmpty:bool=None, _watchOnly:bool=None)
+
+    def rpc_listSinceBlock(self, _blockHash:str=None, _minConfirm:int=None, _watchOnly:bool=None):
+        """
+        DESCRIPTION:
+
+            Get all transactions in blocks since a block specified by
+            hash, or all transactions if no block is specifiied.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _blockHash    : Hash of earliest block to start listing from.
+
+            ( ) _minConfirm   : Minimum confirmations required to count a transaction.
+
+            ( ) _watchOnly    : (bool) Whether to include watch-only addresses. Default = `False`.
+        """
+        
+        endpoint = '/'
+
+        if _blockHash == None and _minConfirm == None and _watchOnly == None:
+            _message = '{ "method": "listsinceblock", "params": [] }'
+        else:
+            watchOnly = ''
+
+            if _watchOnly == None:
+                _watchOnly = False
+
+            if _watchOnly == True:
+                watchOnly = '1'
+            else:
+                watchOnly = '0'
+
+            if _minConfirm == None:
+                    _minConfirm = 0
+
+            _message = '{ "method": "listsinceblock", "params": [ "' + _blockHash + '", ' + str(_minConfirm) + ', ' + str(watchOnly) + ' ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to get list transactions since block `" + _blockHash + "`'}"
+        return response
+    ### END METHOD ################################### rpc_listSinceBlock(self, _blockHash:str=None, _minConfirm:int=None, _watchOnly:bool=None)
 
     def rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str):
         """
