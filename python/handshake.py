@@ -5944,6 +5944,29 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_sendFrom(self, _fromAccount:str, _toAddress:str, _amount:float, _minConfirm:int=None)
 
+    def rpc_walletLock(self):
+        """
+        DESCRIPTION:
+
+            Locks the wallet by removing the decryption key from memory.
+            See `hsw.rpc_walletPassphrase`.
+        
+        PARAMS:
+
+            None.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "walletlock" }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to lock wallet'}"
+        return response
+    ### END METHOD ################################### rpc_walletLock(self)
+
     def rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str):
         """
         DESCRIPTION:
