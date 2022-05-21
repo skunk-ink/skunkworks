@@ -4989,6 +4989,31 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_backupWallet(self, _path:str)
 
+    def rpc_dumpPrivKey(self, _address:str):
+        """
+        DESCRIPTION:
+
+            Get the private key (WIF format) corresponding to specified
+            address. Also see `hsw.rpc_importPrivKey`.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _address : Reveal the private key for this Handshake address.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "dumpprivkey", "params": [ "' + _address + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to dump private keys'}"
+        return response
+    ### END METHOD ################################### rpc_dumpPrivKey(self, _address:str)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
