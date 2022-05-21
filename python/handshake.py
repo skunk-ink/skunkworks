@@ -4763,6 +4763,32 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_createCANCEL(self, _name:str, _account:str='')
 
+    def rpc_createREVOKE(self, _name:str, _account:str=''):
+        """
+        DESCRIPTION:
+
+            Create `REVOKE` transaction without signing or broadcasting it.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _name    : Domain name to `REVOKE` the in-progress transfer of.
+
+            ( ) _account : Account to use.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "createrevoke", "params": [ "' + _name + '", "' + _account + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to create a REVOKE transaction for domain `" + _name + "`'}"
+        return response
+    ### END METHOD ################################### rpc_createREVOKE(self, _name:str, _account:str='')
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
