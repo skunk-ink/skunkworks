@@ -5854,8 +5854,8 @@ class hsw:
         """
         DESCRIPTION:
 
-            Get all transactions in blocks since a block specified by
-            hash, or all transactions if no block is specifiied.
+            Get unsepnt transaction outputs from all addreses,
+            or a specific set of addresses.
         
         PARAMS:
 
@@ -5896,10 +5896,6 @@ class hsw:
 
                 addresses += ']'
 
-            print()
-            print('Address Array = "' + addresses + '"')
-            print()
-
             _message = '{ "method": "listunspent", "params": [ ' + str(_minConfirm) + ', ' + str(_maxConfirm) + ', ' + addresses + ' ] }'
 
         try:
@@ -5909,6 +5905,44 @@ class hsw:
             response['error'] = "{'message': 'RPC failed to get unspent transaction outputs from addresses'}"
         return response
     ### END METHOD ################################### rpc_listUnspent(self, _minConfirm:int=None, _maxConfirm:int=None, _addresses=None)
+
+    def rpc_sendFrom(self, _fromAccount:str, _toAddress:str, _amount:float, _minConfirm:int=None):
+        """
+        DESCRIPTION:
+
+            Send HNS from an account to an address.
+
+            Note: This command involves entering HNS values, be careful with different formats
+                  of values for different APIs. See https://hsd-dev.org/api-docs/?shell--curl#values
+                  to learn more.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _fromAccount : Wallet account to spend outputs from.
+
+            (*) _toAddress   : Handshake address to send funds to.
+
+            (*) _amount      : Amount (in HNS) to send.
+
+            ( ) _minConfirm  : Minimum confirmations for output to be spent from.
+        """
+        
+        endpoint = '/'
+
+        if _minConfirm == None:
+            _message = '{ "method": "sendfrom", "params": [ "' + _fromAccount + '", "' + _toAddress + '", ' + str(_amount) + ' ] }'
+        else:
+            _message = '{ "method": "sendfrom", "params": [ "' + _fromAccount + '", "' + _toAddress + '", ' + str(_amount) + ', ' + str(_minConfirm) + ' ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to send HNS'}"
+        return response
+    ### END METHOD ################################### rpc_sendFrom(self, _fromAccount:str, _toAddress:str, _amount:float, _minConfirm:int=None)
 
     def rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str):
         """
