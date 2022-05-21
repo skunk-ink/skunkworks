@@ -4941,6 +4941,30 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_resendWalletTransactions(self)
 
+    def rpc_abandonTransaction(self, _txID:str):
+        """
+        DESCRIPTION:
+
+            Remove transaction from the database. This allows "stuck" coins to be respent.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _txID : Transaction ID to remove.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "abandontransaction", "params": [ "' + _txID + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to abandon transaction.'}"
+        return response
+    ### END METHOD ################################### rpc_abandonTransaction(self, _txID:str)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
