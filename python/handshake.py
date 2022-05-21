@@ -6103,6 +6103,35 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_sendToAddress(self, _toAddress:str, _amount:float, _subtractFee:bool=None, _comment:str=None, _commentTo:str=None)
 
+    def rpc_setTxFee(self, _txFee:float=0):
+        """
+        DESCRIPTION:
+
+            Set the fee rate for all new transactions until the fee is changed
+            again, or set to `0` (will return to automatic fee).
+
+            Note: This command involves entering HNS values, be careful with different formats
+                  of values for different APIs. See https://hsd-dev.org/api-docs/?shell--curl#values
+                  to learn more.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _txFee : Fee rate in HNS/kB. Default = `0`
+        """
+        
+        endpoint = '/'
+
+        _message = '{ "method": "settxfee", "params": [ ' + str(_txFee) +' ] }'
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to set transaction fee'}"
+        return response
+    ### END METHOD ################################### rpc_setTxFee(self, _txFee:float=0)
+
     def rpc_walletLock(self):
         """
         DESCRIPTION:
