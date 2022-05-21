@@ -35,7 +35,7 @@
 
 ***
 
-### **Handshake API Python Wrapper** [(view source)](handshake/wrapper.py)
+### **Handshake API Python Wrapper** [(view source)](handshake/wrap.py)
 
 ```python
 from skunkworks.python.handshake import hsd, hsw

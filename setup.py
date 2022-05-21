@@ -7,7 +7,7 @@ setup(
     url='https://github.com/skunk-ink/skunkworks/',
     author='skunk-ink',
     license='MIT',
-    packages=['python'],
+    packages=['handshake'],
     install_requires=['requests>=2.13.0',
                       'simplejson>=3.16.0'                    
                       ],
