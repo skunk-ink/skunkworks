@@ -5222,6 +5222,37 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_getRawChangeAddress(self)
 
+    def rpc_getReceivedByAccount(self, _account:str, _minConfirm:int=None):
+        """
+        DESCRIPTION:
+
+            Get total amount received by specified account. Optionally
+            only count transactions with `_minConfirm` number of confirmations.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _account    : Account name.
+
+            ( ) _minConfirm : Only include transactions with this many confirmations.
+        """
+        
+        endpoint = '/'
+
+        if _minConfirm == None:
+            _message = '{ "method": "getreceivedbyaccount", "params": [ "' + _account + '" ] }'
+        else:
+            _message = '{ "method": "getreceivedbyaccount", "params": [ "' + _account + '", "' + _minConfirm + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to get amount received for the `" + _account + "` account'}"
+        return response
+    ### END METHOD ################################### rpc_getReceivedByAccount(self, _account:str, _minConfirm:int=None)
+
     def rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str):
         """
         DESCRIPTION:
