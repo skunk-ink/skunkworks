@@ -4873,7 +4873,7 @@ class hsw:
             response = self.post(endpoint, _message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get wallet info.'}"
+            response['error'] = "{'message': 'RPC failed to get wallet info'}"
         return response
     ### END METHOD ################################### rpc_getWalletInfo(self)
 
@@ -4915,7 +4915,7 @@ class hsw:
             response = self.post(endpoint, _message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to fund raw transaction.'}"
+            response['error'] = "{'message': 'RPC failed to fund raw transaction'}"
         return response
     ### END METHOD ################################### rpc_fundRawTransaction(self, _txHex:str, _feeRate:float=None, _changeAddress:str=None)
 
@@ -4937,7 +4937,7 @@ class hsw:
             response = self.post(endpoint, _message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed resend wallet transactions.'}"
+            response['error'] = "{'message': 'RPC failed resend wallet transactions'}"
         return response
     ### END METHOD ################################### rpc_resendWalletTransactions(self)
 
@@ -4961,9 +4961,33 @@ class hsw:
             response = self.post(endpoint, _message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to abandon transaction.'}"
+            response['error'] = "{'message': 'RPC failed to abandon transaction'}"
         return response
     ### END METHOD ################################### rpc_abandonTransaction(self, _txID:str)
+
+    def rpc_backupWallet(self, _path:str):
+        """
+        DESCRIPTION:
+
+            Back up wallet database and files to directory created at specified path.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _path : Absolute path (including directories and filename) to write backup file.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "backupwallet", "params": [ "' + _path + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed backup wallet'}"
+        return response
+    ### END METHOD ################################### rpc_backupWallet(self, _path:str)
 
     def rpc_getNewAddress(self, _account:str=''):
         """
@@ -4985,6 +5009,6 @@ class hsw:
             response = self.post(endpoint, _message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get new receiving address.'}"
+            response['error'] = "{'message': 'RPC failed to get new receiving address'}"
         return response
     ### END METHOD ################################### rpc_getNewAddress(self, _account:str='')
