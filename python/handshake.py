@@ -4919,6 +4919,28 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_fundRawTransaction(self, _txHex:str, _feeRate:float=None, _changeAddress:str=None)
 
+    def rpc_resendWalletTransactions(self):
+        """
+        DESCRIPTION:
+
+            Re-broadcasts all unconfirmed transactions to the network.
+        
+        PARAMS:
+
+            None.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "resendwallettransactions" }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed resend wallet transactions.'}"
+        return response
+    ### END METHOD ################################### rpc_resendWalletTransactions(self)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
