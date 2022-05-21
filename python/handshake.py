@@ -5039,6 +5039,33 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_dumpWallet(self, _path:str)
 
+    def rpc_encryptWallet(self, _passphrase:str):
+        """
+        DESCRIPTION:
+
+            Encrypts wallet with provided passphrase. This action
+            can only be done once on an unencrypted wallet. See
+            `hsw.rpc_walletPasswordChange()` or `hsw.changePassword()`
+            if wallet has already been encrypted.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _passphrase : Absolute path (including directories and filename) to write backup file.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "encryptwallet", "params": [ "' + _passphrase + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to encrypt wallet'}"
+        return response
+    ### END METHOD ################################### rpc_encryptWallet(self, _passphrase:str)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
