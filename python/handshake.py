@@ -4733,9 +4733,35 @@ class hsw:
             response = self.post(endpoint, _message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to create FINALIZE transaction for domain `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to create a FINALIZE transaction for domain `" + _name + "`'}"
         return response
     ### END METHOD ################################### rpc_createFINALIZE(self, _name:str, _account:str='')
+
+    def rpc_createCANCEL(self, _name:str, _account:str=''):
+        """
+        DESCRIPTION:
+
+            Create `CANCEL` transaction without signing or broadcasting it.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _name    : Domain name to `CANCEL` the in-progress transfer of.
+
+            ( ) _account : Account to use.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "createcancel", "params": [ "' + _name + '", "' + _account + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to create a CANCEL transaction for domain `" + _name + "`'}"
+        return response
+    ### END METHOD ################################### rpc_createCANCEL(self, _name:str, _account:str='')
 
     def rpc_getNewAddress(self, _account:str=''):
         """
