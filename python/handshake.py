@@ -5487,13 +5487,13 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _txHex : Raw transaction in hex that funds an address already in the wallet.
+            (*) _txHex : Raw transaction in hex that funds an address already in the wallet.
 
-            ( ) _txOutProof : Hex output from `hsd.rpc_getTxOutProof` containing the tx.
+            (*) _txOutProof : Hex output from `hsd.rpc_getTxOutProof` containing the tx.
         """
         
         endpoint = '/'
-        _message = '{ "method": "importprunedfunds", "params": [ "' + _txHex + '", "' + _txHex + '" ] }'
+        _message = '{ "method": "importprunedfunds", "params": [ "' + _txHex + '", "' + _txOutProof + '" ] }'
 
         try:
             response = self.post(endpoint, _message)
@@ -5502,6 +5502,48 @@ class hsw:
             response['error'] = "{'message': 'RPC failed to import pruned funds'}"
         return response
     ### END METHOD ################################### rpc_importPrunedFunds(self, _txHex:str, _txOutProof:str)
+
+    def rpc_importPubKey(self, _pubHexKey:str, _label:str=None, _rescan:bool=None):
+        """
+        DESCRIPTION:
+
+            Import public key to a watch-only wallet.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _pubHexKey : Hex-encoded public key.
+
+            ( ) _label   : Ignored but required if additional parameters are passed.
+
+            ( ) _rescan  : (bool) Whether to rescan wallet after importing.
+        """
+        
+        endpoint = '/'
+
+        if _rescan == None:
+            _message = '{ "method": "importpubkey", "params": [ "' + _pubHexKey + '" ] }'
+        else:
+            rescan = ''
+
+            if _rescan == True:
+                rescan = '1'
+            else:
+                rescan = '0'
+
+            if _label == None:
+                _label = 'Unlabeled'
+
+            _message = '{ "method": "importpubkey", "params": [ "' + _pubHexKey + '", "' + _label + '", ' + str(rescan) + ' ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to public key'}"
+        return response
+    ### END METHOD ################################### rpc_importPubKey(self, _pubHexKey:str, _label:str=None, _rescan:bool=None)
 
     def rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str):
         """
