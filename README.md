@@ -66,13 +66,4 @@ print(response)
 ```
 > *For more information on using the Handshake API, visit the **[Handshake API Docs](https://hsd-dev.org/api-docs/#introduction)***
 
-
-### **Initialization Defaults**
- - **`hsd`**
-   - _ipaddress = `'127.0.0.1'`
-   - _port = `12037`
- - **`hsw`**
-   - _ipaddress = `'127.0.0.1'`
-   - _port = `12039`
-
 ***
