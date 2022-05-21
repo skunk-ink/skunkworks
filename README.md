@@ -40,7 +40,7 @@ pip install skunkworks/
 
 ***
 
-### **Handshake API Python Wrapper** [(view source)](handshake/wrap.py)
+### **Handshake API Python Wrapper** [(view source)](handshake/wrapper.py)
 
 ```python
 from handshake.wrapper import hsd, hsw
