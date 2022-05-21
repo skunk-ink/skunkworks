@@ -5284,6 +5284,43 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_getReceivedByAddress(self, _account:str, _minConfirm:int=None)
 
+    def rpc_getTransaction(self, _txID:str, _watchOnly:bool=None):
+        """
+        DESCRIPTION:
+
+            Get details about a transaction in the wallet.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _txID      : ID of transaction to fetch.
+
+            ( ) _watchOnly : (bool) Whether to include watch-only addresses in balance details.
+        """
+        
+        endpoint = '/'
+
+        if _watchOnly == None:
+            _message = '{ "method": "gettransaction", "params": [ "' + _txID + '" ] }'
+        else:
+            watchOnly = ''
+
+            if _watchOnly == True:
+                watchOnly = '1'
+            else:
+                watchOnly = '0'
+
+            _message = '{ "method": "gettransaction", "params": [ "' + _txID + '", ' + watchOnly + ' ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to get transaction details'}"
+        return response
+    ### END METHOD ################################### rpc_getTransaction(self, _txID:str, _watchOnly:bool=None)
+
     def rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str):
         """
         DESCRIPTION:
