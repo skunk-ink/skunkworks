@@ -4400,6 +4400,36 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_sendFINALIZE(self, _name:str)
 
+    def rpc_sendCANCEL(self, _name:str):
+        """
+        DESCRIPTION:
+
+            After sending a `TRANSFER` but before sending a `FINALIZE`,
+            the original owner can `CANCEL` the transfer. The owner will
+            retain control of the name. This is the recommended means
+            of canceling a transfer. Not to be confused with a `REVOKE`,
+            which is only to be used in the case of a stolen key. There
+            is no `CANCEL` covenant -- this transaction actually sends
+            an `UPDATE`.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _name : Domain name to `CANCEL` the in-progress transfer of.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "sendcancel", "params": [ "' + _name + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to CANCEL the transfer of `" + _name + "`'}"
+        return response
+    ### END METHOD ################################### rpc_sendCANCEL(self, _name:str)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
