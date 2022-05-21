@@ -5992,3 +5992,4 @@ class hsw:
             response['error'] = "{'message': 'RPC failed to change wallet password'}"
         return response
     ### END METHOD ################################### rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str)
+    
