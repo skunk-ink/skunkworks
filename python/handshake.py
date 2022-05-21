@@ -4789,6 +4789,48 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_createREVOKE(self, _name:str, _account:str='')
 
+    def rpc_importName(self, _name:str, _rescanHeight:int=None):
+        """
+        DESCRIPTION:
+
+            Add a name to the wallet "watchlist" without sending a transaction. Optionally
+            rescan the blockchain to recover `OPEN` and `BID`s for the name. This action will
+            fail if the name already exists in the wallet.
+
+            The purpose of this action is to "subscribe" to `BID`s for a name auction before
+            participating in that auction. If a user is interested in `BID`s that have already
+            been placed on a name they are interested in bidding on themselves, they may
+            execute this RPC call and include a `height` parameter, which should be any block
+            before the OPEN for the name was confirmed. The `OPEN` transaction must be included
+            in the rescan or the wallet will not track `BID`s on the name.
+
+            Once the auction is rescanned, `rpc_getBIDS` can be used to return all current BIDs
+            on a name, even if the wallet has not placed any BIDs itself.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _name         : Domain name to import.
+
+            ( ) _rescanHeight : If present, perform a wallet rescan from specified height.
+        """
+        
+        endpoint = '/'
+        
+        if _rescanHeight == None:
+            _message = '{ "method": "importname", "params": [ "' + _name + '" ] }'
+        else:
+            _message = '{ "method": "importname", "params": [ "' + _name + '", ' + str(_rescanHeight) + ' ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to import domain `" + _name + "`'}"
+        return response
+    ### END METHOD ################################### rpc_importName(self, _name:str, _rescanHeight:int=None)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
