@@ -6342,4 +6342,26 @@ class hsw:
             response['error'] = "{'message': 'RPC failed to set log level'}"
         return response
     ### END METHOD ################################### rpc_setLogLevel(self, _logLevel:str='NONE')
+
+    def rpc_stop(self):
+        """
+        DESCRIPTION:
+
+            Closes the wallet database.
+        
+        PARAMS:
+
+            None.
+        """
+        
+        endpoint = '/'
+
+        _message = '{ "method": "stop" }'
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to close wallet database'}"
+        return response
+    ### END METHOD ################################### rpc_stop(self)
     
