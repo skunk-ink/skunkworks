@@ -4683,6 +4683,34 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_createRENEWAL(self, _name:str, _account:str='')
 
+    def rpc_createTRANSFER(self, _name:str, _address:str, _account:str=''):
+        """
+        DESCRIPTION:
+
+            Create `TRANSFER` transaction without signing or broadcasting it.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _name    : Domain name to `TRANSFER` ownership of.
+
+            (*) _address : Address to transfer name ownership to.
+
+            ( ) _account : Account to use.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "createtransfer", "params": [ "' + _name + '", "' + _address + '", "' + _account + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to create TRANSFER transaction for domain `" + _name + "`'}"
+        return response
+    ### END METHOD ################################### rpc_createTRANSFER(self, _name:str, _address:str, _account:str='')
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
