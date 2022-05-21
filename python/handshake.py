@@ -5418,6 +5418,59 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_importWallet(self, _walletFile:str, _rescan:bool=False)
 
+    def rpc_importAddress(self, _address:str, _label:str=None, _rescan:bool=None, _p2sh:bool=None):
+        """
+        DESCRIPTION:
+
+            Import address to a watch-only wallet. May also import a
+            Handshake output script (in hex) as pay-to-script-hash
+            (P2WSH) address.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _address : Address to watch in wallet.
+
+            ( ) _label   : Ignored but required if additional parameters are passed.
+
+            ( ) _rescan  : (bool) Whether to rescan wallet after importing.
+
+            ( ) _p2sh    : (bool) Whether to generate P2SH address from given script.
+        """
+        
+        endpoint = '/'
+
+        if _rescan == None and _p2sh == None:
+            _message = '{ "method": "importaddress", "params": [ "' + _address + '" ] }'
+        else:
+            rescan = ''
+            p2sh = ''
+
+            if _rescan == True:
+                rescan = '1'
+            else:
+                rescan = '0'
+
+            if _p2sh == True:
+                p2sh = '1'
+            else:
+                p2sh = '0'
+        
+
+            if _label == None:
+                _label = 'Unlabeled'
+
+            _message = '{ "method": "importwallet", "params": [ "' + _address + '", "' + _label + '", ' + str(rescan) + ', ' + str(p2sh) + ' ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to import address `" + _address + "`'}"
+        return response
+    ### END METHOD ################################### rpc_importAddress(self, _address:str, _label:str=None, _rescan:bool=None, _p2sh:bool=None)
+
     def rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str):
         """
         DESCRIPTION:
