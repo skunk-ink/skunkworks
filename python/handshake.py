@@ -5321,6 +5321,28 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_getTransaction(self, _txID:str, _watchOnly:bool=None)
 
+    def rpc_getUnconfirmedBalance(self):
+        """
+        DESCRIPTION:
+
+            Get the unconfirmed balance from the wallet.
+        
+        PARAMS:
+
+            None.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "getunconfirmedbalance" }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed get balance of unconfirmed'}"
+        return response
+    ### END METHOD ################################### rpc_getUnconfirmedBalance(self)
+
     def rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str):
         """
         DESCRIPTION:
