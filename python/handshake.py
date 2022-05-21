@@ -5200,6 +5200,28 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_getNewAddress(self, _account:str='')
 
+    def rpc_getRawChangeAddress(self):
+        """
+        DESCRIPTION:
+
+            Get the next change address from specified account.
+        
+        PARAMS:
+
+            None.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "getrawchangeaddress" }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed get next change address'}"
+        return response
+    ### END METHOD ################################### rpc_getRawChangeAddress(self)
+
     def rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str):
         """
         DESCRIPTION:
