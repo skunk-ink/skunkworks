@@ -4588,7 +4588,7 @@ class hsw:
             response = self.post(endpoint, _message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to start REVEAL for domain `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to create a REVEAL transaction for domain `" + _name + "`'}"
         return response
     ### END METHOD ################################### rpc_createREVEAL(self, _name:str='', _account:str='')
 
@@ -4599,7 +4599,7 @@ class hsw:
             Create `REDEEM` transaction without signing or broadcasting it.
 
             Note: If no name is specified all names will have their loosing
-                  bids redeemed
+                  bids redeemed.
         
         PARAMS:
 
@@ -4620,7 +4620,7 @@ class hsw:
             response = self.post(endpoint, _message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to `REDEEM` bids for domain `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to create a REDEEM transaction for domain `" + _name + "`'}"
         return response
     ### END METHOD ################################### rpc_createREDEEM(self, _name:str='', _account:str='')
 
@@ -4653,9 +4653,35 @@ class hsw:
             response = self.post(endpoint, _message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to `UPDATE` the records for `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to create UPDATE for `" + _name + "`'}"
         return response
     ### END METHOD ################################### rpc_createUPDATE(self, _name:str, _data:json, _account:str='')
+
+    def rpc_createRENEWAL(self, _name:str, _account:str=''):
+        """
+        DESCRIPTION:
+
+            Create `RENEW` transaction without signing or broadcasting it.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _name    : Domain name to `RENEW` ownership of.
+
+            ( ) _account : Account to use.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "createrenewal", "params": [ "' + _name + '", "' + _account + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to create RENEW transaction for domain `" + _name + "`'}"
+        return response
+    ### END METHOD ################################### rpc_createRENEWAL(self, _name:str, _account:str='')
 
     def rpc_getNewAddress(self, _account:str=''):
         """
