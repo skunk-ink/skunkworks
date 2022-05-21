@@ -5243,7 +5243,7 @@ class hsw:
         if _minConfirm == None:
             _message = '{ "method": "getreceivedbyaccount", "params": [ "' + _account + '" ] }'
         else:
-            _message = '{ "method": "getreceivedbyaccount", "params": [ "' + _account + '", "' + _minConfirm + '" ] }'
+            _message = '{ "method": "getreceivedbyaccount", "params": [ "' + _account + '", ' + str(_minConfirm) + ' ] }'
 
         try:
             response = self.post(endpoint, _message)
@@ -5274,7 +5274,7 @@ class hsw:
         if _minConfirm == None:
             _message = '{ "method": "getreceivedbyaddress", "params": [ "' + _address + '" ] }'
         else:
-            _message = '{ "method": "getreceivedbyaddress", "params": [ "' + _address + '", "' + _minConfirm + '" ] }'
+            _message = '{ "method": "getreceivedbyaddress", "params": [ "' + _address + '", ' + str(_minConfirm) + ' ] }'
 
         try:
             response = self.post(endpoint, _message)
@@ -5544,6 +5544,49 @@ class hsw:
             response['error'] = "{'message': 'RPC failed to public key'}"
         return response
     ### END METHOD ################################### rpc_importPubKey(self, _pubHexKey:str, _label:str=None, _rescan:bool=None)
+
+    def rpc_listAccounts(self, _minConfirm:int=None, _watchOnly:bool=None):
+        """
+        DESCRIPTION:
+
+            Get list of account names and balances.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _minConfirm : Minimum confirmations for transaction to be included in balance.
+
+            ( ) _watchOnly  : (bool) Include watch-only addresses.
+        """
+        
+        endpoint = '/'
+
+        if _minConfirm == None and _watchOnly == None:
+            _message = '{ "method": "listaccounts", "params": [] }'
+        else:
+            watchOnly = ''
+
+            if _watchOnly == None:
+                _watchOnly = False
+
+            if _watchOnly == True:
+                watchOnly = '1'
+            else:
+                watchOnly = '0'
+
+            if _minConfirm == None:
+                _minConfirm = 0
+
+            _message = '{ "method": "listaccounts", "params": [ ' + str(_minConfirm) + ', ' + str(watchOnly) + ' ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to get list of wallet accounts and balances'}"
+        return response
+    ### END METHOD ################################### rpc_listAccounts(self, _minConfirm:int=None, _watchOnly:bool=None)
 
     def rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str):
         """
