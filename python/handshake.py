@@ -4855,6 +4855,28 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_selectWallet(self, _walletID:str)
 
+    def rpc_getWalletInfo(self):
+        """
+        DESCRIPTION:
+
+            Get basic wallet details.
+        
+        PARAMS:
+
+            None.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "getwalletinfo" }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to get wallet info.'}"
+        return response
+    ### END METHOD ################################### rpc_getWalletInfo(self)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
