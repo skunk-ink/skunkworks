@@ -4352,6 +4352,41 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_sendREDEEM(self, _name:str='')
 
+    def rpc_sendUPDATE(self, _name:str, _data:str):
+        """
+        DESCRIPTION:
+
+            After the REVEAL period, the auction is CLOSED. The value
+            locked up by the winning bid is locked forever, although
+            the name owner and the name state can still change. The
+            winning bidder can update the data resource associated with
+            their name by sending an UPDATE.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _name       : Domain name to UPDATE.
+
+            (*) _data       : JSON-encoded resource object.
+                              See https://hsd-dev.org/api-docs/#resource-object for more information.
+        """
+
+        endpoint = '/'
+
+        params = "['name':'" + _name + "', 'data':'" + _data + "']"
+        _message = '{ "method": "sendupdate", "params": "' + params + '" }'
+        try:
+            response = self.post(endpoint, _message)
+            for key in response:
+                if 'error' in key:
+                    response[key] = "{'message': 'RPC failed to UPDATE the domain `" + _name + "`'}"
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to UPDATE the domain `" + _name + "`'}"
+        return response
+    ### END METHOD ################################### rpc_sendUPDATE(self, _name:str, _data:str)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
