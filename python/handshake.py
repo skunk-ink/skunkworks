@@ -5588,6 +5588,46 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_listAccounts(self, _minConfirm:int=None, _watchOnly:bool=None)
 
+    def rpc_lockUnspent(self, _lock:bool=True, _outputs:json=None):
+        """
+        DESCRIPTION:
+
+            Lock or unlock specified transaction outputs. If no outputs are
+            specified, ALL coins will be unlocked (`unlock` only).
+
+            Note: If no paramaters are passed `_lock` will default to `True`
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _lock : (bool) `True` = lock coins, `False` = unlock coins. Default = `True`.
+
+            ( ) _outputs  : (bool) Array of outputs to lock or unlock.
+        """
+        
+        endpoint = '/'
+
+        lock = ''
+
+        if _lock == True:
+            lock = '0'
+        else:
+            lock = '1'
+
+        if _outputs == None:
+            _message = '{ "method": "lockunspent", "params": [ ' + lock + ' ] }'
+        else:
+            _message = '{ "method": "lockunspent", "params": [ ' + lock + ', [' + json.dumps(_outputs) + '] ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed lock/unlock unspent coins'}"
+        return response
+    ### END METHOD ################################### rpc_lockUnspent(self, _lock:bool=True, _outputs:json=None)
+
     def rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str):
         """
         DESCRIPTION:
