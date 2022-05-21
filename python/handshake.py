@@ -4593,6 +4593,38 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_createREVEAL(self, _name:str='', _account:str='')
 
+    def rpc_createREDEEM(self, _name:str='', _account:str=''):
+        """
+        DESCRIPTION:
+
+            Create `REDEEM` transaction without signing or broadcasting it.
+
+            Note: If no name is specified all names will have their loosing
+                  bids redeemed
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _name    : Domain name to `REDEEM` a losing bid for (null for all names).
+
+            ( ) _account : Account to use.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "createredeem", "params": [ "' + _name + '", "' + _account + '" ] }'
+
+        if _name == '':
+            _name = '[ALL]'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to `REDEEM` bids for domain `" + _name + "`'}"
+        return response
+    ### END METHOD ################################### rpc_createREDEEM(self, _name:str='', _account:str='')
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
