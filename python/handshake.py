@@ -5343,6 +5343,48 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_getUnconfirmedBalance(self)
 
+    def rpc_importPrivKey(self, _privKey:str, _label:str=None, _rescan:bool=None):
+        """
+        DESCRIPTION:
+
+            Import a private key into wallet. Also see `hsw.rpc_dumpPrivKey`.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _privKey : Private key to import (WIF format).
+
+            ( ) _label   : Ignored but required if additional parameters are passed.
+
+            ( ) _rescan  : (bool) Whether to rescan wallet after importing.
+        """
+        
+        endpoint = '/'
+
+        if _label == None and _rescan == None:
+            _message = '{ "method": "importprivkey", "params": [ "' + _privKey + '" ] }'
+        elif _rescan != None:
+            rescan = ''
+
+            if _rescan == True:
+                rescan = '1'
+            else:
+                rescan = '0'
+
+            if _label == None:
+                _label = 'Unlabeled'
+
+            _message = '{ "method": "importprivkey", "params": [ "' + _privKey + '", "' + _label + '", ' + rescan + ' ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to import private key'}"
+        return response
+    ### END METHOD ################################### rpc_importPrivKey(self, _privKey:str, _label:str=None, _rescan:bool=None)
+
     def rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str):
         """
         DESCRIPTION:
