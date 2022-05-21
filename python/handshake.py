@@ -6268,4 +6268,29 @@ class hsw:
             response['error'] = "{'message': 'RPC failed to unlock wallet'}"
         return response
     ### END METHOD ################################### rpc_walletPassphrase(self, _passphrase:str, _timeout:int=600)
+
+    def rpc_removePrunedFunds(self, _txID:str):
+        """
+        DESCRIPTION:
+
+            Deletes the specified transaction from the wallet database.
+            See `hsw.rpc_importPrunedFunds`.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _txID : ID of the transaction to remove.
+        """
+        
+        endpoint = '/'
+
+        _message = '{ "method": "removeprunedfunds", "params": [ "' + _txID + '" ] }'
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to remove pruned funds'}"
+        return response
+    ### END METHOD ################################### rpc_removePrunedFunds(self, _txID:str)
     
