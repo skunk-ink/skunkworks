@@ -5964,9 +5964,9 @@ class hsw:
 
             ( ) _minConfirm  : Minimum confirmations for output to be spent from.
 
-            ( ) _label       : Ignored but required if additional parameters are passed.
-
             ( ) _subtractFee : (bool) Subtract the transaction fee equally from the output amounts.
+
+            ( ) _label       : Ignored but required if additional parameters are passed.
         """
         
         endpoint = '/'
@@ -5993,9 +5993,62 @@ class hsw:
             response = self.post(endpoint, _message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to send HNS to multiple addresses.'}"
+            response['error'] = "{'message': 'RPC failed to send HNS to multiple addresses'}"
         return response
     ### END METHOD ################################### rpc_sendMany(self, _fromAccount:str, _outputs:json, _minConfirm:int=None, _subtractFee:bool=None, _label:str=None)
+
+    def rpc_createSendToAddress(self, _toAddress:str, _amount:float, _subtractFee:bool=None, _comment:str=None, _commentTo:str=None):
+        """
+        DESCRIPTION:
+
+            Create transaction sending HNS to a given address without signing or broadcasting it.
+
+            Note: This command involves entering HNS values, be careful with different formats
+                  of values for different APIs. See https://hsd-dev.org/api-docs/?shell--curl#values
+                  to learn more.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _toAddress   : Handshake address to send funds to.
+
+            (*) _amount      : Amount (in HNS) to send.
+
+            ( ) _subtractFee : (bool) Subtract the transaction fee equally from the output amount.
+
+            ( ) _comment     : Ignored but required if additional parameters are passed.
+
+            ( ) _commentTo   : Ignored but required if additional parameters are passed.
+        """
+        
+        endpoint = '/'
+
+        if _subtractFee == None and _comment == None and _commentTo == None:
+            _message = '{ "method": "createsendtoaddress", "params": [ "' + _toAddress + '", ' + str(_amount) + ' ] }'
+        else:
+            subtractFee = ''
+
+            if _comment == None:
+                _comment = 'No Comment.'
+
+            if _commentTo == None:
+                _commentTo = 'No Comment.'
+            
+            if _subtractFee == True:
+                subtractFee = '1'
+            else:
+                subtractFee = '0'
+
+            _message = '{ "method": "createsendtoaddress", "params": [ "' + _toAddress + '", ' + str(_amount) + ', "' + _comment + '", "' + _commentTo + '", ' + subtractFee + ' ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to create HNS transaction to address'}"
+        return response
+    ### END METHOD ################################### rpc_createSendToAddress(self, _toAddress:str, _amount:float, _subtractFee:bool=None, _comment:str=None, _commentTo:str=None)
 
     def rpc_walletLock(self):
         """
