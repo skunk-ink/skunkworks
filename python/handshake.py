@@ -5628,6 +5628,29 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_lockUnspent(self, _lock:bool=True, _outputs:json=None)
 
+    def rpc_listLockUnspent(self):
+        """
+        DESCRIPTION:
+
+            Get list of currently locked (unspendable) outputs.
+            See `hsw.rpc_lockUnspent` and `hsw.lockCoinOutpoints`.
+        
+        PARAMS:
+
+            None.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "listlockunspent" }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to list locked unspendable outputs'}"
+        return response
+    ### END METHOD ################################### rpc_listLockUnspent(self)
+
     def rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str):
         """
         DESCRIPTION:
