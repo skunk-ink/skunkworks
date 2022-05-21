@@ -1,10 +1,10 @@
 from setuptools import setup
 
 setup(
-    name='Skunk Works Python Code Repository',
+    name='skunk-works',
     version='1.0.0',    
-    description='A collection of useful python scripts written by skunk-ink',
-    url='https://github.com/skunk-ink/skunkworks/',
+    description='The Skunk Works Code Repository',
+    url='https://github.com/skunk-ink/skunkworks.git',
     author='skunk-ink',
     license='MIT',
     packages=['handshake'],

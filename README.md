@@ -32,13 +32,18 @@
 ```
 # **The Repository**
 ## **Python**
+To install the `skunkworks` using PIP:
+```
+git clone https://github.com/skunk-ink/skunkworks.git
+pip install skunkworks
+```
 
 ***
 
 ### **Handshake API Python Wrapper** [(view source)](handshake/wrap.py)
 
 ```python
-from skunkworks.python.handshake import hsd, hsw
+from handshake.wrapper import hsd, hsw
 
 # Use default ip and port
 
