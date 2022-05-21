@@ -5014,6 +5014,31 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_dumpPrivKey(self, _address:str)
 
+    def rpc_dumpWallet(self, _path:str):
+        """
+        DESCRIPTION:
+
+            Creates a new human-readable file at specified path with
+            all wallet private keys in Wallet Import Format (base58).
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _path : Absolute path (including directories and filename) to write backup file.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "dumpwallet", "params": [ "' + _path + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to dump wallet to `" + _path + "`'}"
+        return response
+    ### END METHOD ################################### rpc_dumpWallet(self, _path:str)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
