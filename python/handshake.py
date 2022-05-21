@@ -5385,6 +5385,39 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_importPrivKey(self, _privKey:str, _label:str=None, _rescan:bool=None)
 
+    def rpc_importWallet(self, _walletFile:str, _rescan:bool=False):
+        """
+        DESCRIPTION:
+
+            Import all keys from a wallet backup file. Also see `hsw.rpc_dumpWallet`.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _walletFile : Path to wallet file.
+
+            ( ) _rescan  : (bool) Whether to rescan wallet after importing.
+        """
+        rescan = ''
+
+        if _rescan == True:
+            rescan = '1'
+        else:
+            rescan = '0'
+        
+        endpoint = '/'
+
+        _message = '{ "method": "importwallet", "params": [ "' + _walletFile + '", ' + rescan + ' ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to import wallet `" + _walletFile + "`'}"
+        return response
+    ### END METHOD ################################### rpc_importWallet(self, _walletFile:str, _rescan:bool=False)
+
     def rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str):
         """
         DESCRIPTION:
