@@ -5850,6 +5850,66 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_listTransactions(self, _account:str='', _count:int=0, _from:int=0, _watchOnly:bool=None)
 
+    def rpc_listUnspent(self, _minConfirm:int=None, _maxConfirm:int=None, _addresses=None):
+        """
+        DESCRIPTION:
+
+            Get all transactions in blocks since a block specified by
+            hash, or all transactions if no block is specifiied.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _minConfirm : Minimum confirmations required to return tx.
+
+            ( ) _maxConfirm : Maximum confirmations required to return tx.
+
+            ( ) _addresses  : Array of addresses to filter.
+        """
+        
+        endpoint = '/'
+
+        if _minConfirm == None and _maxConfirm == None and _addresses == None:
+            _message = '{ "method": "listunspent" }'
+        else:
+
+            if _minConfirm == None:
+                _minConfirm = 0
+
+            if _maxConfirm == None:
+                _minConfirm = 0
+            
+            if _addresses == None:
+                addresses = '[]'
+            else:
+                addressCount = 0
+                addresses = '['
+
+                for address in _addresses:
+                    addressCount += 1
+
+                    if addressCount == 1:
+                        addresses += '"' + address + '"'
+                    else:
+                        addresses += ', "' + address + '"'
+
+                addresses += ']'
+
+            print()
+            print('Address Array = "' + addresses + '"')
+            print()
+
+            _message = '{ "method": "listunspent", "params": [ ' + str(_minConfirm) + ', ' + str(_maxConfirm) + ', ' + addresses + ' ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to get unspent transaction outputs from addresses'}"
+        return response
+    ### END METHOD ################################### rpc_listUnspent(self, _minConfirm:int=None, _maxConfirm:int=None, _addresses=None)
+
     def rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str):
         """
         DESCRIPTION:
