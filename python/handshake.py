@@ -6163,6 +6163,37 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_signMessage(self, _address:str, _message:str)
 
+    def rpc_signMessageWithName(self, _name:str, _message:str):
+        """
+        DESCRIPTION:
+
+            Sign an arbitrary message with the private key corresponding to
+            a Handshake address that owns the specified name in the wallet.
+
+            Note: Due to behavior of some shells like bash, if your message
+            contains spaces you may need to add additional quotes like
+            this: `"'"$message"'"`
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _name    : Domain name to use for signing.
+
+            (*) _message : The message to sign.
+        """
+        
+        endpoint = '/'
+
+        _message = '{ "method": "signmessagewithname", "params": [ "' + _name + '", "' + _message + '" ] }'
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to sign message with name'}"
+        return response
+    ### END METHOD ################################### rpc_signMessageWithName(self, _name:str, _message:str)
+
     def rpc_walletLock(self):
         """
         DESCRIPTION:
