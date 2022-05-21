@@ -5944,6 +5944,59 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_sendFrom(self, _fromAccount:str, _toAddress:str, _amount:float, _minConfirm:int=None)
 
+    def rpc_sendMany(self, _fromAccount:str, _outputs:json, _minConfirm:int=None, _subtractFee:bool=None, _label:str=None):
+        """
+        DESCRIPTION:
+
+            Send different amounts of HNS from an account to multiple addresses.
+
+            Note: This command involves entering HNS values, be careful with different formats
+                  of values for different APIs. See https://hsd-dev.org/api-docs/?shell--curl#values
+                  to learn more.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _fromAccount : Wallet account to spend outputs from.
+
+            (*) _outputs     : (json) of Handshake addresses and amounts to send.
+
+            ( ) _minConfirm  : Minimum confirmations for output to be spent from.
+
+            ( ) _label       : Ignored but required if additional parameters are passed.
+
+            ( ) _subtractFee : (bool) Subtract the transaction fee equally from the output amounts.
+        """
+        
+        endpoint = '/'
+
+        if _minConfirm == None and _label == None and _subtractFee == None:
+            _message = '{ "method": "sendmany", "params": [ "' + _fromAccount + '", ' + json.dumps(_outputs) + ' ] }'
+        else:
+            subtractFee = ''
+
+            if _minConfirm == None:
+                _minConfirm = 0
+
+            if _label == None:
+                _label = 'Unlabeled Transaction'
+            
+            if _subtractFee == True:
+                subtractFee = '1'
+            else:
+                subtractFee = '0'
+
+            _message = '{ "method": "sendmany", "params": [ "' + _fromAccount + '", ' + json.dumps(_outputs) + ', ' + str(_minConfirm) + ', "' + _label + '", ' + subtractFee + ' ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to send HNS to multiple addresses.'}"
+        return response
+    ### END METHOD ################################### rpc_sendMany(self, _fromAccount:str, _outputs:json, _minConfirm:int=None, _subtractFee:bool=None, _label:str=None)
+
     def rpc_walletLock(self):
         """
         DESCRIPTION:
