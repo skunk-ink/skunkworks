@@ -4527,6 +4527,40 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_createOPEN(self, _name:str, _force:bool, _account:str)
 
+    def rpc_createBID(self, _name:str, _bidAmount:float, _lockupBlind:float, _account:str):
+        """
+        DESCRIPTION:
+
+            Create `BID` transaction without signing or broadcasting it.
+
+            Note: This command involves entering HNS values, be careful with different formats
+                  of values for different APIs. See https://hsd-dev.org/api-docs/?shell--curl#values
+                  to learn more.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _name        : Domain name bid on.
+
+            (*) _bidAmount   : Amount to bid (in HNS).
+
+            (*) _lockupBlind : Amount to lock up to blind your bid, must be greater than `_bidAmount`).
+
+            (*) _address     : Address submitting the bid.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "createbid", "params": [ "' + _name + '", ' + str(_bidAmount) + ', ' + str(_lockupBlind) + ', "' + _account + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to create BID for `" + _name + "`'}"
+        return response
+    ### END METHOD ################################### rpc_createBID(self, _name:str, _bidAmount:float, _lockupBlind:float, _account:str)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
