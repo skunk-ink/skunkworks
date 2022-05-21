@@ -2927,6 +2927,29 @@ class hsw:
         return response
     ### END METHOD ################################### lockCoinOutpoints(self, _txhash:str, _index:str='0', _id:str='primary')
 
+    def unlockCoinOutpoints(self, _txhash:str, _index:str='0', _id:str='primary'):
+        """
+        DESCRIPTION:
+
+            Unlock outpoints.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _txhash : Hash of transaction that created the outpoint.
+
+            ( ) _index  : Index of the output in the transaction being referenced. Default = '0'
+
+            ( ) _id     : ID of wallet that contains the outpoint. Default = 'primary'
+        """
+
+        endpoint = '/wallet/' + _id + '/locked/' + _txhash + '/' + _index
+
+        response = self.delete(endpoint)
+        return response
+    ### END METHOD ################################### unlockCoinOutpoints(self, _txhash:str, _index:str='0', _id:str='primary')
+
     def getLockedOutpoints(self, _id:str='primary'):
         """
         DESCRIPTION:
