@@ -4492,6 +4492,41 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_importNONCE(self, _name:str, _address:str, _bidValue:float)
 
+    def rpc_createOPEN(self, _name:str, _force:bool, _account:str):
+        """
+        DESCRIPTION:
+
+            Creates `OPEN` transaction without signing or broadcasting it.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _name    : Domain name to `OPEN` bidding on.
+
+            (*) _force   : Currently ignored but required if additional parameters are passed.
+
+            (*) _account : Account to use.
+        """
+        
+        force = ''
+
+        if _force == True:
+            force = '1'
+        else:
+            force = '0'
+
+        endpoint = '/'
+        _message = '{ "method": "createopen", "params": [ "' + _name + '", ' + force + ', "' + _account + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to unsigned OPEN transaction for `" + _name + "`'}"
+        return response
+    ### END METHOD ################################### rpc_createOPEN(self, _name:str, _force:bool, _account:str)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
