@@ -5066,17 +5066,20 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_encryptWallet(self, _passphrase:str)
 
-    def rpc_getAccountAddress(self, _account:str):
+    def rpc_getAccountAddress(self, _account:str='default'):
         """
         DESCRIPTION:
 
             Get the current receiving address for specified account.
+
+            Note: If no account is specified, the receiving address
+                  for the `default` account will be returned.
         
         PARAMS:
 
             (*) Denotes required argument
 
-            (*) _account : Account to retrieve address from.
+            ( ) _account : Account to retrieve address from.
         """
         
         endpoint = '/'
@@ -5089,6 +5092,30 @@ class hsw:
             response['error'] = "{'message': 'RPC failed to get account address for `" + _account + "`'}"
         return response
     ### END METHOD ################################### rpc_getAccountAddress(self, _account:str)
+
+    def rpc_getAccount(self, _address:str):
+        """
+        DESCRIPTION:
+
+            Get the account associated with a specified address.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _address : Address to search for.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "getaccount", "params": [ "' + _address + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to get account for the address `" + _address + "`'}"
+        return response
+    ### END METHOD ################################### rpc_getAccount(self, _address:str)
 
     def rpc_getNewAddress(self, _account:str=''):
         """
