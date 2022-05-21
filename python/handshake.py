@@ -4831,6 +4831,30 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_importName(self, _name:str, _rescanHeight:int=None)
 
+    def rpc_selectWallet(self, _walletID:str):
+        """
+        DESCRIPTION:
+
+            Switch target wallet for all future RPC calls.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _walletID : ID of selected wallet.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "selectwallet", "params": [ "' + _walletID + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to select wallet named `" + _walletID + "`'}"
+        return response
+    ### END METHOD ################################### rpc_selectWallet(self, _walletID:str)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
