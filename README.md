@@ -35,7 +35,7 @@
 To install the `skunkworks` using PIP:
 ```
 git clone https://github.com/skunk-ink/skunkworks.git
-pip install skunkworks
+pip install skunkworks/
 ```
 
 ***
