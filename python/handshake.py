@@ -5992,3 +5992,29 @@ class hsw:
             response['error'] = "{'message': 'RPC failed to change wallet password'}"
         return response
     ### END METHOD ################################### rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str)
+
+    def rpc_walletPassphrase(self, _passphrase:str, _timeout:int=600):
+        """
+        DESCRIPTION:
+
+            Store wallet decryption key in memory, unlocking the wallet keys.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _passphrase : The current wallet passphrase.
+
+            ( ) _timeout    : Amount of time in seconds decryption key will stay in memory. Default = `600`
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "walletpassphrase", "params": [ "' + _passphrase + '", ' + str(_timeout) + ' ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to unlock wallet'}"
+        return response
+    ### END METHOD ################################### rpc_walletPassphrase(self, _passphrase:str, _timeout:int=600)
