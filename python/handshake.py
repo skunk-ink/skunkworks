@@ -4304,10 +4304,9 @@ class hsw:
                               See https://hsd-dev.org/api-docs/#resource-object for more information.
         """
 
+        data = json.dumps(_data)
         endpoint = '/'
-
-        params = "['name':'" + _name + "', 'data':" + str(_data) + "]"
-        _message = '{ "method": "sendupdate", "params": "' + params + '" }'
+        _message = '{ "method": "sendupdate", "params": [ "' + _name + '", ' + data + ' ] }'
         try:
             response = self.post(endpoint, _message)
         except:
@@ -4624,6 +4623,39 @@ class hsw:
             response['error'] = "{'message': 'RPC failed to `REDEEM` bids for domain `" + _name + "`'}"
         return response
     ### END METHOD ################################### rpc_createREDEEM(self, _name:str='', _account:str='')
+
+    def rpc_createUPDATE(self, _name:str, _data:json, _account:str=''):
+        """
+        DESCRIPTION:
+
+            Create `UPDATE` transaction without signing or broadcasting it.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _name    : Domain name to `UPDATE` the data for.
+
+            (*) _data    : JSON-encoded resource object.
+                           See https://hsd-dev.org/api-docs/#resource-object for more information.
+
+            ( ) _account : Account to use.
+        """
+        
+        data = json.dumps(_data)
+        endpoint = '/'
+        _message = '{ "method": "createupdate", "params": [ "' + _name + '", ' + data + ', "' + _account + '" ] }'
+
+        if _name == '':
+            _name = '[ALL]'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to `UPDATE` the records for `" + _name + "`'}"
+        return response
+    ### END METHOD ################################### rpc_createUPDATE(self, _name:str, _data:json, _account:str='')
 
     def rpc_getNewAddress(self, _account:str=''):
         """
