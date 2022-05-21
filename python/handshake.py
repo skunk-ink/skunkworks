@@ -4132,7 +4132,7 @@ class hsw:
         """
         DESCRIPTION:
 
-            Returns list of BIDs placed by your wallet. 
+            Returns list of `BID`s placed by your wallet. 
         
         PARAMS:
         
@@ -4153,7 +4153,7 @@ class hsw:
         """
         DESCRIPTION:
 
-            Returns all the REVEAL transactions sent by the wallet.
+            Returns all the `REVEAL` transactions sent by the wallet.
         
         PARAMS:
         
@@ -4180,7 +4180,7 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name : Domain name to send open transaction for.
+            (*) _name : Domain name to send `OPEN` transaction for.
         """
         
         endpoint = '/'
@@ -4197,7 +4197,7 @@ class hsw:
         """
         DESCRIPTION:
 
-            The OPEN period is followed by the BIDDING period. Use `rpc_sendBID` to place a bid.
+            The `OPEN` period is followed by the `BID` period. Use `rpc_sendBID` to place a bid.
 
             Note: This command involves entering HNS values, be careful with different formats
                   of values for different APIs. See https://hsd-dev.org/api-docs/?shell--curl#values
@@ -4229,16 +4229,16 @@ class hsw:
         """
         DESCRIPTION:
 
-            The BIDDING period is followed by the REVEAL period, during which bidders
+            The `BID` period is followed by the `REVEAL` period, during which bidders
             must reveal their bids.
 
-            Note: If not domain name is specified then a REVEAL will be sent to all names.
+            Note: If not domain name is specified then a `REVEAL` will be sent to all names.
         
         PARAMS:
 
             (*) Denotes required argument
 
-            ( ) _name : Domain name to reveal bid for (`null` for all names).
+            ( ) _name : Domain name to `REVEAL` bid for (`null` for all names).
         """
         
         endpoint = '/'
@@ -4259,15 +4259,15 @@ class hsw:
         """
         DESCRIPTION:
 
-            After the REVEAL period, the auction is CLOSED. The value locked
-            up by losing bids can be spent using a REDEEM covenant like any
+            After the `REVEAL` period, the auction is `CLOSED`. The value locked
+            up by losing bids can be spent using a `REDEEM` covenant like any
             other coin. The winning bid can not be redeemed.
         
         PARAMS:
 
             (*) Denotes required argument
 
-            ( ) _name : Domain name to REDEEM bid for (`null` for all names).
+            ( ) _name : Domain name to `REDEEM` bid for (`null` for all names).
         """
         
         endpoint = '/'
@@ -4288,17 +4288,17 @@ class hsw:
         """
         DESCRIPTION:
 
-            After the REVEAL period, the auction is CLOSED. The value
+            After the `REVEAL` period, the auction is `CLOSED`. The value
             locked up by the winning bid is locked forever, although
             the name owner and the name state can still change. The
             winning bidder can update the data resource associated with
-            their name by sending an UPDATE.
+            their name by sending an `UPDATE`.
         
         PARAMS:
 
             (*) Denotes required argument
 
-            (*) _name       : Domain name to UPDATE.
+            (*) _name       : Domain name to `UPDATE`.
 
             (*) _data       : JSON-encoded resource object.
                               See https://hsd-dev.org/api-docs/#resource-object for more information.
@@ -4321,8 +4321,8 @@ class hsw:
         DESCRIPTION:
 
             On mainnet, name ownership expires after two years. If the name
-            owner does not RENEW the name, it can be re-opened by any user.
-            RENEW covenants commit to a a recent block hash to prevent
+            owner does not `RENEW` the name, it can be re-opened by any user.
+            `RENEW` covenants commit to a a recent block hash to prevent
             pre-signing and prove physical ownership of controlling keys.
             There is no cost besides the miner fee.
         
@@ -4330,7 +4330,7 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name : Domain name to RENEW ownership of.
+            (*) _name : Domain name to `RENEW` ownership of.
         """
         
         endpoint = '/'
@@ -4348,19 +4348,19 @@ class hsw:
         """
         DESCRIPTION:
 
-            TRANSFER a name to a new address. Note that the output value
-            of the UTXO still does not change. On mainnet, the TRANSFER
+            `TRANSFER` a name to a new address. Note that the output value
+            of the UTXO still does not change. On mainnet, the `TRANSFER`
             period lasts two days, after which the original owner can
-            FINALIZE the transfer. Any time before it is final, the
-            original owner can still CANCEL or REVOKE the transfer.
+            `FINALIZE` the transfer. Any time before it is final, the
+            original owner can still `CANCEL` or `REVOKE` the transfer.
         
         PARAMS:
 
             (*) Denotes required argument
 
-            (*) _name    : Domain name to TRANSFER.
+            (*) _name    : Domain name to `TRANSFER`.
 
-            (*) _address : Address to TRANSFER name ownership to.
+            (*) _address : Address to `TRANSFER` name ownership to.
         """
         
         endpoint = '/'
@@ -4373,6 +4373,32 @@ class hsw:
             response['error'] = "{'message': 'RPC failed to TRANSFER the domain `" + _name + "`'}"
         return response
     ### END METHOD ################################### rpc_sendTRANSFER(self, _name:str, _address:str)
+
+    def rpc_sendFINALIZE(self, _name:str):
+        """
+        DESCRIPTION:
+
+            About 48 hours after a TRANSFER, the original owner can send a
+            `FINALIZE` transaction, completing the transfer to a new address.
+            The output address of the `FINALIZE` is the new owner's address.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _name : Domain name to `FINALIZE`.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "sendfinalize", "params": [ "' + _name + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to FINALIZE the domain `" + _name + "`'}"
+        return response
+    ### END METHOD ################################### rpc_sendFINALIZE(self, _name:str)
 
     def rpc_getNewAddress(self, _account:str=''):
         """
