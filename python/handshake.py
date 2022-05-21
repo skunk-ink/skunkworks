@@ -29,6 +29,7 @@
                                    `"             `""""`  `""""""`      
 """
 
+import json
 import requests
 
 ########################################################################################################
@@ -383,9 +384,6 @@ class hsd:
         endpoint = '/coin/address/' + _address
         try:
             response = self.get(endpoint)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'Failed to get coins for address " + _address + "'}"
         except:
             response = {}
             response['error'] = "{'message': 'Failed to get coins for address " + _address + "'}"
@@ -3041,9 +3039,6 @@ class hsw:
 
         try:
             response = self.post(endpoint)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'Path is required for wallet backup'}"
         except:
             response = {}
             response['error'] = "{'message': 'Failed to back up wallet'}"
@@ -3203,9 +3198,6 @@ class hsw:
 
         try:
             response = self.get(endpoint)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'Cannot get transaction details for the wallet '" + _id + "'}"
         except:
             response = {}
             response['error'] = "{'message': 'Cannot get transaction details for the wallet '" + _id + "'}"
@@ -3564,9 +3556,6 @@ class hsw:
 
         try:
             response = self.get(endpoint)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'Failed to get data resources associated with the domain '" + _name + "'}"
         except:
             response = {}
             response['error'] = "{'message': 'Failed to get data resources associated with the domain '" + _name + "'}"
@@ -3599,9 +3588,6 @@ class hsw:
 
         try:
             response = self.get(endpoint)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'Failed to generate nonce for blind bid on '" + _name + "'}"
         except:
             response = {}
             response['error'] = "{'message': 'Failed to generate nonce for blind bid on '" + _name + "'}"
@@ -3647,9 +3633,6 @@ class hsw:
         _message = '{ "passphrase":"' + _passphrase + '", "name":"' + _name + '", "broadcast":' + broadcast + ', "sign":' + sign + ' }'
         try:
             response = self.post(endpoint, _message)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'Failed to OPEN auction for '" + _name + "'}"
         except:
             response = {}
             response['error'] = "{'message': 'Failed to OPEN auction for '" + _name + "'}"
@@ -3701,9 +3684,6 @@ class hsw:
         
         try:
             response = self.post(endpoint, _message)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'Failed to send BID for '" + _name + "'}"
         except:
             response = {}
             response['error'] = "{'message': 'Failed to send BID for '" + _name + "'}"
@@ -3752,9 +3732,6 @@ class hsw:
         
         try:
             response = self.post(endpoint, _message)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'Failed to send name REVEAL for '" + _name + "'}"
         except:
             response = {}
             response['error'] = "{'message': 'Failed to send name REVEAL for '" + _name + "'}"
@@ -3805,9 +3782,6 @@ class hsw:
         
         try:
             response = self.post(endpoint, _message)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'Failed to REDEEM bids for '" + _name + "'}"
         except:
             response = {}
             response['error'] = "{'message': 'Failed to REDEEM bids for '" + _name + "'}"
@@ -3862,9 +3836,6 @@ class hsw:
         
         try:
             response = self.post(endpoint, _message)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'Failed to UPDATE resource data for '" + _name + "'}"
         except:
             response = {}
             response['error'] = "{'message': 'Failed to UPDATE resource data for '" + _name + "'}"
@@ -3911,9 +3882,6 @@ class hsw:
         
         try:
             response = self.post(endpoint, _message)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'Failed to RENEW domain '" + _name + "'}"
         except:
             response = {}
             response['error'] = "{'message': 'Failed to RENEW domain '" + _name + "'}"
@@ -3962,9 +3930,6 @@ class hsw:
         
         try:
             response = self.post(endpoint, _message)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'Failed to TRANSFER domain '" + _name + "'}"
         except:
             response = {}
             response['error'] = "{'message': 'Failed to TRANSFER domain '" + _name + "'}"
@@ -4015,9 +3980,6 @@ class hsw:
         
         try:
             response = self.post(endpoint, _message)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'Failed to cancel transfer of '" + _name + "'}"
         except:
             response = {}
             response['error'] = "{'message': 'Failed to cancel transfer of '" + _name + "'}"
@@ -4064,9 +4026,6 @@ class hsw:
         
         try:
             response = self.post(endpoint, _message)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'Failed to FINALIZE transfer of '" + _name + "'}"
         except:
             response = {}
             response['error'] = "{'message': 'Failed to FINALIZE transfer of '" + _name + "'}"
@@ -4120,9 +4079,6 @@ class hsw:
         
         try:
             response = self.post(endpoint, _message)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'Failed to REVOKE transfer of '" + _name + "'}"
         except:
             response = {}
             response['error'] = "{'message': 'Failed to REVOKE transfer of '" + _name + "'}"
@@ -4144,9 +4100,6 @@ class hsw:
         _message = '{ "method": "getnames", "params": [] }'
         try:
             response = self.post(endpoint, _message)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'RPC failed to find domain names in wallet'}"
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get domain names in wallet'}"
@@ -4169,9 +4122,6 @@ class hsw:
         _message = '{ "method": "getauctioninfo", "params": [ "' + _name + '" ] }'
         try:
             response = self.post(endpoint, _message)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'RPC failed to find auction information for `" + _name + "`'}"
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to find auction information for `" + _name + "`'}"
@@ -4193,9 +4143,6 @@ class hsw:
         _message = '{ "method": "getbids", "params": [] }'
         try:
             response = self.post(endpoint, _message)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'RPC failed to find BIDs places with your wallet'}"
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to find BIDs places with your wallet'}"
@@ -4217,9 +4164,6 @@ class hsw:
         _message = '{ "method": "getreveals", "params": [] }'
         try:
             response = self.post(endpoint, _message)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'RPC failed to find any REVEAL transactions sent by your wallet'}"
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to find any REVEAL transactions sent by your wallet'}"
@@ -4243,9 +4187,6 @@ class hsw:
         _message = '{ "method": "sendopen", "params": [ "' + _name + '" ] }'
         try:
             response = self.post(endpoint, _message)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'RPC failed to start OPEN phase of auction for the domain `" + _name + "`'}"
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to start OPEN phase of auction for the domain `" + _name + "`'}"
@@ -4275,12 +4216,9 @@ class hsw:
         """
         
         endpoint = '/'
-        _message = '{ "method": "sendbid", "params": [ "' + _name + '", "' + str(_bidAmount) + '", "' + str(_lockupBlind) + '" ] }'
+        _message = '{ "method": "sendbid", "params": [ "' + _name + '", ' + str(_bidAmount) + ', ' + str(_lockupBlind) + ' ] }'
         try:
             response = self.post(endpoint, _message)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'RPC failed to to place BID for the domain `" + _name + "`'}"
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to to place BID for the domain `" + _name + "`'}"
@@ -4311,9 +4249,6 @@ class hsw:
 
         try:
             response = self.post(endpoint, _message)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'RPC failed to start REVEAL phase of auction for the domain `" + _name + "`'}"
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to start REVEAL phase of auction for the domain `" + _name + "`'}"
@@ -4343,16 +4278,13 @@ class hsw:
 
         try:
             response = self.post(endpoint, _message)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'RPC failed to start REDEEM the domain `" + _name + "`'}"
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to start REDEEM the domain `" + _name + "`'}"
         return response
     ### END METHOD ################################### rpc_sendREDEEM(self, _name:str='')
 
-    def rpc_sendUPDATE(self, _name:str, _data:str):
+    def rpc_sendUPDATE(self, _name:str, _data:json):
         """
         DESCRIPTION:
 
@@ -4374,18 +4306,43 @@ class hsw:
 
         endpoint = '/'
 
-        params = "['name':'" + _name + "', 'data':'" + _data + "']"
+        params = "['name':'" + _name + "', 'data':" + str(_data) + "]"
         _message = '{ "method": "sendupdate", "params": "' + params + '" }'
         try:
             response = self.post(endpoint, _message)
-            for key in response:
-                if 'error' in key:
-                    response[key] = "{'message': 'RPC failed to UPDATE the domain `" + _name + "`'}"
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to UPDATE the domain `" + _name + "`'}"
         return response
     ### END METHOD ################################### rpc_sendUPDATE(self, _name:str, _data:str)
+
+    def rpc_sendRENEWAL(self, _name:str):
+        """
+        DESCRIPTION:
+
+            On mainnet, name ownership expires after two years. If the name
+            owner does not RENEW the name, it can be re-opened by any user.
+            RENEW covenants commit to a a recent block hash to prevent
+            pre-signing and prove physical ownership of controlling keys.
+            There is no cost besides the miner fee.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _name : Domain name to RENEW ownership of.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "sendrenewal", "params": [ "' + _name + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to RENEW the domain `" + _name + "`'}"
+        return response
+    ### END METHOD ################################### rpc_sendRENEWAL(self, _name:str)
 
     def rpc_getNewAddress(self, _account:str=''):
         """
