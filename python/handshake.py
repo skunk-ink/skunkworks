@@ -5089,3 +5089,29 @@ class hsw:
             response['error'] = "{'message': 'RPC failed to get new receiving address'}"
         return response
     ### END METHOD ################################### rpc_getNewAddress(self, _account:str='')
+
+    def rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str):
+        """
+        DESCRIPTION:
+
+            Change the wallet encryption pasphrase.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _oldPassphrase : The current wallet passphrase.
+
+            (*) _newPassphrase : New passphrase.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "walletpassphrasechange", "params": [ "' + _oldPassphrase + '", "' + _newPassphrase + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to change wallet password'}"
+        return response
+    ### END METHOD ################################### rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str)
