@@ -6293,4 +6293,27 @@ class hsw:
             response['error'] = "{'message': 'RPC failed to remove pruned funds'}"
         return response
     ### END METHOD ################################### rpc_removePrunedFunds(self, _txID:str)
+
+    def rpc_getMemoryInfo(self):
+        """
+        DESCRIPTION:
+
+            Get information about memory usage. Identical to
+            node RPC call `hsd.rpc_getMemoryInfo`.
+        
+        PARAMS:
+
+            None.
+        """
+        
+        endpoint = '/'
+
+        _message = '{ "method": "getmemoryinfo" }'
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to get memory info'}"
+        return response
+    ### END METHOD ################################### rpc_getMemoryInfo(self)
     
