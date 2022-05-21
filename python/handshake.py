@@ -5144,6 +5144,38 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_getAddressesByAccount(self, _account:str='default')
 
+    def rpc_getBalance(self, _account:str=None):
+        """
+        DESCRIPTION:
+
+            Get total balance for entire wallet or a single, specified account.
+
+            Note: If no account is specified, then the balance of
+                  the entire wallet will be returned
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _account : Account to return balance of.
+        """
+        
+        endpoint = '/'
+
+        if _account == None:
+            _account = '[ALL]'
+            _message = '{ "method": "getbalance" }'
+        else:
+            _message = '{ "method": "getbalance", "params": [ "' + _account + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to get balance for `" + _account + "`'}"
+        return response
+    ### END METHOD ################################### rpc_getBalance(self, _account:str=None)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
