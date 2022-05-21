@@ -5805,6 +5805,51 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_listSinceBlock(self, _blockHash:str=None, _minConfirm:int=None, _watchOnly:bool=None)
 
+    def rpc_listTransactions(self, _account:str='', _count:int=0, _from:int=0, _watchOnly:bool=None):
+        """
+        DESCRIPTION:
+
+            Get all recent transactions for specified account up
+            to a limit, starting from a specified index.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _account   : Account name.
+
+            ( ) _count     : Max number of transactions to return.
+
+            ( ) _from      : Number of oldest transactions to skip.
+
+            ( ) _watchOnly : (bool) Whether to include watch-only addresses. Default = `False`.
+        """
+        
+        endpoint = '/'
+
+        if _account == '' and _count == 0 and _from == 0 and _watchOnly == None:
+            _message = '{ "method": "listtransactions" }'
+        else:
+            watchOnly = ''
+
+            if _watchOnly == None:
+                _watchOnly = False
+
+            if _watchOnly == True:
+                watchOnly = '1'
+            else:
+                watchOnly = '0'
+
+            _message = '{ "method": "listtransactions", "params": [ "' + _account + '", ' + str(_count) + ', ' + str(_from) + ', ' + str(watchOnly) + ' ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to get transactions for the account `" + _account + "`'}"
+        return response
+    ### END METHOD ################################### rpc_listTransactions(self, _account:str='', _count:int=0, _from:int=0, _watchOnly:bool=None)
+
     def rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str):
         """
         DESCRIPTION:
