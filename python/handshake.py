@@ -5253,6 +5253,37 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_getReceivedByAccount(self, _account:str, _minConfirm:int=None)
 
+    def rpc_getReceivedByAddress(self, _address:str, _minConfirm:int=None):
+        """
+        DESCRIPTION:
+
+            Get total amount received by specified address. Optionally
+            only count transactions with `_minConfirm` number of confirmations.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _address    : Address to request balance of.
+
+            ( ) _minConfirm : Only include transactions with this many confirmations.
+        """
+        
+        endpoint = '/'
+
+        if _minConfirm == None:
+            _message = '{ "method": "getreceivedbyaddress", "params": [ "' + _address + '" ] }'
+        else:
+            _message = '{ "method": "getreceivedbyaddress", "params": [ "' + _address + '", "' + _minConfirm + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to get amount received for address `" + _address + "` account'}"
+        return response
+    ### END METHOD ################################### rpc_getReceivedByAddress(self, _account:str, _minConfirm:int=None)
+
     def rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str):
         """
         DESCRIPTION:
