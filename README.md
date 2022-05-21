@@ -32,7 +32,7 @@
 ```
 # **The Repository**
 ## **Python**
-To install the `skunkworks` using PIP:
+Install the `skunkworks` package using PIP:
 ```
 git clone https://github.com/skunk-ink/skunkworks.git
 pip install skunkworks/
