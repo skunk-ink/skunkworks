@@ -6132,6 +6132,37 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_setTxFee(self, _txFee:float=0)
 
+    def rpc_signMessage(self, _address:str, _message:str):
+        """
+        DESCRIPTION:
+
+            Sign an arbitrary message with the private key corresponding to a
+            specified Handshake address in the wallet.
+
+            Note: Due to behavior of some shells like bash, if your message
+            contains spaces you may need to add additional quotes like
+            this: `"'"$message"'"`
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _address : Wallet address to use for signing.
+
+            (*) _message : The message to sign.
+        """
+        
+        endpoint = '/'
+
+        _message = '{ "method": "signmessage", "params": [ "' + _address + '", "' + _message + '" ] }'
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to sign message'}"
+        return response
+    ### END METHOD ################################### rpc_signMessage(self, _address:str, _message:str)
+
     def rpc_walletLock(self):
         """
         DESCRIPTION:
