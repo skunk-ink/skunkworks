@@ -58,9 +58,9 @@ class hsd:
 
         (*) _api_key   : HSD API key.
 
-        (*) _ipaddress : HSD node ip. Default = '127.0.0.1'.
+        ( ) _ipaddress : HSD node ip. Default = '127.0.0.1'.
 
-        (*) _port      : HSD node port. Defualt = 12037
+        ( ) _port      : HSD node port. Defualt = 12037
         """
 
         self.API_KEY = _api_key
