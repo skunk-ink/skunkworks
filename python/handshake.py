@@ -5073,7 +5073,7 @@ class hsw:
             Get the current receiving address for specified account.
 
             Note: If no account is specified, the receiving address
-                  for the `default` account will be returned.
+                  for the account `default` will be returned.
         
         PARAMS:
 
@@ -5116,6 +5116,33 @@ class hsw:
             response['error'] = "{'message': 'RPC failed to get account for the address `" + _address + "`'}"
         return response
     ### END METHOD ################################### rpc_getAccount(self, _address:str)
+
+    def rpc_getAddressesByAccount(self, _account:str='default'):
+        """
+        DESCRIPTION:
+
+            Get all addresses for a specified account.
+
+            Note: If no account is specified, then the addresses
+                  for the account `default` will be returned.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _account : Account to retrieve addresses from.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "getaddressesbyaccount", "params": [ "' + _account + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to get all addresses for the account `" + _account + "`'}"
+        return response
+    ### END METHOD ################################### rpc_getAddressesByAccount(self, _account:str='default')
 
     def rpc_getNewAddress(self, _account:str=''):
         """
