@@ -5651,6 +5651,63 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_listLockUnspent(self)
 
+    def rpc_listReceivedByAccount(self, _minConfirm:int=None, _includeEmpty:bool=None, _watchOnly:bool=None):
+        """
+        DESCRIPTION:
+
+            Get balances for all accounts in wallet.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _minConfirm   : Minimum confirmations required to count a transaction.
+
+            ( ) _includeEmpty : (bool) Whether to include accounts with zero balance. Default = `False`.
+
+            ( ) _watchOnly    : (bool) Whether to include watch-only addresses. Default = `False`.
+        """
+        
+        endpoint = '/'
+
+        if _minConfirm == None and _watchOnly == None:
+            _message = '{ "method": "listaccounts", "params": [] }'
+        else:
+            includeEmpty = ''
+            watchOnly = ''
+
+            if _includeEmpty == None:
+                _includeEmpty = False
+
+            if _includeEmpty == True:
+                includeEmpty = '1'
+            else:
+                includeEmpty = '0'
+
+            if _watchOnly == None:
+                _watchOnly = False
+
+            if _watchOnly == True:
+                watchOnly = '1'
+            else:
+                watchOnly = '0'
+
+            if _minConfirm == None and _includeEmpty == None and _watchOnly == None:
+                _message = '{ "method": "listreceivedbyaccount" }'
+            else:
+                if _minConfirm == None:
+                    _minConfirm = 0
+
+                _message = '{ "method": "listreceivedbyaccount", "params": [ ' + str(_minConfirm) + ', ' + str(includeEmpty) + ', ' + str(watchOnly) + ' ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to get list account balances'}"
+        return response
+    ### END METHOD ################################### rpc_listReceivedByAccount(self, _minConfirm:int=None, _includeEmpty:bool=None, _watchOnly:bool=None)
+
     def rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str):
         """
         DESCRIPTION:
