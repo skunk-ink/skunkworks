@@ -4344,6 +4344,36 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_sendRENEWAL(self, _name:str)
 
+    def rpc_sendTRANSFER(self, _name:str, _address:str):
+        """
+        DESCRIPTION:
+
+            TRANSFER a name to a new address. Note that the output value
+            of the UTXO still does not change. On mainnet, the TRANSFER
+            period lasts two days, after which the original owner can
+            FINALIZE the transfer. Any time before it is final, the
+            original owner can still CANCEL or REVOKE the transfer.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _name    : Domain name to TRANSFER.
+
+            (*) _address : Address to TRANSFER name ownership to.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "sendtransfer", "params": [ "' + _name + '", "' + _address + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to TRANSFER the domain `" + _name + "`'}"
+        return response
+    ### END METHOD ################################### rpc_sendTRANSFER(self, _name:str, _address:str)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
