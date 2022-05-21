@@ -4460,6 +4460,38 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_sendREVOKE(self, _name:str)
 
+    def rpc_importNONCE(self, _name:str, _address:str, _bidValue:float):
+        """
+        DESCRIPTION:
+
+            Deterministically regenerate the nonce for a bid.
+
+            Note: This command involves entering HNS values, be careful with different formats
+                  of values for different APIs. See https://hsd-dev.org/api-docs/?shell--curl#values
+                  to learn more.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _name     : Domain name bid on.
+
+            (*) _address  : Address submitting the bid.
+
+            (*) _bidValue : Value of the bid (in HNS).
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "importnonce", "params": [ "' + _name + '", "' + _address + '", ' + str(_bidValue) + ' ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to regenerate NONCE for `" + _name + "`'}"
+        return response
+    ### END METHOD ################################### rpc_importNONCE(self, _name:str, _address:str, _bidValue:float)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
