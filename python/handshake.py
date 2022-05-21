@@ -2456,6 +2456,7 @@ class hsw:
         """
         
         endpoint = '/wallet/' + _id + '/master'
+
         try:
             response = self.get(endpoint)
         except:
@@ -2631,6 +2632,32 @@ class hsw:
             response['error'] = "{'message': 'Failed to import private key for account " + _account + "'}"
         return response
     ### END METHOD ################################### importPrivateKey(self, _account:str, _priv_key:str, _id:str='primary')
+
+    def importAddress(self, _account:str, _address:str):
+        """
+        Description:
+
+            Import a Bech32 encoded address. Addresses (like public keys)
+            can only be imported into watch-only wallets
+
+            The HTTP endpoint is the same as for key imports.
+        
+        Params:
+
+            (*) Denotes required argument
+
+            (*) _account : Wallet ID.
+
+            ( ) _address : Hex encoded public key.
+        """
+        
+        endpoint = '/wallet/watchonly1/import'
+
+        _message = '{"account":"' + _account + '", "address":"' + _address + '"}'
+
+        response = self.post(endpoint, _message)
+        return response
+    ### END METHOD ################################### importAddress(self, _account:str, _address:str)
 
     def getBlocksWithWalletTX(self, _id:str='primary'):
         """
