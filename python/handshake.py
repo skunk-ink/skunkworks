@@ -5471,6 +5471,38 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_importAddress(self, _address:str, _label:str=None, _rescan:bool=None, _p2sh:bool=None)
 
+    def rpc_importPrunedFunds(self, _txHex:str, _txOutProof:str):
+        """
+        DESCRIPTION:
+
+            Imports funds (without rescan) into pruned wallets.
+            Corresponding address or script must previously be
+            included in wallet. Does NOT check if imported coins
+            are already spent, rescan may be required after the
+            point in time in which the specified transaciton was
+            included in the blockchain. See `hsd.rpc_getTxOutProof` and
+            `hsw.rpc_removePrunedFunds`.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            ( ) _txHex : Raw transaction in hex that funds an address already in the wallet.
+
+            ( ) _txOutProof : Hex output from `hsd.rpc_getTxOutProof` containing the tx.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "importprunedfunds", "params": [ "' + _txHex + '", "' + _txHex + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to import pruned funds'}"
+        return response
+    ### END METHOD ################################### rpc_importPrunedFunds(self, _txHex:str, _txOutProof:str)
+
     def rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str):
         """
         DESCRIPTION:
