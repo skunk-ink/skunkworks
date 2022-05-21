@@ -4430,6 +4430,36 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_sendCANCEL(self, _name:str)
 
+    def rpc_sendREVOKE(self, _name:str):
+        """
+        DESCRIPTION:
+
+            After sending a `TRANSFER` but before sending a `FINALIZE`,
+            the original owner can `REVOKE` the name transfer. This
+            renders the name's output forever unspendable, and puts the
+            name back up for bidding. This is intended as an action of
+            last resort in the case that the owner's key has been
+            compromised, leading to a grief battle between an attacker
+            and the owner.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _name : Domain name to `REVOKE` the in-progress transfer of.
+        """
+        
+        endpoint = '/'
+        _message = '{ "method": "sendrevoke", "params": [ "' + _name + '" ] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to REVOKE the in-progress transfer of `" + _name + "`'}"
+        return response
+    ### END METHOD ################################### rpc_sendREVOKE(self, _name:str)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
