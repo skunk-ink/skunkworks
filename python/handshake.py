@@ -4877,6 +4877,48 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_getWalletInfo(self)
 
+    def rpc_fundRawTransaction(self, _txHex:str, _feeRate:float=None, _changeAddress:str=None):
+        """
+        DESCRIPTION:
+
+            Add inputs to a transaction until it has enough in value to meet its out value.
+        
+        PARAMS:
+
+            (*) Denotes required argument
+
+            (*) _txHex         : Raw transaction (hex).
+
+            ( ) _feeRate       : Sets fee rate for transaction in HNS/kb.
+
+            ( ) _changeAddress : Handshake address for change output of transaction.
+        """
+        
+        endpoint = '/'
+
+        options = {}
+        
+        if _feeRate != None:
+            options['feeRate'] = _feeRate
+
+        if _changeAddress != None:
+            options['changeAddress'] = _changeAddress
+
+
+        if _feeRate == None and _changeAddress == None:
+            _message = '{ "method": "fundrawtransaction", "params": [ "' + _txHex + '" ] }'
+        else:
+            #options = '{"changeAddress": "' +  _changeAddress + '", "feeRate": ' + str(_feeRate) + '}'
+            _message = '{ "method": "fundrawtransaction", "params": [ "' + _txHex + '", ' + json.dumps(options) + '] }'
+
+        try:
+            response = self.post(endpoint, _message)
+        except:
+            response = {}
+            response['error'] = "{'message': 'RPC failed to fund raw transaction.'}"
+        return response
+    ### END METHOD ################################### rpc_fundRawTransaction(self, _txHex:str, _feeRate:float=None, _changeAddress:str=None)
+
     def rpc_getNewAddress(self, _account:str=''):
         """
         DESCRIPTION:
