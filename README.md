@@ -42,24 +42,24 @@ pip install skunkworks-repo
 ### **Handshake Wrapper** [(view source)](handshake/wrapper.py)
 
 ```python
-from handshake.wrapper import hsd, hsw
+from handshake import api
 
 # Use default ip and port
 
-hsd_api = hsd('api-key')
-hsw_api = hsw('api-key')
+dAPI = api.hsd('api-key')
+wAPI = api.hsw('api-key')
 
 # Or specify
 
-hsd_api = hsd('api-key', '0.0.0.0', 14037)
-hsw_api = hsw('api-key', '0.0.0.0', 14039)
+dAPI = hsd('api-key', '0.0.0.0', 14037)
+wAPI = hsw('api-key', '0.0.0.0', 14039)
 
 # Then use
 
-response = hsd_api.getInfo()
+response = dAPI.getInfo()
 print(response)
 
-response = hsw_api.resetAuthToken('primary', 'secret123')
+response = wAPI.resetAuthToken('primary', 'secret123')
 print(response)
 
 ```
