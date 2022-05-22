@@ -39,7 +39,7 @@ pip install skunkworks-repo
 
 ***
 
-### **Handshake Wrapper** [(view source)](handshake/wrapper.py)
+### **Handshake Wrapper** [(view source)](handshake/api.py)
 
 ```python
 from handshake import api
