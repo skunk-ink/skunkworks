@@ -10,7 +10,7 @@ setup(
     author='skunk-ink',
     license='MIT',
     packages=['handshake'],
-    install_requires=['requests=>2.22.0'],
+    install_requires=['requests>=2.22.0'],
 
     classifiers=[
         'Intended Audience :: Developers',

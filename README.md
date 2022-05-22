@@ -46,20 +46,20 @@ from handshake import api
 
 # Use default ip and port
 
-dAPI = api.hsd('api-key')
-wAPI = api.hsw('api-key')
+hsd = api.hsd('api-key')
+hsw = api.hsw('api-key')
 
 # Or specify
 
-dAPI = hsd('api-key', '0.0.0.0', 14037)
-wAPI = hsw('api-key', '0.0.0.0', 14039)
+hsd = api.hsd('api-key', '0.0.0.0', 14037)
+hsw = api.hsw('api-key', '0.0.0.0', 14039)
 
 # Then use
 
-response = dAPI.getInfo()
+response = hsd.getInfo()
 print(response)
 
-response = wAPI.resetAuthToken('primary', 'secret123')
+response = hsw.resetAuthToken('primary', 'secret123')
 print(response)
 
 ```
