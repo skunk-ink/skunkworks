@@ -1,10 +1,12 @@
 from setuptools import setup
 
 setup(
-    name='skunk-works',
+    name='skunk-works-repo',
     version='1.0.0',    
     description='The Skunk Works Code Repository',
-    url='https://github.com/skunk-ink/skunkworks.git',
+    url='https://github.com/skunk-ink/skunkworks',
+    download_url='https://github.com/skunk-ink/skunkworks/archive/refs/tags/v1.0.0.tar.gz',
+    keywords=['Handshake', 'API', 'HNS'],
     author='skunk-ink',
     license='MIT',
     packages=['handshake'],
@@ -13,7 +15,8 @@ setup(
                       ],
 
     classifiers=[
-        'Intended Audience :: Science/Research',
+        'Intended Audience :: Developers',
+        'Topic :: Software Development :: Build Tools',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
