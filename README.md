@@ -34,7 +34,7 @@
 ## **Python**
 Install the `skunkworks-repo` package using PIP:
 ```
-pip install skunk-works-repo
+pip install skunkworks-repo
 ```
 
 ***
