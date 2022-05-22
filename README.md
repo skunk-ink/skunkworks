@@ -32,7 +32,7 @@
 ```
 # **The Repository**
 ## **Python**
-Install the `skunk-works-repo` package using PIP:
+Install the `skunkworks-repo` package using PIP:
 ```
 pip install skunk-works-repo
 ```
