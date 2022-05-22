@@ -2,10 +2,10 @@ from setuptools import setup
 
 setup(
     name='skunkworks-repo',
-    version='1.0.2',    
+    version='1.0.3',    
     description='The Skunk Works Code Repository',
     url='https://github.com/skunk-ink/skunkworks',
-    download_url='https://github.com/skunk-ink/skunkworks/archive/refs/tags/v1.0.2.tar.gz',
+    download_url='https://github.com/skunk-ink/skunkworks/archive/refs/tags/v1.0.3.tar.gz',
     keywords=['Handshake', 'API', 'HNS'],
     author='skunk-ink',
     license='MIT',
