@@ -20,7 +20,7 @@
   ░▒█░░▒█░▒█▀▀▀█░▒█▀▀▄░▒█░▄▀░▒█▀▀▀█  \:::::::::::::|'::/::::::::/
   ░▒█▒█▒█░▒█░░▒█░▒█▄▄▀░▒█▀▄░░░▀▀▀▄▄  /\::::::::::::/  /:::::::/:|
   ░▒▀▄▀▄▀░▒█▄▄▄█░▒█░▒█░▒█░▒█░▒█▄▄▄█ |::';:::::::::/   |::::::/::;
-           HANDSHAKE PYTHON WRAPPER |:::/`-:::::;;-._ |:::::/::/
+              HANDSHAKE API WRAPPER |:::/`-:::::;;-._ |:::::/::/
                                     |:::|  `-::::\   `|::::/::/
                                     |:::|     \:::\   \:::/::/
                                    /:::/       \:::\   \:/\:/
@@ -497,29 +497,30 @@ class hsd:
         return response
     ### END METHOD ################################### rpc_getMemoryInfo(self)
 
-    def rpc_setLogLevel(self, _params:str=['NONE']): # _params = ['NONE', 'ERROR', 'WARNING', 'INFO', 'DEBUG', 'SPAM']
+    def rpc_setLogLevel(self, _logLevel:str='NONE'):
         """
         DESCRIPTION:
 
             Change Log level of the running node.
+
+            Levels are: `NONE`, `ERROR`, `WARNING`, `INFO`, `DEBUG`, `SPAM`
         
         PARAMS:
 
-        (*) Denotes required argument
-        
-        (*) _params : Level for the logger as list array.
-                      [ 'NONE', 'ERROR', 'WARNING', 'INFO', 'DEBUG', 'SPAM' ] 
+            (*) Denotes required argument
+
+            ( ) _logLevel : Level for the logger. Default = `NONE`
         """
         
         endpoint = '/'
-        _message = '{ "method": "setloglevel", "params": [ "' + _params + '" ] }'
+        _message = '{ "method": "setloglevel", "params": [ "' + _logLevel + '" ] }'
         try:
             response = self.post(endpoint, _message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to set log level to " + _params + "'}"
+            response['error'] = "{'message': 'RPC failed to set log level to " + _logLevel + "'}"
         return response
-    ### END METHOD ################################### rpc_setLogLevel(self, _params:str=['NONE'])
+    ### END METHOD ################################### rpc_setLogLevel(self, _logLevel:str='NONE')
 
     def rpc_validateAddress(self, _address:str):
         """
