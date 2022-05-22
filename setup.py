@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name='skunk-works-repo',
+    name='skunkworks-repo',
     version='1.0.0',    
     description='The Skunk Works Code Repository',
     url='https://github.com/skunk-ink/skunkworks',
