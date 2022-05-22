@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='skunkworks-repo',
-    version='1.0.0',    
+    version='1.0.1',    
     description='The Skunk Works Code Repository',
     url='https://github.com/skunk-ink/skunkworks',
     download_url='https://github.com/skunk-ink/skunkworks/archive/refs/tags/v1.0.0.tar.gz',
