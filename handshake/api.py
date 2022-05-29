@@ -4371,7 +4371,7 @@ class hsw:
         return response
     ### END METHOD ################################### rpc_sendOPEN(self, _name:str)
 
-    def rpc_sendBID(self, _name:str, _bidAmount:float, _lockupBlind:float):
+    def rpc_sendBID(self, _name:str, _bidAmount:float, _lockupBlind:float, _account:str='default'):
         """
         DESCRIPTION:
 
@@ -4391,17 +4391,19 @@ class hsw:
             (*) _bidAmount   : Amount to bid (in HNS).
 
             (*) _lockupBlind : Amount to lock up to blind your bid (must be greater than bid amount).
+
+            ( ) _account     : Wallet account to use. Default = 'default'
         """
         
         endpoint = '/'
-        _message = '{ "method": "sendbid", "params": [ "' + _name + '", ' + str(_bidAmount) + ', ' + str(_lockupBlind) + ' ] }'
+        _message = '{ "method": "sendbid", "params": [ "' + _name + '", ' + str(_bidAmount) + ', ' + str(_lockupBlind) + ', "' + _account + '" ] }'
         try:
             response = self.post(endpoint, _message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to to place BID for the domain `" + _name + "`'}"
         return response
-    ### END METHOD ################################### rpc_sendBID(self, _name:str, _bidAmount:float, _lockupBlind:float)
+    ### END METHOD ################################### rpc_sendBID(self, _name:str, _bidAmount:float, _lockupBlind:float, _account:str='default')
 
     def rpc_sendREVEAL(self, _name:str=''):
         """
