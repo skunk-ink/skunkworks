@@ -3319,7 +3319,7 @@ class hsw:
         return response
     ### END METHOD ################################### getAccountInfo(self, _id:str='primary', _account:str='default')
 
-    def createAccount(self, _passphrase:str, _id:str='primary', _name:str='', _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
+    def createAccount(self, _passphrase:str, _id:str, _account:str, _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
         """
         DESCRIPTION:
 
@@ -3329,34 +3329,35 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id         : Wallet ID (used for storage).
+            (*) _id          : Wallet ID (used for storage).
 
-            (*) _passphrase : A strong passphrase used to encrypt the wallet.
+            (*) _passphrase  : A strong passphrase used to encrypt the wallet.
 
-            (*) _name       : Name to give the account. Option can be account or name.
+            (*) _account : Name to give the account.
 
-            (*) _type       : Type of wallet (pubkeyhash, multisig). Default is 'pubkeyhash'
+            ( ) _type        : Type of wallet (pubkeyhash, multisig). Default is 'pubkeyhash'
 
-            ( ) _accountkey : The extended public key for the account. This is ignored for
+            ( ) _accountkey  : The extended public key for the account. This is ignored for
                               non watch only wallets. Watch only accounts can't accept private
                               keys for import (or sign transactions).
 
-            ( ) _m          : 'm' value for multisig (m-of-n).
+            ( ) _m           : 'm' value for multisig (m-of-n).
 
-            ( ) _n          : 'n' value for multisig (m-of-n)
+            ( ) _n           : 'n' value for multisig (m-of-n)
         """
         
-        endpoint = '/wallet/' + _id + '/account/' + _name
+        endpoint = '/wallet/' + _id + '/account/' + _account
 
         _message = '{"type":"' + _type + '", "passphrase":"' + _passphrase + '", "accountKey":"' + _accountkey + '", "m": ' + str(_m) + ', "n": ' + str(_n) + '}'
         try:
             response = self.put(endpoint, _message)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to create account '" + _name + "'}"
+            response['error'] = "{'message': 'Failed to create account '" + _account + "'}"
         return response
-    ### END METHOD ################################### createAccount(self, _id:str='primary', _passphrase:str, _name:str='', _accountkey:str='',
-    #                                                                _type:str='pubkeyhash', _m:int=1, _n:int=1)
+    ### END METHOD ################################### createAccount(self, _passphrase:str, _id:str, _account:str,
+    #                                                                      _accountkey:str='', _type:str='pubkeyhash',
+    #                                                                      _m:int=1, _n:int=1)
 
     def getWalletTxDetails(self, _id:str='primary', _txhash:str=''):
         """
