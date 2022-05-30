@@ -8,6 +8,7 @@ setup(
     download_url='https://github.com/skunk-ink/skunkworks/archive/refs/tags/v1.0.6.tar.gz',
     keywords=['Handshake', 'API', 'HNS'],
     author='skunk-ink',
+    author_email='murray.crawford85@gmail.com',
     license='MIT',
     packages=['handshake'],
     install_requires=['requests>=2.22.0'],
