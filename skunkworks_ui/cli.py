@@ -20,7 +20,7 @@
   ░▒█░░▒█░▒█▀▀▀█░▒█▀▀▄░▒█░▄▀░▒█▀▀▀█  \:::::::::::::|'::/::::::::/
   ░▒█▒█▒█░▒█░░▒█░▒█▄▄▀░▒█▀▄░░░▀▀▀▄▄  /\::::::::::::/  /:::::::/:|
   ░▒▀▄▀▄▀░▒█▄▄▄█░▒█░▒█░▒█░▒█░▒█▄▄▄█ |::';:::::::::/   |::::::/::;
-             COMMAND LINE INTERFACE |:::/`-:::::;;-._ |:::::/::/
+              HANDSHAKE API WRAPPER |:::/`-:::::;;-._ |:::::/::/
                                     |:::|  `-::::\   `|::::/::/
                                     |:::|     \:::\   \:::/::/
                                    /:::/       \:::\   \:/\:/
@@ -30,10 +30,17 @@
 """
 
 import os
+import sys
 from getpass import getpass
+from time import sleep
+
+if sys.platform == 'win32':
+    from msvcrt import getch as pause
+elif sys.platform == 'linux':
+    from getch import getch as pause
 
 class Menu:
-    def __init__(self, title, options):
+    def __init__(self, title:str, options:dict):
         """
         DESCRIPTION:
         
@@ -60,9 +67,10 @@ class Menu:
             
             None.
         """
+        self.clear_screen()
         print('    ' + self.title + '\n')
-        for i, option in enumerate(self.options):
-            print(f'\t{i + 1} : {option}')
+        for option in self.options:
+            print('\t' + str(option) + ': ' + self.options[option])
         
         print()
         ############################################################ END: display(self)
@@ -106,7 +114,7 @@ class Menu:
     def run(self):
         """
         DESCRIPTION:
-
+        
             This function is used to run the menu.
             
         PARAMETERS:
@@ -115,15 +123,11 @@ class Menu:
         """
         self.display()
         choice = self.get_input()
-        if choice == 'q':
+        while choice not in self.options:
             self.clear_screen()
-            exit()
-        elif choice.isdigit():
-            self.clear_screen()
-            return self.options[int(choice) - 1]
-        else:
-            self.clear_screen()
-            return self.run()
+            self.display()
+            choice = self.get_input()
+        return choice
         ############################################################ END: run(self)
 
     def clear_screen(self):
@@ -138,3 +142,43 @@ class Menu:
         """
         os.system('cls' if os.name == 'nt' else 'clear')
         ############################################################ END: clear_screen(self)
+
+    def pause(self):
+        """
+        DESCRIPTION:
+        
+            This function is used to pause the menu.
+            
+        PARAMETERS:
+        
+            None.
+        """
+        pause()
+        ############################################################ END: pause(self)
+
+    def wait(self, seconds:int):
+        """
+        DESCRIPTION:
+        
+            This function is used to wait for a certain amount of time.
+            
+        PARAMETERS:
+        
+            None.
+        """
+        sleep(seconds)
+        ############################################################ END: wait(self)
+
+    def quit(self):
+        """
+        DESCRIPTION:
+        
+            This function is used to quit the menu.
+            
+        PARAMETERS:
+        
+            None.
+        """
+        self.clear_screen()
+        sys.exit(0)
+        ############################################################ END: quit(self)

@@ -20,7 +20,7 @@
   ░▒█░░▒█░▒█▀▀▀█░▒█▀▀▄░▒█░▄▀░▒█▀▀▀█  \:::::::::::::|'::/::::::::/
   ░▒█▒█▒█░▒█░░▒█░▒█▄▄▀░▒█▀▄░░░▀▀▀▄▄  /\::::::::::::/  /:::::::/:|
   ░▒▀▄▀▄▀░▒█▄▄▄█░▒█░▒█░▒█░▒█░▒█▄▄▄█ |::';:::::::::/   |::::::/::;
-                       MENU STYLING |:::/`-:::::;;-._ |:::::/::/
+              HANDSHAKE API WRAPPER |:::/`-:::::;;-._ |:::::/::/
                                     |:::|  `-::::\   `|::::/::/
                                     |:::|     \:::\   \:::/::/
                                    /:::/       \:::\   \:/\:/
@@ -30,14 +30,14 @@
 """
 
 # FONT COLORS
-magenta_fg = '\033[95m'
-white_fg = '\033[97m'
-black_fg = '\033[30m'
-blue_fg = '\033[94m'
-cyan_fg = '\033[96m'
-green_fg = '\033[92m'
-yellow_fg = '\033[93m'
-red_fg = '\033[91m'
+magenta_foreground = '\033[95m'
+white_foreground = '\033[97m'
+black_foreground = '\033[30m'
+blue_foreground = '\033[94m'
+cyan_foreground = '\033[96m'
+green_foreground = '\033[92m'
+yellow_foreground = '\033[93m'
+red_foreground = '\033[91m'
 
 # FONT BACKGROUNDS
 white_background = '\033[107m'
@@ -56,7 +56,7 @@ alert = '\033[1m\033[41m'
 # ESCAPE SEQUENCE
 endc = '\033[0m'
 
-def font(text:str, color:str, background:str = None, style:str = None):
+def font(text:str, color:str = None, background:str = None, style:str = None, bold:bool = False, underline:bool = False, italic:bool = False):
     """
     DESCRIPTION:
         This function is used to create custom colored text.
@@ -66,7 +66,7 @@ def font(text:str, color:str, background:str = None, style:str = None):
 
         (*) text       : The text to be colored.
 
-        (*) color      : The color of the text.
+        ( ) color      : The color of the text.
                             Options are: black, white, yellow, red, blue, green.
 
         ( ) background : The background color of the text.
@@ -74,24 +74,30 @@ def font(text:str, color:str, background:str = None, style:str = None):
 
         ( ) style      : The style of the text.
                             Options: bold, underline, and italic.
+
+        ( ) bold       : If the text should be bold.
+
+        ( ) underline  : If the text should be underlined.
+
+        ( ) italic     : If the text should be italic.
     """
 
     if color == 'white':
-        text = white_fg + text + endc
+        text = white_foreground + text + endc
     elif color == 'red':
-        text = red_fg + text + endc
+        text = red_foreground + text + endc
     elif color == 'green':
-        text = green_fg + text + endc
+        text = green_foreground + text + endc
     elif color == 'blue':
-        text = blue_fg + text + endc
+        text = blue_foreground + text + endc
     elif color == 'yellow':
-        text = yellow_fg + text + endc
+        text = yellow_foreground + text + endc
     elif color == 'cyan':
-        text = cyan_fg + text + endc
+        text = cyan_foreground + text + endc
     elif color == 'magenta':
-        text = magenta_fg + text + endc
+        text = magenta_foreground + text + endc
     elif color == 'black':
-        text = black_fg + text + endc
+        text = black_foreground + text + endc
     
     if background == 'white':
         text = white_background + text + endc
@@ -102,11 +108,11 @@ def font(text:str, color:str, background:str = None, style:str = None):
     elif background == 'blue':
         text = blue_background + text + endc
     
-    if style == 'bold':
+    if style == 'bold' or bold:
         text = style_bold + text + endc
-    elif style == 'underline':
+    elif style == 'underline' or underline:
         text = style_underline + text + endc
-    elif style == 'italic':
+    elif style == 'italic' or italic:
         text = style_italic + text + endc
     
     return text
@@ -119,7 +125,7 @@ def font(text:str, color:str, background:str = None, style:str = None):
 ##                                                                  ##
 ######################################################################
 
-def black(text):
+def black_font(text):
     """
     DESCRIPTION:
 
@@ -131,10 +137,10 @@ def black(text):
 
         (*) text : The text to be colored.
     """
-    return black_fg + text + endc
-    ########################################################## END: black(text)
+    return black_foreground + text + endc
+    ########################################################## END: black_font(text)
     
-def white(text):
+def white_font(text):
     """
     DESCRIPTION:
 
@@ -145,10 +151,10 @@ def white(text):
 
         (*) text : The text to be colored.
     """
-    return white_fg + text + endc
-    ########################################################## END: white(text)
+    return white_foreground + text + endc
+    ########################################################## END: white_font(text)
     
-def yellow(text):
+def yellow_font(text):
     """
     DESCRIPTION:
 
@@ -158,10 +164,10 @@ def yellow(text):
         (*) Denotes a required parameter.
 
         (*) text : The text to be colored."""
-    return yellow_fg + text + endc
-    ########################################################## END: yellow(text)
+    return yellow_foreground + text + endc
+    ########################################################## END: yellow_font(text)
     
-def red(text):
+def red_font(text):
     """
     DESCRIPTION:
 
@@ -172,10 +178,10 @@ def red(text):
 
         (*) text : The text to be colored.
     """
-    return red_fg + text + endc
-    ########################################################## END: red(text)
+    return red_foreground + text + endc
+    ########################################################## END: red_font(text)
 
-def blue(text):
+def blue_font(text):
     """
     DESCRIPTION:
 
@@ -186,9 +192,10 @@ def blue(text):
 
         (*) text : The text to be colored.
     """
-    return blue_fg + text + endc
+    return blue_foreground + text + endc
+    ########################################################## END: blue_font(text)
     
-def green(text):
+def green_font(text):
     """
     DESCRIPTION:
     
@@ -199,10 +206,10 @@ def green(text):
         
         (*) text : The text to be colored.
     """
-    return green_fg + text + endc
-    ########################################################## END: green(text)
+    return green_foreground + text + endc
+    ########################################################## END: green_font(text)
     
-def cyan(text):
+def cyan_font(text):
     """
     DESCRIPTION:
     
@@ -213,8 +220,8 @@ def cyan(text):
         
         (*) text : The text to be colored.
     """
-    return cyan_fg + text + endc
-    ########################################################## END: cyan(text)
+    return cyan_foreground + text + endc
+    ########################################################## END: cyan_font(text)
     
     
 ##################################################################
@@ -287,7 +294,7 @@ def blue_bg(text):
 ##                                                              ##
 ##################################################################
 
-def bold(text):
+def bold_font(text):
     """
     DESCRIPTION:
     
@@ -299,9 +306,9 @@ def bold(text):
         (*) text : The text to be colored.
     """
     return style_bold + text + endc
-    ########################################################## END: bold(text)
+    ########################################################## END: bold_font(text)
     
-def underline(text):
+def underline_font(text):
     """
     DESCRIPTION:
     
@@ -313,9 +320,9 @@ def underline(text):
         (*) text : The text to be colored.
     """
     return style_underline + text + endc
-    ########################################################## END: underline(text)
+    ########################################################## END: underline_font(text)
 
-def italic(text):
+def italic_font(text):
     """
     DESCRIPTION:
     
@@ -327,7 +334,7 @@ def italic(text):
         (*) text : The text to be colored.
     """
     return style_italic + text + endc
-    ########################################################## END: italic(text)
+    ########################################################## END: italic_font(text)
 
 
 ##################################################################
@@ -341,7 +348,7 @@ def title(text):
     
         This function is used to create green menu titles.
     """
-    return green_fg + style_bold + text + endc + endc
+    return style_underline + style_bold + text + endc + endc
     ########################################################## END: title(text)
     
 def prompt(text):
@@ -355,7 +362,7 @@ def prompt(text):
         
         (*) text : The text to be colored.
     """
-    return yellow_fg + style_bold + text + endc + endc
+    return yellow_foreground + style_bold + text + endc + endc
     ########################################################## END: prompt(text)
     
 def error(text):
@@ -370,4 +377,4 @@ def error(text):
         (*) text : The text to be colored.
     """
     text = ' ERROR : ' + text + ' '
-    return red_background + white_fg + text + endc + endc
+    return red_background + white_foreground + text + endc + endc
