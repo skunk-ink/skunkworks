@@ -31,15 +31,15 @@
                                    `"             `""""`  `""""""`   
 ```
 # **The Repository**
-## **Python**
+# **Python**
 Install the `skunkworks-repo` package using PIP:
 ```
 pip install skunkworks-repo
 ```
 
-***
 
-### **Handshake Wrapper** [(view source)](handshake/api.py)
+## **Handshake Wrapper** ( [`api.py`](handshake/api.py) )
+> *For more information on using the Handshake API, visit the **[Handshake API Docs](https://hsd-dev.org/api-docs/#introduction)***
 
 ```python
 from handshake import api
@@ -63,6 +63,32 @@ response = hsw.resetAuthToken('primary', 'secret123')
 print(response)
 
 ```
-> *For more information on using the Handshake API, visit the **[Handshake API Docs](https://hsd-dev.org/api-docs/#introduction)***
+
+## **Skunkworks UI** ( [`cli.py`](skunkworks_ui/cli.py) | [`style.py`](skunkworks_ui/style.py) )
+
+```python
+# Import
+
+from skunkworks_ui.cli import Menu
+from skunkworks_ui.style import *
+
+# Use the `style` module to stylize text
+# ex. style.font(text, color, background, style)
+
+print(font("Skunkworks UI", 'green', 'white', 'bold'))
+
+# Use the `cli` module to construct a command-line menu
+
+menu = Menu("Skunkworks UI", ["Test 1", "Test 2", "Test 3"])
+menu.display()
+user_input = menu.get_input("Press `ENTER` to continue...")
+
+# Use both the `cli` and `style` modules to customize your menus
+
+menu = Menu(font(underline("Skunkworks UI Styled"), 'green', style='bold'), [cyan("Test 1"), cyan("Test 2"), cyan("Test 3")])
+menu.display()
+user_input = menu.get_input(prompt("Press `ENTER` to quit..."))
+
+```
 
 ***
