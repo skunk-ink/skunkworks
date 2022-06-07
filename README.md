@@ -31,6 +31,9 @@
                                    `"             `""""`  `""""""`   
 ```
 # **The Repository**
+- **Python**
+  - [Handshake (HNS) wrapper](#handshake-wrapper)
+  - [Skunkworks UI](#skunkworks-ui)
 # **Python**
 Install the `skunkworks-repo` package using PIP:
 ```
@@ -38,7 +41,8 @@ pip install skunkworks-repo
 ```
 ***
 
-## **Handshake Wrapper** ( [`api.py`](handshake/api.py) )
+## **Handshake Wrapper**
+**Source Code: [`api.py`](handshake/api.py)**
 > *For more information on using the Handshake API, visit the **[Handshake API Docs](https://hsd-dev.org/api-docs/#introduction)***
 
 ```python
@@ -72,7 +76,8 @@ print(response)
 ```
 ***
 ***
-## **Skunkworks UI** ( [`cli.py`](skunkworks_ui/cli.py) | [`style.py`](skunkworks_ui/style.py) )
+## **Skunkworks UI**
+**Source Code: [`cli.py`](skunkworks_ui/cli.py) | [`style.py`](skunkworks_ui/style.py)**
 
 ```python
 # Import
