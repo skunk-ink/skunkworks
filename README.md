@@ -82,8 +82,8 @@ print(response)
 ```python
 # Import
 
-from skunkworks_ui_test.cli import Menu
-from skunkworks_ui_test.style import *
+from skunkworks_ui.cli import Menu
+from skunkworks_ui.style import *
 ```
 
 ```python
