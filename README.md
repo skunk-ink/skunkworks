@@ -73,11 +73,12 @@ from skunkworks_ui.cli import Menu
 from skunkworks_ui.style import *
 
 # Use the `style` module to stylize text
-# ex. style.font(text, color, background, style)
+# ex. font(text, color, background, style)
 
 print(font("Skunkworks UI", 'green', 'white', 'bold'))
 
 # Use the `cli` module to construct a command-line menu
+# ex. Menu(title, options)
 
 menu = Menu("Skunkworks UI", ["Test 1", "Test 2", "Test 3"])
 menu.display()
