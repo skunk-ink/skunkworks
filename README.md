@@ -36,24 +36,31 @@ Install the `skunkworks-repo` package using PIP:
 ```
 pip install skunkworks-repo
 ```
-
+***
 
 ## **Handshake Wrapper** ( [`api.py`](handshake/api.py) )
 > *For more information on using the Handshake API, visit the **[Handshake API Docs](https://hsd-dev.org/api-docs/#introduction)***
 
 ```python
+# Import
 from handshake import api
+```
 
+```python
 # Use default ip and port
 
 hsd = api.hsd('api-key')
 hsw = api.hsw('api-key')
+```
 
+```python
 # Or specify
 
 hsd = api.hsd('api-key', '0.0.0.0', 14037)
 hsw = api.hsw('api-key', '0.0.0.0', 14039)
+```
 
+```python
 # Then use
 
 response = hsd.getInfo()
@@ -63,33 +70,67 @@ response = hsw.resetAuthToken('primary', 'secret123')
 print(response)
 
 ```
-
+***
+***
 ## **Skunkworks UI** ( [`cli.py`](skunkworks_ui/cli.py) | [`style.py`](skunkworks_ui/style.py) )
 
 ```python
 # Import
 
-from skunkworks_ui.cli import Menu
-from skunkworks_ui.style import *
+from skunkworks_ui_test.cli import Menu
+from skunkworks_ui_test.style import *
+```
 
+```python
 # Use the `style` module to stylize text
 # ex. font(text, color, background, style)
 
-print(font("Skunkworks UI", 'green', 'white', 'bold'))
+styledText = font('Skunkworks UI', 'green', 'white', 'bold')
+print(styledText)
+```
 
-# Use the `cli` module to construct a command-line menu
+```python
+# Use the `cli` module to construct a comman-line menu
 # ex. Menu(title, options)
 
-menu = Menu("Skunkworks UI", ["Test 1", "Test 2", "Test 3"])
+menu_title = 'Skunkworks UI'
+
+menu_options = {
+                '1': 'Bold blue text',
+                '2': 'Red text, white Background',
+                'Q': 'Quit'
+                }
+
+menu = Menu(menu_title, menu_options)
 menu.display()
-user_input = menu.get_input("Press `ENTER` to continue...")
+user_input = menu.get_input()
+```
 
-# Use both the `cli` and `style` modules to customize your menus
+```python
+# Use the `cli` and `style` modules to create menu themes
 
-menu = Menu(font(underline("Skunkworks UI Styled"), 'green', style='bold'), [cyan("Test 1"), cyan("Test 2"), cyan("Test 3")])
+menu_title = green_font(title('Skunkworks UI'))
+
+menu_options = { 
+                cyan_font('1'): 'Bold blue text',
+                cyan_font('2'): 'Red text, white Background',
+                cyan_font('Q'): 'Quit'
+              }
+
+menu = Menu(menu_title, menu_options)
 menu.display()
-user_input = menu.get_input(prompt("Press `ENTER` to quit..."))
+user_input = menu.get_input(prompt('Select an option : '))
+```
 
+```python
+# Then add menu logic
+
+if user_input.lower() == '1':
+    print(font('Bold blue text', 'blue', bold=True))
+elif user_input.lower() == '2':
+    print(font('Red text, white Background', 'red', 'white'))
+elif user_input.lower() == 'q':
+    menu.quit()
 ```
 
 ***
