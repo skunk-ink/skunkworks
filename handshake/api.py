@@ -46,7 +46,7 @@ class hsd:
     ADDRESS = ''
     PORT = ''
 
-    def __init__(self, _api_key:str, _ipaddress:str='127.0.0.1', _port:int=12037):
+    def __init__(self, api_key:str, ip_address:str='127.0.0.1', port:int=12037):
         """
         DESCRIPTION:
 
@@ -56,19 +56,19 @@ class hsd:
 
         (*) Denotes required argument
 
-        (*) _api_key   : HSD API key.
+        (*) api_key    : HSD API key.
 
-        ( ) _ipaddress : HSD node ip. Default = '127.0.0.1'.
+        ( ) ip_address : HSD node ip. Default = '127.0.0.1'.
 
-        ( ) _port      : HSD node port. Defualt = 12037
+        ( ) port       : HSD node port. Defualt = 12037
         """
 
-        self.API_KEY = _api_key
-        self.ADDRESS = _ipaddress
-        self.PORT = str(_port)
-    ### END METHOD ################################### __init__(self, _api_key:str, _ipaddress:str='127.0.0.1', _port:int=12037)
+        self.API_KEY = api_key
+        self.ADDRESS = ip_address
+        self.PORT = str(port)
+    ### END METHOD ################################### __init__(self, api_key:str, ip_address:str='127.0.0.1', port:int=12037)
 
-    def get(self, _endpoint:str):
+    def get(self, endpoint:str):
         """
         DESCRIPTION:
 
@@ -78,17 +78,17 @@ class hsd:
 
         (*) Denotes required argument
 
-        (*) _endpoint : API endpoint to send GET request.
+        (*) endpoint : API endpoint to send GET request.
         """
 
-        url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + _endpoint
+        url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + endpoint
 
-        getResponse = requests.get(url)
-        response = getResponse.json()
+        get_response = requests.get(url)
+        response = get_response.json()
         return response # Returned as json
-    ### END METHOD ################################### get(self, _endpoint:str)
+    ### END METHOD ################################### get(self, endpoint:str)
 
-    def post(self, _endpoint:str, _message:str=''):
+    def post(self, endpoint:str, message:str=''):
         """
         DESCRIPTION:
 
@@ -98,17 +98,17 @@ class hsd:
 
         (*) Denotes required argument
 
-        (*) _endpoint : API endpoint to send POST message.
+        (*) endpoint : API endpoint to send POST message.
 
-        (*) _message  : Message to be sent.
+        (*) message  : Message to be sent.
         """
         
-        url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + _endpoint
+        url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + endpoint
  
-        postRequest = requests.post(url, _message)
-        response = postRequest.json()
+        post_request = requests.post(url, message)
+        response = post_request.json()
         return response # Returned as json
-    ### END METHOD ################################### post(self, _endpoint:str, _message:str='')
+    ### END METHOD ################################### post(self, endpoint:str, message:str='')
 
     def getInfo(self):
         """
@@ -150,7 +150,7 @@ class hsd:
         return response
     ### END METHOD ################################### getMemPool(self)
 
-    def getMemPoolInvalid(self, _verbose:bool=False):
+    def getMemPoolInvalid(self, verbose:bool=False):
         """
         DESCRIPTION:
 
@@ -161,10 +161,10 @@ class hsd:
 
         (*) Denotes required argument
 
-        ( ) _verbose : (bool) Returns entire Bloom Filter in filter property, hex-encoded.
+        ( ) verbose : (bool) Returns entire Bloom Filter in filter property, hex-encoded.
         """
 
-        if _verbose == True:
+        if verbose == True:
             endpoint = '/mempool/invalid?verbose=true'
         else:
             endpoint = '/mempool/invalid'
@@ -175,9 +175,9 @@ class hsd:
             response = {}
             response['error'] = "{'message': 'Failed to get invalid mempool transaction hashes'}"
         return response
-    ### END METHOD ################################### getMemPoolInvalid(self, _verbose:bool=False)
+    ### END METHOD ################################### getMemPoolInvalid(self, verbose:bool=False)
 
-    def getMemPoolInvalidHash(self, _txhash:str):
+    def getMemPoolInvalidHash(self, tx_hash:str):
         """
         DESCRIPTION:
 
@@ -188,19 +188,19 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _txhash : Transaction hash.
+        (*) tx_hash : Transaction hash.
         """
         
-        endpoint = '/mempool/invalid/' + _txhash
+        endpoint = '/mempool/invalid/' + tx_hash
         try:
             response = self.get(endpoint)
         except:
             response = {}
             response['error'] = "{'message': 'Failed to check mempool for invalid hash'}"
         return response
-    ### END METHOD ################################### getMemPoolInvalidHash(self, _txhash:str)
+    ### END METHOD ################################### getMemPoolInvalidHash(self, tx_hash:str)
 
-    def getBlockByHashOrHeight(self, _blockHashOrHeight:str):
+    def getBlockByHashOrHeight(self, block_hash_or_height:str):
         """
         DESCRIPTION:
 
@@ -210,19 +210,19 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _blockHashOrHeight : Hash or Height of block.
+        (*) block_hash_or_height : Hash or Height of block.
         """
         
-        endpoint = '/block/' + _blockHashOrHeight
+        endpoint = '/block/' + block_hash_or_height
         try:
             response = self.get(endpoint)
         except:
             response = {}
             response['error'] = "{'message': 'Failed to get block by hash or height'}"
         return response
-    ### END METHOD ################################### getBlockByHashOrHeight(self, _blockHashOrHeight:str)
+    ### END METHOD ################################### getBlockByHashOrHeight(self, block_hash_or_height:str)
 
-    def getHeaderByHashOrHeight(self, _headerHashOrHeight:str):
+    def getHeaderByHashOrHeight(self, header_hash_or_height:str):
         """
         DESCRIPTION:
 
@@ -232,19 +232,19 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _headerHashOrHeight : Hash or Height of block.
+        (*) header_hash_or_height : Hash or Height of block.
         """
         
-        endpoint = '/header/' + _headerHashOrHeight
+        endpoint = '/header/' + header_hash_or_height
         try:
             response = self.get(endpoint)
         except:
             response = {}
             response['error'] = "{'message': 'Failed to get header by hash or height'}"
         return response
-    ### END METHOD ################################### getHeaderByHashOrHeight(self, _headerHashOrHeight:str)
+    ### END METHOD ################################### getHeaderByHashOrHeight(self, header_hash_or_height:str)
 
-    def broadcast(self, _tx:str):
+    def broadcast(self, tx_hex:str):
         """
         DESCRIPTION:
 
@@ -256,20 +256,20 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _tx : Raw transaction in hex.
+        (*) tx_hex : Raw transaction in hex.
         """
         
         endpoint = '/broadcast/'
-        _message = '{"tx": "' + _tx + '"}'
+        message = '{"tx": "' + tx_hex + '"}'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'Failed to broadcast transaction'}"
         return response
-    ### END METHOD ################################### broadcast(self, _tx:str)
+    ### END METHOD ################################### broadcast(self, tx_hex:str)
 
-    def broadcastClaim(self, _claim:str):
+    def broadcastClaim(self, claim:str):
         """
         DESCRIPTION:
 
@@ -279,20 +279,20 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _claim : Raw claim in hex.
+        (*) claim : Raw claim in hex.
         """
         
         endpoint = '/claim/'
-        _message = '{ "claim": "' + _claim + '" }'
+        message = '{ "claim": "' + claim + '" }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'Failed to broadcast claim'}"
         return response
-    ### END METHOD ################################### broadcastClaim(self, _claim:str)
+    ### END METHOD ################################### broadcastClaim(self, claim:str)
 
-    def getFeeEstimate(self, _blocks:int):
+    def getFeeEstimate(self, blocks:int):
         """
         DESCRIPTION:
 
@@ -304,46 +304,46 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _blocks : Number of blocks to target confirmation.
+        (*) blocks : Number of blocks to target confirmation.
         """
         
-        endpoint = '/fee?blocks=' + str(_blocks)
+        endpoint = '/fee?blocks=' + str(blocks)
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to estimate fee required for "' + _blocks + '" blocks'}"
+            response['error'] = "{'message': 'Failed to estimate fee required for "' + blocks + '" blocks'}"
         return response
-    ### END METHOD ################################### getFeeEstimate(self, _blocks:int)
+    ### END METHOD ################################### getFeeEstimate(self, blocks:int)
 
-    def reset(self, _height:int):
+    def reset(self, height:int):
         """
         DESCRIPTION:
 
             Triggers a hard-reset of the blockchain. All blocks are disconnected
             from the tip down to the provided height. Indexes and Chain Entries
             are removed. Useful for "rescanning" an SPV wallet. Since there are
-            no blocks stored on disk, the only way to rescan the blockchain is to
+            no blocks stored on disk, the only way to _rescan the blockchain is to
             re-request [merkle]blocks from peers.
         
         PARAMS:
 
         (*) Denotes required argument
         
-        (*) _height : Block height to reset chain to.
+        (*) height : Block height to reset chain to.
         """
         
         endpoint = '/reset'
-        _message = '{ "height": ' + str(_height) + '}'
+        message = '{ "height": ' + str(height) + '}'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'Failed to hard-reset blockchain'}"
         return response
-    ### END METHOD ################################### reset(self, _height:int)
+    ### END METHOD ################################### reset(self, height:int)
 
-    def getCoinByHashIndex(self, _txhash:str, _index:int):
+    def getCoinByHashIndex(self, tx_hash:str, index:int):
         """
         DESCRIPTION:
 
@@ -354,21 +354,21 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _txhash : Hash of tx.
+        (*) tx_hash : Hash of tx.
 
-        (*) _index  : Output's index in tx.
+        (*) index   : Output's index in tx.
         """
         
-        endpoint = '/coin/' + hash + '/' + _txhash + '/' + str(_index)
+        endpoint = '/coin/' + hash + '/' + tx_hash + '/' + str(index)
         try:
             response = self.get(endpoint)
         except:
             response = {}
             response['error'] = "{'message': 'Failed to get coin from hash and index'}"
         return response
-    ### END METHOD ################################### getCoinByHashIndex(self, _txhash:str, _index:int)
+    ### END METHOD ################################### getCoinByHashIndex(self, tx_hash:str, index:int)
 
-    def getCoinByAddress(self, _address:str):
+    def getCoinByAddress(self, address:str):
         """
         DESCRIPTION:
 
@@ -378,19 +378,19 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _address : Handshake address.
+        (*) address : Handshake address.
         """
         
-        endpoint = '/coin/address/' + _address
+        endpoint = '/coin/address/' + address
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to get coins for address " + _address + "'}"
+            response['error'] = "{'message': 'Failed to get coins for address " + address + "'}"
         return response
-    ### END METHOD ################################### getCoinByAddress(self, _address:str)
+    ### END METHOD ################################### getCoinByAddress(self, address:str)
 
-    def getTxByHash(self, _txhash:str):
+    def getTxByHash(self, tx_hash:str):
         """
         DESCRIPTION:
 
@@ -400,19 +400,19 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _txhash : Transaction hash.
+        (*) tx_hash : Transaction hash.
         """
         
-        endpoint = '/tx/' + _txhash
+        endpoint = '/tx/' + tx_hash
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to get transactions for hash " + _txhash + "'}"
+            response['error'] = "{'message': 'Failed to get transactions for hash " + tx_hash + "'}"
         return response
-    ### END METHOD ################################### getTxByHash(self, _txhash:str)
+    ### END METHOD ################################### getTxByHash(self, tx_hash:str)
 
-    def getTxByAddress(self, _address:str):
+    def getTxByAddress(self, address:str):
         """
         DESCRIPTION:
 
@@ -422,17 +422,17 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _address : Handshake address.
+        (*) address : Handshake address.
         """
         
-        endpoint = '/tx/address/' + _address
+        endpoint = '/tx/address/' + address
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to get transactions for address " + _address + "'}"
+            response['error'] = "{'message': 'Failed to get transactions for address " + address + "'}"
         return response
-    ### END METHOD ################################### getTxByAddress(self, _address:str)
+    ### END METHOD ################################### getTxByAddress(self, address:str)
 
     def rpc_stop(self):
         """
@@ -446,9 +446,9 @@ class hsd:
         """
         
         endpoint = '/'
-        _message = '{ "method": "stop" }'
+        message = '{ "method": "stop" }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to stop node'}"
@@ -467,9 +467,9 @@ class hsd:
         """
         
         endpoint = '/'
-        _message = '{ "method": "getinfo" }'
+        message = '{ "method": "getinfo" }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get information'}"
@@ -488,16 +488,16 @@ class hsd:
         """
         
         endpoint = '/'
-        _message = '{ "method": "getmemoryinfo" }'
+        message = '{ "method": "getmemoryinfo" }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get memory usage information'}"
         return response
     ### END METHOD ################################### rpc_getMemoryInfo(self)
 
-    def rpc_setLogLevel(self, _logLevel:str='NONE'):
+    def rpc_setLogLevel(self, log_level:str='NONE'):
         """
         DESCRIPTION:
 
@@ -509,20 +509,20 @@ class hsd:
 
             (*) Denotes required argument
 
-            ( ) _logLevel : Level for the logger. Default = `NONE`
+            ( ) log_level : Level for the logger. Default = `NONE`
         """
         
         endpoint = '/'
-        _message = '{ "method": "setloglevel", "params": [ "' + _logLevel + '" ] }'
+        message = '{ "method": "setloglevel", "params": [ "' + log_level + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to set log level to " + _logLevel + "'}"
+            response['error'] = "{'message': 'RPC failed to set log level to " + log_level + "'}"
         return response
-    ### END METHOD ################################### rpc_setLogLevel(self, _logLevel:str='NONE')
+    ### END METHOD ################################### rpc_setLogLevel(self, log_level:str='NONE')
 
-    def rpc_validateAddress(self, _address:str):
+    def rpc_validateAddress(self, address:str):
         """
         DESCRIPTION:
 
@@ -532,20 +532,20 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _address : Address to validate.
+        (*) address : Address to validate.
         """
         
         endpoint = '/'
-        _message = '{ "validateaddress": "", "params": [ "' + _address + '" ] }'
+        message = '{ "validateaddress": "", "params": [ "' + address + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to validate address " + _address + "'}"
+            response['error'] = "{'message': 'RPC failed to validate address " + address + "'}"
         return response
-    ### END METHOD ################################### rpc_validateAddress(self, _address:str)
+    ### END METHOD ################################### rpc_validateAddress(self, address:str)
 
-    def rpc_createMultiSig(self, _nrequired:int, _keyDict:str):
+    def rpc_createMultiSig(self, nrequired:int, key_dict:str):
         """
         DESCRIPTION:
 
@@ -555,22 +555,22 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _nrequired : Required number of approvals for spending.
+        (*) nrequired : Required number of approvals for spending.
 
-        (*) _keyDict   : List array of public keys.
+        (*) key_dict  : List array of public keys.
         """
         
         endpoint = '/'
-        _message = '{ "method": "createmultisig", "params": [ ' + str(_nrequired) + ', "' + _keyDict + ' ] }'
+        message = '{ "method": "createmultisig", "params": [ ' + str(nrequired) + ', "' + key_dict + ' ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to create multisig address'}"
         return response
-    ### END METHOD ################################### rpc_createMultiSig(self, _nrequired:int, _keyDict:str)
+    ### END METHOD ################################### rpc_createMultiSig(self, nrequired:int, key_dict:str)
 
-    def rpc_signMessageWithPrivKey(self, _privkey:str, _message:str):
+    def rpc_signMessageWithPrivKey(self, private_key:str, message:str):
         """
         DESCRIPTION:
 
@@ -579,22 +579,22 @@ class hsd:
         PARAMS:
         (*) Denotes required argument
         
-        (*) _privkey : Private key.
+        (*) private_key : Private key.
 
-        (*) _message : Message you want to sign.
+        (*) message : Message you want to sign.
         """
         
         endpoint = '/'
-        _message = '{ "method": "signmessagewithprivkey", "params": [ "' + _privkey + '", "' + _message + ' ] }'
+        message = '{ "method": "signmessagewithprivkey", "params": [ "' + private_key + '", "' + message + ' ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to sign message with private key'}"
         return response
-    ### END METHOD ################################### rpc_signMessageWithPrivKey(self, _privkey:str, _message:str)
+    ### END METHOD ################################### rpc_signMessageWithPrivKey(self, private_key:str, message:str)
 
-    def rpc_verifyMessage(self, _address:str, _signature:str, _message:str):
+    def rpc_verifyMessage(self, address:str, signature:str, message:str):
         """
         DESCRIPTION:
 
@@ -604,24 +604,24 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _address   : Address of the signer.
+        (*) address   : Address of the signer.
 
-        (*) _signature : Signature of signed message.
+        (*) signature : Signature of signed message.
 
-        (*) _message   : Message that was signed.
+        (*) message   : Message that was signed.
         """
         
         endpoint = '/'
-        _message = '{ "method": "verifymessage", "params": [ "' + _address + '", "' + _signature + '", "' + _message + '" ] }'
+        message = '{ "method": "verifymessage", "params": [ "' + address + '", "' + signature + '", "' + message + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to verify signature of address " + _address + "'}"
+            response['error'] = "{'message': 'RPC failed to verify signature of address " + address + "'}"
         return response
-    ### END METHOD ################################### rpc_verifyMessage(self, _address:str, _signature:str, _message:str)
+    ### END METHOD ################################### rpc_verifyMessage(self, address:str, signature:str, message:str)
 
-    def rpc_verifyMessageWithName(self, _name:str, _signature:str, _message:str):
+    def rpc_verifyMessageWithName(self, name:str, signature:str, message:str):
         """
         DESCRIPTION:
 
@@ -631,24 +631,24 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _name      : Name to retrieve the address used to sign.
+        (*) name      : Name to retrieve the address used to sign.
 
-        (*) _signature : Signature of signed message.
+        (*) signature : Signature of signed message.
 
-        (*) _message   : Message that was signed.
+        (*) message   : Message that was signed.
         """
         
         endpoint = '/'
-        _message = '{ "method": "verifymessagewithname", "params": [ "' + _name + '", "' + _signature + '", "' + _message + '" ] }'
+        message = '{ "method": "verifymessagewithname", "params": [ "' + name + '", "' + signature + '", "' + message + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to verify message for the name " + _name + "'}"
+            response['error'] = "{'message': 'RPC failed to verify message for the name " + name + "'}"
         return response
-    ### END METHOD ################################### rpc_verifyMessageWithName(self, _name:str, _signature:str, _message:str)
+    ### END METHOD ################################### rpc_verifyMessageWithName(self, name:str, signature:str, message:str)
 
-    def rpc_setMockTime(self, _timestamp:int):
+    def rpc_setMockTime(self, timestamp:int):
         """
         DESCRIPTION:
 
@@ -658,18 +658,18 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _timestamp : Timestamp to change to.
+        (*) timestamp : Timestamp to change to.
         """
         
         endpoint = '/'
-        _message = '{ "method": "setmocktime", "params": [ ' + str(_timestamp) + ' ] }'
+        message = '{ "method": "setmocktime", "params": [ ' + str(timestamp) + ' ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to set network time to " + _timestamp + "'}"
+            response['error'] = "{'message': 'RPC failed to set network time to " + timestamp + "'}"
         return response
-    ### END METHOD ################################### rpc_setMockTime(self, _timestamp:int)
+    ### END METHOD ################################### rpc_setMockTime(self, timestamp:int)
 
     def rpc_pruneBlockchain(self):
         """
@@ -683,16 +683,16 @@ class hsd:
         """
         
         endpoint = '/'
-        _message = '{ "method": "pruneblockchain", "params": [] }'
+        message = '{ "method": "pruneblockchain", "params": [] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to prune the blockchain'}"
         return response
     ### END METHOD ################################### rpc_pruneBlockchain(self)
     
-    def rpc_invalidateBlock(self, _blockhash:str):
+    def rpc_invalidateBlock(self, block_hash:str):
         """
         DESCRIPTION:
 
@@ -705,20 +705,20 @@ class hsd:
         
         (*) Denotes required argument
         
-        (*) _blockhash : Block's hash.
+        (*) block_hash : Block's hash.
         """
         
         endpoint = '/'
-        _message = '{ "method": "", "params": [ "' + _blockhash + '" ] }'
+        message = '{ "method": "", "params": [ "' + block_hash + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to invalidate block hash " + _blockhash + "'}"
+            response['error'] = "{'message': 'RPC failed to invalidate block hash " + block_hash + "'}"
         return response
-    ### END METHOD ################################### rpc_invalidateBlock(self, _blockhash:str)
+    ### END METHOD ################################### rpc_invalidateBlock(self, block_hash:str)
     
-    def rpc_reconsiderBlock(self, _blockhash:str):
+    def rpc_reconsiderBlock(self, block_hash:str):
         """
         DESCRIPTION:
 
@@ -728,18 +728,18 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _blockhash : Block's hash.
+        (*) block_hash : Block's hash.
         """
         
         endpoint = '/'
-        _message = '{ "method": "reconsiderblock", "params": [ "' + _blockhash + '" ] }'
+        message = '{ "method": "reconsiderblock", "params": [ "' + block_hash + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to remove block from hash " + _blockhash + "'}"
+            response['error'] = "{'message': 'RPC failed to remove block from hash " + block_hash + "'}"
         return response
-    ### END METHOD ################################### rpc_reconsiderBlock(self, _blockhash:str)
+    ### END METHOD ################################### rpc_reconsiderBlock(self, block_hash:str)
 
     def rpc_getBlockchainInfo(self):
         """
@@ -753,9 +753,9 @@ class hsd:
         """
         
         endpoint = '/'
-        _message = '{ "method": "getblockchaininfo" }'
+        message = '{ "method": "getblockchaininfo" }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get blockchain information'}"
@@ -774,9 +774,9 @@ class hsd:
         """
         
         endpoint = '/'
-        _message = '{ "method": "getbestblockhash" }'
+        message = '{ "method": "getbestblockhash" }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get block hash at the tip'}"
@@ -795,16 +795,16 @@ class hsd:
         """
         
         endpoint = '/'
-        _message = '{ "method": "getblockcount" }'
+        message = '{ "method": "getblockcount" }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to retreive current block count'}"
         return response
     ### END METHOD ################################### rpc_getBlockCount(self)
     
-    def rpc_getBlock(self, _blockhash:str, _verbose:bool=True, _details:bool=False):
+    def rpc_getBlock(self, block_hash:str, verbose:bool=True, details:bool=False):
         """
         DESCRIPTION:
 
@@ -814,37 +814,37 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _blockhash : Hash of the block.
+        (*) block_hash : Hash of the block.
 
-        ( ) _verbose   : (bool) If set to False, it will return hex of the block.
+        ( ) verbose    : (bool) If set to False, it will return hex of the block.
 
-        ( ) _details   : (bool) If set to True, it will return transaction details too.
+        ( ) details    : (bool) If set to True, it will return transaction details too.
         """
 
-        verbose = ''
-        details = ''
+        _verbose = ''
+        _details = ''
 
-        if _verbose == True:
-            verbose = '1'
+        if verbose == True:
+            _verbose = '1'
         else:
-            verbose = '0'
+            _verbose = '0'
 
-        if _details == True:
-            details = '1'
+        if details == True:
+            _details = '1'
         else:
-            details = '0'
+            _details = '0'
         
         endpoint = '/'
-        _message = '{ "method": "getblock", "params": [ "' + _blockhash + '", ' + verbose + ', ' + details + ' ] }'
+        message = '{ "method": "getblock", "params": [ "' + block_hash + '", ' + _verbose + ', ' + _details + ' ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get information for the block hash " + _blockhash + "'}"
+            response['error'] = "{'message': 'RPC failed to get information for the block hash " + block_hash + "'}"
         return response
-    ### END METHOD ################################### rpc_getBlock(self, _blockhash:str, _verbose:bool=True, _details:bool=False)
+    ### END METHOD ################################### rpc_getBlock(self, block_hash:str, verbose:bool=True, details:bool=False)
     
-    def rpc_getBlockByHeight(self, _blockheight:int, _verbose:bool=True, _details:bool=False):
+    def rpc_getBlockByHeight(self, block_height:int, verbose:bool=True, details:bool=False):
         """
         DESCRIPTION:
 
@@ -854,37 +854,37 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _blockheight : Height of the block in the blockchain.
+        (*) block_height : Height of the block in the blockchain.
 
-        ( ) _verbose     : (bool) If set to True, it will return hex of the block.
+        ( ) verbose      : (bool) If set to True, it will return hex of the block.
 
-        ( ) _details     : (bool) If set to True, it will return transaction details too.
+        ( ) details      : (bool) If set to True, it will return transaction details too.
         """
 
-        verbose = ''
-        details = ''
+        _verbose = ''
+        _details = ''
 
-        if _verbose == True:
-            verbose = '1'
+        if verbose == True:
+            _verbose = '1'
         else:
-            verbose = '0'
+            _verbose = '0'
 
-        if _details == True:
-            details = '1'
+        if details == True:
+            _details = '1'
         else:
-            details = '0'
+            _details = '0'
         
         endpoint = '/'
-        _message = '{ "method": "getblockbyheight", "params": [ ' + str(_blockheight) + ', ' + verbose + ', ' + details + ' ] }'
+        message = '{ "method": "getblockbyheight", "params": [ ' + str(block_height) + ', ' + _verbose + ', ' + _details + ' ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get block at height " + _blockheight + "'}"
+            response['error'] = "{'message': 'RPC failed to get block at height " + block_height + "'}"
         return response
-    ### END METHOD ################################### rpc_getBlockByHeight(self, _blockheight:int, _verbose:bool=True, _details:bool=False)
+    ### END METHOD ################################### rpc_getBlockByHeight(self, block_height:int, verbose:bool=True, details:bool=False)
     
-    def rpc_getBlockHash(self, _blockheight:int):
+    def rpc_getBlockHash(self, block_height:int):
         """
         DESCRIPTION:
 
@@ -894,20 +894,20 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _blockheight : Height of the block in the blockchain.
+        (*) block_height : Height of the block in the blockchain.
         """
         
         endpoint = '/'
-        _message = '{ "method": "getblockhash", "params": [ ' + str(_blockheight) + ' ] }'
+        message = '{ "method": "getblockhash", "params": [ ' + str(block_height) + ' ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get hash for the block at height " + _blockheight + "'}"
+            response['error'] = "{'message': 'RPC failed to get hash for the block at height " + block_height + "'}"
         return response
-    ### END METHOD ################################### rpc_getBlockHash(self, _blockheight:int)
+    ### END METHOD ################################### rpc_getBlockHash(self, block_height:int)
     
-    def rpc_getBlockHeader(self, _blockhash:str, _verbose:bool=True):
+    def rpc_getBlockHeader(self, block_hash:str, verbose:bool=True):
         """
         DESCRIPTION:
 
@@ -917,27 +917,27 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _blockhash : Hash of the block in the blockchain.
+        (*) block_hash : Hash of the block in the blockchain.
 
-        ( ) _verbose   : If set to False, it will return (hex) of the block.
+        ( ) verbose    : If set to False, it will return (hex) of the block.
         """
 
-        verbose = ''
+        _verbose = ''
 
-        if _verbose == True:
-            verbose = '1'
+        if verbose == True:
+            _verbose = '1'
         else:
-            verbose = '0'
+            _verbose = '0'
         
         endpoint = '/'
-        _message = '{ "method": "getblockheader", "params": [ "' + _blockhash + '", ' + verbose + ' ] }'
+        message = '{ "method": "getblockheader", "params": [ "' + block_hash + '", ' + _verbose + ' ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get block header for hash " + _blockhash + "'}"
+            response['error'] = "{'message': 'RPC failed to get block header for hash " + block_hash + "'}"
         return response
-    ### END METHOD ################################### rpc_getBlockHeader(self, _blockhash:str, _verbose:bool=True)
+    ### END METHOD ################################### rpc_getBlockHeader(self, block_hash:str, verbose:bool=True)
     
     def rpc_getChainTips(self):
         """
@@ -951,9 +951,9 @@ class hsd:
         """
         
         endpoint = '/'
-        _message = '{ "method": "getchaintips" }'
+        message = '{ "method": "getchaintips" }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get chaintips'}"
@@ -972,9 +972,9 @@ class hsd:
         """
         
         endpoint = '/'
-        _message = '{ "method": "getdifficulty" }'
+        message = '{ "method": "getdifficulty" }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get current difficulty level'}"
@@ -993,16 +993,16 @@ class hsd:
         """
         
         endpoint = '/'
-        _message = '{ "method": "getmempoolinfo" }'
+        message = '{ "method": "getmempoolinfo" }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get information about mempool'}"
         return response
     ### END METHOD ################################### rpc_getMemPoolInfo(self)
     
-    def rpc_getMemPoolAncestors(self, _txhash:str, _verbose:bool=False):
+    def rpc_getMemPoolAncestors(self, tx_hash:str, verbose:bool=False):
         """
         DESCRIPTION:
 
@@ -1012,29 +1012,29 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _txhash  : Transaction Hash.
+        (*) tx_hash  : Transaction Hash.
 
-        ( ) _verbose : False returns only tx hashs, true - returns dependency tx info.
+        ( ) verbose : False returns only tx hashs, true - returns dependency tx info.
         """
 
-        verbose = ''
+        _verbose = ''
 
-        if _verbose == True:
-            verbose = '1'
+        if verbose == True:
+            _verbose = '1'
         else:
-            verbose = '0'
+            _verbose = '0'
         
         endpoint = '/'
-        _message = '{ "method": "getmempoolancestors", "params": [ "' + _txhash + '", ' + verbose + ' ] }'
+        message = '{ "method": "getmempoolancestors", "params": [ "' + tx_hash + '", ' + _verbose + ' ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get mempool ancestors for transaction hash " + _txhash + "'}"
+            response['error'] = "{'message': 'RPC failed to get mempool ancestors for transaction hash " + tx_hash + "'}"
         return response
-    ### END METHOD ################################### rpc_getMemPoolAncestors(self, _txhash:str, _verbose:bool=False)
+    ### END METHOD ################################### rpc_getMemPoolAncestors(self, tx_hash:str, verbose:bool=False)
     
-    def rpc_getMemPoolDescendants(self, _txhash:str, _verbose:bool=False):
+    def rpc_getMemPoolDescendants(self, tx_hash:str, verbose:bool=False):
         """
         DESCRIPTION:
 
@@ -1044,29 +1044,29 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _txhash  : Transaction Hash.
+        (*) tx_hash  : Transaction Hash.
 
-        ( ) _verbose : False returns only tx hashs, true - returns dependency tx info.
+        ( ) verbose : False returns only tx hashs, true - returns dependency tx info.
         """
 
-        verbose = ''
+        _verbose = ''
 
-        if _verbose == True:
-            verbose = '1'
+        if verbose == True:
+            _verbose = '1'
         else:
-            verbose = '0'
+            _verbose = '0'
         
         endpoint = '/'
-        _message = '{ "method": "getmempooldescendants", "params": [ "' + _txhash + '", ' + verbose + ' ] }'
+        message = '{ "method": "getmempooldescendants", "params": [ "' + tx_hash + '", ' + _verbose + ' ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get mempool descendants for transaction hash " + _txhash + "'}"
+            response['error'] = "{'message': 'RPC failed to get mempool descendants for transaction hash " + tx_hash + "'}"
         return response
-    ### END METHOD ################################### rpc_getMemPoolDescendants(self, _txhash:str, _verbose:bool=False)
+    ### END METHOD ################################### rpc_getMemPoolDescendants(self, tx_hash:str, verbose:bool=False)
     
-    def rpc_getMemPoolEntry(self, _txhash:str):
+    def rpc_getMemPoolEntry(self, tx_hash:str):
         """
         DESCRIPTION:
 
@@ -1076,20 +1076,20 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _txhash : Transaction Hash.
+        (*) tx_hash : Transaction Hash.
         """
         
         endpoint = '/'
-        _message = '{ "method": "getmempoolentry", "params": [ "' + _txhash + '" ] }'
+        message = '{ "method": "getmempoolentry", "params": [ "' + tx_hash + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get mempool entry for the transaction hash " + _txhash + "'}"
+            response['error'] = "{'message': 'RPC failed to get mempool entry for the transaction hash " + tx_hash + "'}"
         return response
-    ### END METHOD ################################### rpc_getMemPoolEntry(self, _txhash:str)
+    ### END METHOD ################################### rpc_getMemPoolEntry(self, tx_hash:str)
     
-    def rpc_getRawMemPool(self, _verbose:bool=False):
+    def rpc_getRawMemPool(self, verbose:bool=False):
         """
         DESCRIPTION:
 
@@ -1099,27 +1099,27 @@ class hsd:
 
         (*) Denotes required argument
         
-        ( ) _verbose : False returns only tx hashs, true - returns full tx info.
+        ( ) verbose : False returns only tx hashs, true - returns full tx info.
         """
 
-        verbose = ''
+        _verbose = ''
 
-        if _verbose == True:
-            verbose = '1'
+        if verbose == True:
+            _verbose = '1'
         else:
-            verbose = '0'
+            _verbose = '0'
         
         endpoint = '/'
-        _message = '{ "method": "getrawmempool", "params": [ ' + verbose + ' ] }'
+        message = '{ "method": "getrawmempool", "params": [ ' + _verbose + ' ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get raw mempool data'}"
         return response
-    ### END METHOD ################################### rpc_getRawMemPool(self, _verbose:bool=False)
+    ### END METHOD ################################### rpc_getRawMemPool(self, verbose:bool=False)
     
-    def rpc_prioritiseTransaction(self, _txhash:str, _priorityDelta:int, _feeDelta:int):
+    def rpc_prioritiseTransaction(self, tx_hash:str, priority_delta:int, fee_delta:int):
         """
         DESCRIPTION:
 
@@ -1132,24 +1132,24 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _txhash        : Transaction hash.
+        (*) tx_hash        : Transaction hash.
 
-        (*) _priorityDelta : Virtual priority to add/subtract to the entry.
+        (*) priority_delta : Virtual priority to add/subtract to the entry.
 
-        (*) _feeDelta      : Virtual fee to add/subtract to the entry.
+        (*) fee_delta      : Virtual fee to add/subtract to the entry.
         """
         
         endpoint = '/'
-        _message = '{ "method": "prioritisetransaction", "params": [ "' + _txhash + '", "' + str(_priorityDelta) + '", "' + str(_feeDelta) + '" ] }'
+        message = '{ "method": "prioritisetransaction", "params": [ "' + tx_hash + '", "' + str(priority_delta) + '", "' + str(fee_delta) + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to prioritize the transaction hash " + _txhash + "'}"
+            response['error'] = "{'message': 'RPC failed to prioritize the transaction hash " + tx_hash + "'}"
         return response
-    ### END METHOD ################################### rpc_prioritiseTransaction(self, _txhash:str, _priorityDelta:int, _feeDelta:int)
+    ### END METHOD ################################### rpc_prioritiseTransaction(self, tx_hash:str, priority_delta:int, fee_delta:int)
     
-    def rpc_estimateFee(self, _nblocks:int=1):
+    def rpc_estimateFee(self, n_blocks:int=1):
         """
         DESCRIPTION:
 
@@ -1159,20 +1159,20 @@ class hsd:
 
         (*) Denotes required argument
         
-        ( ) _nblocks : Number of blocks to check for estimation.
+        ( ) n_blocks : Number of blocks to check for estimation.
         """
         
         endpoint = '/'
-        _message = '{ "method": "estimatefee", "params": [ ' + str(_nblocks) + ' ] }'
+        message = '{ "method": "estimatefee", "params": [ ' + str(n_blocks) + ' ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to estimate fee for transaction of "' + _nblocks + '" blocks'}"
+            response['error'] = "{'message': 'RPC failed to estimate fee for transaction of "' + n_blocks + '" blocks'}"
         return response
-    ### END METHOD ################################### rpc_estimateFee(self, _nblocks:int=1)
+    ### END METHOD ################################### rpc_estimateFee(self, n_blocks:int=1)
     
-    def rpc_estimatePriority(self, _nblocks:int=1):
+    def rpc_estimatePriority(self, n_blocks:int=1):
         """
         DESCRIPTION:
 
@@ -1184,20 +1184,20 @@ class hsd:
 
         (*) Denotes required argument
         
-        ( ) _nblocks : Number of blocks to check for estimation.
+        ( ) n_blocks : Number of blocks to check for estimation.
         """
         
         endpoint = '/'
-        _message = '{ "method": "estimatepriority", "params": [ ' + str(_nblocks) + ' ] }'
+        message = '{ "method": "estimatepriority", "params": [ ' + str(n_blocks) + ' ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to estimate the priority of "' + _nblocks + '" blocks'}"
+            response['error'] = "{'message': 'RPC failed to estimate the priority of "' + n_blocks + '" blocks'}"
         return response
-    ### END METHOD ################################### rpc_estimatePriority(self, _nblocks:int=1)
+    ### END METHOD ################################### rpc_estimatePriority(self, n_blocks:int=1)
     
-    def rpc_estimateSmartFee(self, _nblocks:int=1):
+    def rpc_estimateSmartFee(self, n_blocks:int=1):
         """
         DESCRIPTION:
 
@@ -1207,20 +1207,20 @@ class hsd:
 
         (*) Denotes required argument
         
-        ( ) _nblocks : Number of blocks to check for estimation.
+        ( ) n_blocks : Number of blocks to check for estimation.
         """
         
         endpoint = '/'
-        _message = '{ "method": "estimatesmartfee", "params": [ ' + str(_nblocks) + ' ] }'
+        message = '{ "method": "estimatesmartfee", "params": [ ' + str(n_blocks) + ' ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to estimate the smart fee for " + _nblocks + " blocks'}"
+            response['error'] = "{'message': 'RPC failed to estimate the smart fee for " + n_blocks + " blocks'}"
         return response
-    ### END METHOD ################################### rpc_estimateSmartFee(self, _nblocks:int=1)
+    ### END METHOD ################################### rpc_estimateSmartFee(self, n_blocks:int=1)
     
-    def rpc_estimateSmartPriority(self, _nblocks:int=1):
+    def rpc_estimateSmartPriority(self, n_blocks:int=1):
         """
         DESCRIPTION:
 
@@ -1232,20 +1232,20 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _nblocks : Number of blocks to check for estimation.
+        (*) n_blocks : Number of blocks to check for estimation.
         """
         
         endpoint = '/'
-        _message = '{ "method": "estimatesmartpriority", "params": [ ' + str(_nblocks) + ' ] }'
+        message = '{ "method": "estimatesmartpriority", "params": [ ' + str(n_blocks) + ' ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to estimate the smart priority for " + _nblocks + " blocks'}"
+            response['error'] = "{'message': 'RPC failed to estimate the smart priority for " + n_blocks + " blocks'}"
         return response
-    ### END METHOD ################################### rpc_estimateSmartPriority(self, _nblocks:int=1)
+    ### END METHOD ################################### rpc_estimateSmartPriority(self, n_blocks:int=1)
     
-    def rpc_getTxOut(self, _txhash:str, _index:int, _includemempool:int=1):
+    def rpc_getTxOut(self, tx_hash:str, index:int, include_mempool:int=1):
         """
         DESCRIPTION:
 
@@ -1255,22 +1255,22 @@ class hsd:
         
         (*) Denotes required argument
         
-        (*) _txhash         : Transaction hash.
+        (*) tx_hash         : Transaction hash.
 
-        (*) _index          : Index of the outpoint tx.
+        (*) index           : Index of the outpoint tx.
 
-        ( ) _includemempool : Whether to include mempool transactions.
+        ( ) include_mempool : Whether to include mempool transactions.
         """
         
         endpoint = '/'
-        _message = '{ "method": "gettxout", "params": [ "' + _txhash + '", ' + str(_index) + ', ' + str(_includemempool) + ' ] }'
+        message = '{ "method": "gettxout", "params": [ "' + tx_hash + '", ' + str(index) + ', ' + str(include_mempool) + ' ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get oupoint for the transaction hash " + _txhash + "'}"
+            response['error'] = "{'message': 'RPC failed to get oupoint for the transaction hash " + tx_hash + "'}"
         return response
-    ### END METHOD ################################### rpc_getTxOut(self, _txhash:str, _index:int, _includemempool:int=1)
+    ### END METHOD ################################### rpc_getTxOut(self, tx_hash:str, index:int, include_mempool:int=1)
     
     def rpc_getTxOutSetInfo(self):
         """
@@ -1284,16 +1284,16 @@ class hsd:
         """
 
         endpoint = '/'
-        _message = '{ "method": "gettxoutsetinfo", "params": [] }'
+        message = '{ "method": "gettxoutsetinfo", "params": [] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get UTXO information from chain'}"
         return response
     ### END METHOD ################################### rpc_getTxOutSetInfo(self)
     
-    def rpc_getRawTransaction(self, _txhash:str, _verbose:bool=False):
+    def rpc_getRawTransaction(self, tx_hash:str, verbose:bool=False):
         """
         DESCRIPTION:
 
@@ -1303,29 +1303,29 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _txhash  : Transaction hash.
+        (*) tx_hash  : Transaction hash.
 
-        ( ) _verbose : Returns json formatted if true.
+        ( ) verbose : Returns json formatted if true.
         """
 
-        verbose = ''
+        _verbose = ''
 
-        if _verbose == True:
-            verbose = '1'
+        if verbose == True:
+            _verbose = '1'
         else:
-            verbose = '0'
+            _verbose = '0'
         
         endpoint = '/'
-        _message = '{ "method": "getrawtransaction", "params": [ "' + _txhash + '", ' + verbose + ' ] }'
+        message = '{ "method": "getrawtransaction", "params": [ "' + tx_hash + '", ' + _verbose + ' ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get raw transaction for hash " + _txhash + "'}"
+            response['error'] = "{'message': 'RPC failed to get raw transaction for hash " + tx_hash + "'}"
         return response
-    ### END METHOD ################################### rpc_getRawTransaction(self, _txhash:str, _verbose:bool=False)
+    ### END METHOD ################################### rpc_getRawTransaction(self, tx_hash:str, verbose:bool=False)
     
-    def rpc_decodeRawTransaction(self, _rawtx:str):
+    def rpc_decodeRawTransaction(self, raw_tx:str):
         """
         DESCRIPTION:
 
@@ -1335,20 +1335,20 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _rawtx : Raw transaction hex.
+        (*) raw_tx : Raw transaction hex.
         """
         
         endpoint = '/'
-        _message = '{ "method": "decoderawtransaction", "params": [ "' + _rawtx + '" ] }'
+        message = '{ "method": "decoderawtransaction", "params": [ "' + raw_tx + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to decode raw transcation " + _rawtx + "'}"
+            response['error'] = "{'message': 'RPC failed to decode raw transcation " + raw_tx + "'}"
         return response
-    ### END METHOD ################################### rpc_decodeRawTransaction(self, _rawtx:str)
+    ### END METHOD ################################### rpc_decodeRawTransaction(self, raw_tx:str)
     
-    def rpc_decodeScript(self, _script:str):
+    def rpc_decodeScript(self, script:str):
         """
         DESCRIPTION:
 
@@ -1358,20 +1358,20 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _script : Script hex.
+        (*) script : Script hex.
         """
         
         endpoint = '/'
-        _message = '{ "method": "decodescript", "params": [ "' + _script + '" ] }'
+        message = '{ "method": "decodescript", "params": [ "' + script + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to decond script " + _script + "'}"
+            response['error'] = "{'message': 'RPC failed to decond script " + script + "'}"
         return response
-    ### END METHOD ################################### rpc_decodeScript(self, _script:str)
+    ### END METHOD ################################### rpc_decodeScript(self, script:str)
     
-    def rpc_sendRawTransaction(self, _rawtx:str):
+    def rpc_sendRawTransaction(self, raw_tx:str):
         """
         DESCRIPTION:
 
@@ -1381,20 +1381,20 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _rawtx : Raw transaction hex.
+        (*) raw_tx : Raw transaction hex.
         """
         
         endpoint = '/'
-        _message = '{ "method": "sendrawtransaction", "params": [ "' + _rawtx + '" ] }'
+        message = '{ "method": "sendrawtransaction", "params": [ "' + raw_tx + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to send raw transaction without verification'}"
         return response
-    ### END METHOD ################################### rpc_sendRawTransaction(self, _rawtx:str)
+    ### END METHOD ################################### rpc_sendRawTransaction(self, raw_tx:str)
     
-    def rpc_createRawTransaction(self, _txhash:str, _txindex:int, _address:str, _amount:int, _data:str):
+    def rpc_createRawTransaction(self, tx_hash:str, tx_index:int, address:str, amount:int, data:str):
         """
         DESCRIPTION:
 
@@ -1404,26 +1404,26 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _txhash  : Transaction hash.
+        (*) tx_hash  : Transaction hash.
 
-        (*) _txindex : Transaction outpoint index.
+        (*) tx_index : Transaction outpoint index.
 
-        (*) _address : Recipient address.
+        (*) address  : Recipient address.
 
-        (*) _amount  : Amount to send in HNS (float).
+        (*) amount   : Amount to send in HNS (float).
         """
 
         endpoint = '/'
-        _message = '{ "method": "createrawtransaction", "params": [[{ "txid": "' + _txhash + '", "vout": ' + str(_txindex) + ' }], { "' + _address + '": ' + str(_amount) + ', "data": "' + _data + '" }] }'
+        message = '{ "method": "createrawtransaction", "params": [[{ "txid": "' + tx_hash + '", "vout": ' + str(tx_index) + ' }], { "' + address + '": ' + str(amount) + ', "data": "' + data + '" }] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to create raw unsigned transaction'}"
         return response
-    ### END METHOD ################################### rpc_createRawTransaction(self, _txhash:str, _txindex:int, _address:str, _amount:int, _data:str)
+    ### END METHOD ################################### rpc_createRawTransaction(self, tx_hash:str, tx_index:int, address:str, amount:int, data:str)
     
-    def rpc_signRawTransaction(self, _rawtx:str, _txhash:str, _txindex:int, _address:str, _amount:int, _privkey:str):
+    def rpc_signRawTransaction(self, raw_tx:str, tx_hash:str, tx_index:int, address:str, amount:int, private_key:str):
         """
         DESCRIPTION:
 
@@ -1433,30 +1433,30 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _rawtx   : Raw transaction.
+        (*) raw_tx      : Raw transaction.
 
-        (*) _txhash  : Transaction hash.
+        (*) tx_hash     : Transaction hash.
 
-        (*) _txindex : Transaction outpoint index.
+        (*) tx_index    : Transaction outpoint index.
 
-        (*) _address : Address which received the output you're going to sign.
+        (*) address     : Address which received the output you're going to sign.
 
-        (*) _amount  : Amount the output is worth.
+        (*) amount      : Amount the output is worth.
 
-        ( ) _privkey : List of private keys.
+        ( ) private_key : List of private keys.
         """
 
         endpoint = '/'
-        _message = '{ "method": "signrawtransaction", "params": [ "' + _rawtx + '", [{ "txid": "' + _txhash + '", "vout": ' + str(_txindex) + ', "address": "' + _address + '", "amount": ' + str(_amount) + ' }], [ "' + _privkey + '" ]] }'
+        message = '{ "method": "signrawtransaction", "params": [ "' + raw_tx + '", [{ "txid": "' + tx_hash + '", "vout": ' + str(tx_index) + ', "address": "' + address + '", "amount": ' + str(amount) + ' }], [ "' + private_key + '" ]] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to sign raw transaction'}"
         return response
-    ### END METHOD ################################### rpc_signRawTransaction(self, _rawtx:str, _txhash:str, _txindex:int, _address:str, _amount:int, _privkey:str)
+    ### END METHOD ################################### rpc_signRawTransaction(self, raw_tx:str, tx_hash:str, tx_index:int, address:str, amount:int, private_key:str)
     
-    def rpc_getTxOutProof(self, _txidlist:str):
+    def rpc_getTxOutProof(self, tx_id_list:str):
         """
         DESCRIPTION:
 
@@ -1466,20 +1466,20 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _txidlist  : List array of transaction ID's
+        (*) tx_id_list : List array of transaction ID's
         """
 
         endpoint = '/'
-        _message = '{ "method": "gettxoutproof", "params": [ "' + _txidlist + '" ] }'
+        message = '{ "method": "gettxoutproof", "params": [ "' + tx_id_list + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get proof for transactions " + _txidlist + "'}"
+            response['error'] = "{'message': 'RPC failed to get proof for transactions " + tx_id_list + "'}"
         return response
-    ### END METHOD ################################### rpc_getTxOutProof(self, _txidlist:str)
+    ### END METHOD ################################### rpc_getTxOutProof(self, tx_id_list:str)
     
-    def rpc_verifyTxOutProof(self, _proof:str):
+    def rpc_verifyTxOutProof(self, proof:str):
         """
         DESCRIPTION:
 
@@ -1489,20 +1489,20 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _proof : Proof of transaction inclusion (raw MerkleBlock).
+        (*) proof : Proof of transaction inclusion (raw MerkleBlock).
         """
 
         endpoint = '/'
-        _message = '{ "method": "verifytxoutproof", "params": [ "' + _proof + '" ] }'
+        message = '{ "method": "verifytxoutproof", "params": [ "' + proof + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to verify proof " + _proof + "'}"
+            response['error'] = "{'message': 'RPC failed to verify proof " + proof + "'}"
         return response
-    ### END METHOD ################################### rpc_verifyTxOutProof(self, _proof)
+    ### END METHOD ################################### rpc_verifyTxOutProof(self, proof)
     
-    def rpc_getNetworkHashPerSec(self, _blocks:int=120, _height:int=1):
+    def rpc_getNetworkHashPerSec(self, blocks:int=120, height:int=1):
         """
         DESCRIPTION:
 
@@ -1512,20 +1512,20 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _blocks : Number of blocks to lookup.
+        (*) blocks : Number of blocks to lookup.
         
-        (*) _height : Starting height for calculations.
+        (*) height : Starting height for calculations.
         """
 
         endpoint = '/'
-        _message = '{ "method": "getnetworkhashps", "params": [ ' + str(_blocks) + ', ' + str(_height) + ' ] }'
+        message = '{ "method": "getnetworkhashps", "params": [ ' + str(blocks) + ', ' + str(height) + ' ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to retreive historical hashes per second estimation'}"
         return response
-    ### END METHOD ################################### rpc_getNetworkHashPerSec(self, _blocks:int=120, _height:int=1)
+    ### END METHOD ################################### rpc_getNetworkHashPerSec(self, blocks:int=120, height:int=1)
     
     def rpc_getMiningInfo(self):
         """
@@ -1543,16 +1543,16 @@ class hsd:
         """
 
         endpoint = '/'
-        _message = '{ "method": "getmininginfo", "params": [] }'
+        message = '{ "method": "getmininginfo", "params": [] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get mining information'}"
         return response
     ### END METHOD ################################### rpc_getMiningInfo(self)
     
-    def rpc_getWork(self, _data:str=[]):
+    def rpc_getWork(self, data:str=[]):
         """
         DESCRIPTION:
 
@@ -1562,18 +1562,18 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _data : Data to be submitted to the network.
+        (*) data : Data to be submitted to the network.
         """
 
         endpoint = '/'
-        _message = '{ "method": "getworklp", "params": [ "' + _data + '" ] }'
+        message = '{ "method": "getworklp", "params": [ "' + data + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get hashing work'}"
         return response
-    ### END METHOD ################################### rpc_getWork(self, _data:str=[])
+    ### END METHOD ################################### rpc_getWork(self, data:str=[])
     
     def rpc_getWorkLP(self):
         """
@@ -1590,9 +1590,9 @@ class hsd:
         """
 
         endpoint = '/'
-        _message = '{ "method": "getworklp", "params": [] }'
+        message = '{ "method": "getworklp", "params": [] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get work from long polling'}"
@@ -1611,16 +1611,16 @@ class hsd:
         """
 
         endpoint = '/'
-        _message = '{ "method": "getblocktemplate", "params": [] }'
+        message = '{ "method": "getblocktemplate", "params": [] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get block template'}"
         return response
     ### END METHOD ################################### rpc_getBlockTemplate(self):
     
-    def rpc_submitBlock(self, _blockdata:str):
+    def rpc_submitBlock(self, block_data:str):
         """
         DESCRIPTION:
 
@@ -1630,20 +1630,20 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _blockdata : Mined block data (hex).
+        (*) block_data : Mined block data (hex).
         """
 
         endpoint = '/'
-        _message = '{ "method": "submitblock", "params": [ "' + _blockdata + '" ] }'
+        message = '{ "method": "submitblock", "params": [ "' + block_data + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to add block to chain'}"
         return response
-    ### END METHOD ################################### rpc_submitBlock(self, _blockdata:str)
+    ### END METHOD ################################### rpc_submitBlock(self, block_data:str)
     
-    def rpc_verifyBlock(self, _blockdata:str):
+    def rpc_verifyBlock(self, block_data:str):
         """
         DESCRIPTION:
 
@@ -1652,20 +1652,20 @@ class hsd:
         PARAMS:
         (*) Denotes required argument
         
-        (*) _blockdata : Mined block data (hex).
+        (*) block_data : Mined block data (hex).
         """
 
         endpoint = '/'
-        _message = '{ "method": "verifyblock", "params": [ "' + _blockdata + '" ] }'
+        message = '{ "method": "verifyblock", "params": [ "' + block_data + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to verify block data'}"
         return response
-    ### END METHOD ################################### rpc_verifyBlock(self, _blockdata:str)
+    ### END METHOD ################################### rpc_verifyBlock(self, block_data:str)
     
-    def rpc_setGenerate(self, _mining:int=0, _proclimit:int=0):
+    def rpc_setGenerate(self, mining:int=0, proc_limit:int=0):
         """
         DESCRIPTION:
 
@@ -1675,20 +1675,20 @@ class hsd:
 
         (*) Denotes required argument
         
-        ( ) _mining    : 1 will start mining, 0 will stop. Default = 0
+        ( ) mining    : 1 will start mining, 0 will stop. Default = 0
 
-        ( ) _proclimit : 1 will set processor limit, 0 will remove limit. Default = 0
+        ( ) proc_limit : 1 will set processor limit, 0 will remove limit. Default = 0
         """
 
         endpoint = '/'
-        _message = '{ "method": "setgenerate", "params": [ ' + str(_mining) + ', ' + str(_proclimit) + ' ] }'
+        message = '{ "method": "setgenerate", "params": [ ' + str(mining) + ', ' + str(proc_limit) + ' ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to set mining status'}"
         return response
-    ### END METHOD ################################### rpc_setGenerate(self, _mining:int=0, _proclimit:int=0)
+    ### END METHOD ################################### rpc_setGenerate(self, mining:int=0, proc_limit:int=0)
     
     def rpc_getGenerate(self):
         """
@@ -1702,16 +1702,16 @@ class hsd:
         """
 
         endpoint = '/'
-        _message = '{ "method": "getgenerate", "params": [] }'
+        message = '{ "method": "getgenerate", "params": [] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to return status of the mining node'}"
         return response
     ### END METHOD ################################### rpc_getGenerate(self)
     
-    def rpc_generate(self, _numblocks:int=1):
+    def rpc_generate(self, num_blocks:int=1):
         """
         DESCRIPTION:
 
@@ -1720,20 +1720,20 @@ class hsd:
         PARAMS:
         (*) Denotes required argument
         
-        ( ) _numblocks : Number of blocks to mine.
+        ( ) num_blocks : Number of blocks to mine.
         """
 
         endpoint = '/'
-        _message = '{ "method": "generate", "params": [' + str(_numblocks) + '] }'
+        message = '{ "method": "generate", "params": [' + str(num_blocks) + '] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to generate "' + _numblocks + '" blocks'}"
+            response['error'] = "{'message': 'RPC failed to generate "' + num_blocks + '" blocks'}"
         return response
-    ### END METHOD ################################### rpc_generate(self, _numblocks:int=1)
+    ### END METHOD ################################### rpc_generate(self, num_blocks:int=1)
     
-    def rpc_generateToAddress(self, _address:str, _numblocks:int=1):
+    def rpc_generateToAddress(self, address:str, num_blocks:int=1):
         """
         DESCRIPTION:
 
@@ -1743,29 +1743,29 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _address   : Coinbase address for new blocks.
+        (*) address   : Coinbase address for new blocks.
 
-        ( ) _numblocks : Number of blocks to mine.
+        ( ) num_blocks : Number of blocks to mine.
         """
         response = ""
 
         try:
             endpoint = '/'
-            _message = '{ "method": "generatetoaddress", "params": [ ' + str(_numblocks) + ', "' + _address + '" ] }'
-            response = self.post(endpoint, _message)
+            message = '{ "method": "generatetoaddress", "params": [ ' + str(num_blocks) + ', "' + address + '" ] }'
+            response = self.post(endpoint, message)
         except (ValueError, TypeError):
             endpoint = '/'
             try:
-                address = _address['result']
-                _message = '{ "method": "generatetoaddress", "params": [ ' + str(_numblocks) + ', "' + address + '" ] }'
-                response = self.post(endpoint, _message)
+                address = address['result']
+                message = '{ "method": "generatetoaddress", "params": [ ' + str(num_blocks) + ', "' + address + '" ] }'
+                response = self.post(endpoint, message)
             except KeyError as e:
                 print('hsd.rpc_GenerateToAddress() Error: The key ' + str(e) + " was not located in JSON.")
             except:
                 response = {}
-                response['error'] = "{'message': 'RPC failed to generate "' + _numblocks + '" blocks for the address " + address + "'}"
+                response['error'] = "{'message': 'RPC failed to generate "' + num_blocks + '" blocks for the address " + address + "'}"
         return response
-    ### END METHOD ################################### rpc_generateToAddress(self, _address:str, _numblocks:int=1)
+    ### END METHOD ################################### rpc_generateToAddress(self, address:str, num_blocks:int=1)
     
     def rpc_getConnectionCount(self):
         """
@@ -1779,9 +1779,9 @@ class hsd:
         """
 
         endpoint = '/'
-        _message = '{ "method": "getconnectioncount", "params": [] }'
+        message = '{ "method": "getconnectioncount", "params": [] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get peer connection count'}"
@@ -1800,9 +1800,9 @@ class hsd:
         """
 
         endpoint = '/'
-        _message = '{ "method": "ping", "params": [] }'
+        message = '{ "method": "ping", "params": [] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to ping connected peers'}"
@@ -1821,16 +1821,16 @@ class hsd:
         """
 
         endpoint = '/'
-        _message = '{ "method": "getpeerinfo", "params": [] }'
+        message = '{ "method": "getpeerinfo", "params": [] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get information for connected peers'}"
         return response
     ### END METHOD ################################### rpc_getPeerInfo(self)
     
-    def rpc_addNode(self, _nodeAddress:str, _cmd:str):
+    def rpc_addNode(self, node_address:str, cmd:str):
         """
         DESCRIPTION:
 
@@ -1840,9 +1840,9 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _nodeAddress : IP Address of the Node. Eg. '127.0.0.1:14038'
+        (*) node_address : IP Address of the Node. Eg. '127.0.0.1:14038'
 
-        (*) _cmd         : 'add' - Adds node to Host List and connects to it.
+        (*) cmd          : 'add' - Adds node to Host List and connects to it.
 
                            'onetry' - Tries to connect to the given node.
 
@@ -1850,16 +1850,16 @@ class hsd:
         """
 
         endpoint = '/'
-        _message = '{ "method": "addnode", "params": [ "' + _nodeAddress + '", "' + _cmd + '" ] }'
+        message = '{ "method": "addnode", "params": [ "' + node_address + '", "' + cmd + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to "' + _cmd + '" node for address " + _nodeAddress + "'}"
+            response['error'] = "{'message': 'RPC failed to "' + cmd + '" node for address " + node_address + "'}"
         return response
-    ### END METHOD ################################### rpc_addNode(self, _nodeAddress:str, _cmd:str)
+    ### END METHOD ################################### rpc_addNode(self, node_address:str, cmd:str)
     
-    def rpc_disconnectNode(self, _nodeAddress:str):
+    def rpc_disconnectNode(self, node_address:str):
         """
         DESCRIPTION:
 
@@ -1869,20 +1869,20 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _address : IP Address of the Node. Eg. '127.0.0.1:14038'
+        (*) address : IP Address of the Node. Eg. '127.0.0.1:14038'
         """
 
         endpoint = '/'
-        _message = '{ "method": "disconnectnode", "params": [ "' + _nodeAddress + '" ] }'
+        message = '{ "method": "disconnectnode", "params": [ "' + node_address + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to disconnect node at address " + _nodeAddress + "'}"
+            response['error'] = "{'message': 'RPC failed to disconnect node at address " + node_address + "'}"
         return response
-    ### END METHOD ################################### rpc_disconnectNode(self, _nodeAddress:str)
+    ### END METHOD ################################### rpc_disconnectNode(self, node_address:str)
     
-    def rpc_getAddedNodeInfo(self, _nodeAddress:str):
+    def rpc_getAddedNodeInfo(self, node_address:str):
         """
         DESCRIPTION:
 
@@ -1892,18 +1892,18 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _address : IP Address of the Node. Eg. '127.0.0.1:14038'
+        (*) address : IP Address of the Node. Eg. '127.0.0.1:14038'
         """
 
         endpoint = '/'
-        _message = '{ "method": "getaddednodeinfo", "params": [ "' + _nodeAddress + '" ] }'
+        message = '{ "method": "getaddednodeinfo", "params": [ "' + node_address + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get node information for the node address " + _nodeAddress + "'}"
+            response['error'] = "{'message': 'RPC failed to get node information for the node address " + node_address + "'}"
         return response
-    ### END METHOD ################################### rpc_getAddedNodeInfo(self, _nodeAddress:str)
+    ### END METHOD ################################### rpc_getAddedNodeInfo(self, node_address:str)
     
     def rpc_getNetTotals(self):
         """
@@ -1917,9 +1917,9 @@ class hsd:
         """
 
         endpoint = '/'
-        _message = '{ "method": "getnettotals", "params": [] }'
+        message = '{ "method": "getnettotals", "params": [] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get information about used network resources'}"
@@ -1938,16 +1938,16 @@ class hsd:
         """
 
         endpoint = '/'
-        _message = '{ "method": "getnetworkinfo", "params": [] }'
+        message = '{ "method": "getnetworkinfo", "params": [] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get network info for local node'}"
         return response
     ### END METHOD ################################### def rpc_getNetworkInfo(self)
     
-    def rpc_setBan(self, _nodeAddress:str, _cmd:str):
+    def rpc_setBan(self, node_address:str, cmd:str):
         """
         DESCRIPTION:
 
@@ -1957,22 +1957,22 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _nodeAddress : IP Address of the Node. Eg. '127.0.0.1:14038'
+        (*) node_address : IP Address of the Node. Eg. '127.0.0.1:14038'
 
-        (*) _cmd         : 'add' - Adds node to ban list, removes from host list, disconnects.
+        (*) cmd         : 'add' - Adds node to ban list, removes from host list, disconnects.
 
                            'remove' - Removes node from ban list.
         """
 
         endpoint = '/'
-        _message = '{ "method": "setban", "params": ["' + _nodeAddress + '", "' + _cmd + '"] }'
+        message = '{ "method": "setban", "params": ["' + node_address + '", "' + cmd + '"] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to ' + _cmd + ' ban for node at address " + _nodeAddress + "'}"
+            response['error'] = "{'message': 'RPC failed to ' + cmd + ' ban for node at address " + node_address + "'}"
         return response
-    ### END METHOD ################################### rpc_setBan(self, _nodeAddress:str, _cmd:str)
+    ### END METHOD ################################### rpc_setBan(self, node_address:str, cmd:str)
     
     def rpc_listBan(self):
         """
@@ -1986,9 +1986,9 @@ class hsd:
         """
 
         endpoint = '/'
-        _message = '{ "method": "listbanned", "params": [] }'
+        message = '{ "method": "listbanned", "params": [] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get list of banned peers'}"
@@ -2007,16 +2007,16 @@ class hsd:
         """
 
         endpoint = '/'
-        _message = '{ "method": "clearbanned", "params": [] }'
+        message = '{ "method": "clearbanned", "params": [] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'PRC failed to remove banned peers'}"
         return response
     ### END METHOD ################################### rpc_clearBanned(self)
     
-    def rpc_getNameInfo(self, _name:str=''):
+    def rpc_getNameInfo(self, name:str=''):
         """
         DESCRIPTION:
 
@@ -2026,20 +2026,20 @@ class hsd:
 
         (*) Denotes required argument
 
-        (*) _name : Name you wish to look up.
+        (*) name : Name you wish to look up.
         """
 
         endpoint = '/'
-        _message = '{ "method": "getnameinfo", "params": [ "' + _name + '" ] }'
+        message = '{ "method": "getnameinfo", "params": [ "' + name + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get information for name " + _name + "'}"
+            response['error'] = "{'message': 'RPC failed to get information for name " + name + "'}"
         return response
-    ### END METHOD ################################### rpc_getNameInfo(self, _name:str='')
+    ### END METHOD ################################### rpc_getNameInfo(self, name:str='')
     
-    def rpc_getNameByHash(self, _namehash:str=''):
+    def rpc_getNameByHash(self, name_hash:str=''):
         """
         DESCRIPTION:
 
@@ -2049,20 +2049,20 @@ class hsd:
 
         (*) Denotes required argument
 
-        (*) _namehash : Name hash you wish to look up.
+        (*) name_hash : Name hash you wish to look up.
         """
 
         endpoint = '/'
-        _message = '{ "method": "getnamebyhash", "params": [ "' + _namehash + '" ] }'
+        message = '{ "method": "getnamebyhash", "params": [ "' + name_hash + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get the name for the hash " + _namehash + "'}"
+            response['error'] = "{'message': 'RPC failed to get the name for the hash " + name_hash + "'}"
         return response
-    ### END METHOD ###################################  rpc_getNameByHash(self, _namehash:str='')
+    ### END METHOD ###################################  rpc_getNameByHash(self, name_hash:str='')
     
-    def rpc_getNameResource(self, _name:str=''):
+    def rpc_getNameResource(self, name:str=''):
         """
         DESCRIPTION:
 
@@ -2072,20 +2072,20 @@ class hsd:
 
         (*) Denotes required argument
 
-        (*) _name : Name for resource records.
+        (*) name : Name for resource records.
         """
 
         endpoint = '/'
-        _message = '{ "method": "getnameresource", "params": [ "' + _name + '" ] }'
+        message = '{ "method": "getnameresource", "params": [ "' + name + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get resource records for name " + _name + "'}"
+            response['error'] = "{'message': 'RPC failed to get resource records for name " + name + "'}"
         return response
-    ### END METHOD ################################### rpc_getNameResource(self, _name:str='')
+    ### END METHOD ################################### rpc_getNameResource(self, name:str='')
     
-    def rpc_getNameProof(self, _name:str=''):
+    def rpc_getNameProof(self, name:str=''):
         """
         DESCRIPTION:
 
@@ -2095,20 +2095,20 @@ class hsd:
 
         (*) Denotes required argument
 
-        (*) _name : Domain name you to retreive the proof for.
+        (*) name : Domain name you to retreive the proof for.
         """
 
         endpoint = '/'
-        _message = '{ "method": "getnameproof", "params": [ "' + _name + '" ] }'
+        message = '{ "method": "getnameproof", "params": [ "' + name + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get name proof for name " + _name + "'}"
+            response['error'] = "{'message': 'RPC failed to get name proof for name " + name + "'}"
         return response
-    ### END METHOD ################################### rpc_getNameProof(self, _name:str='')
+    ### END METHOD ################################### rpc_getNameProof(self, name:str='')
     
-    def rpc_sendRawClaim(self, _base64_string:str):
+    def rpc_sendRawClaim(self, base64_string:str):
         """
         DESCRIPTION:
 
@@ -2122,20 +2122,20 @@ class hsd:
 
         (*) Denotes required argument
 
-        (*) _base64_string : Raw serialized base64-string.
+        (*) base64_string : Raw serialized base64-string.
         """
 
         endpoint = '/'
-        _message = '{ "method": "sendrawclaim", "params": [ "' + _base64_string + '" ] }'
+        message = '{ "method": "sendrawclaim", "params": [ "' + base64_string + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to send raw claim'}"
         return response
-    ### END METHOD ################################### rpc_sendRawClaim(self, _base64_string:str='')
+    ### END METHOD ################################### rpc_sendRawClaim(self, base64_string:str='')
     
-    def rpc_getDnsSecProof(self, _name:str='', _estimate:bool=False, _verbose:bool=True):
+    def rpc_getDnsSecProof(self, name:str='', estimate:bool=False, verbose:bool=True):
         """
         DESCRIPTION:
 
@@ -2145,37 +2145,37 @@ class hsd:
 
         (*) Denotes required argument
         
-        (*) _name     : Domain name.
+        (*) name     : Domain name.
 
-        (*) _estimate : No validation when True.
+        ( ) estimate : No validation when True.
 
-        (*) _verbose  : Returns (hex) when False.
+        ( ) verbose  : Returns (hex) when False.
         """
         
-        estimate = ''
-        verbose = ''
+        _estimate = ''
+        _verbose = ''
 
-        if _verbose == True:
-            verbose = '1'
+        if verbose == True:
+            _verbose = '1'
         else:
-            verbose = '0'
+            _verbose = '0'
 
-        if _estimate == True:
-            estimate = '1'
+        if estimate == True:
+            _estimate = '1'
         else:
-            estimate = '0'
+            _estimate = '0'
 
         endpoint = '/'
-        _message = '{ "method": "getdnssecproof", "params": ["' + _name + '", ' + estimate + ', ' + verbose + '] }'
+        message = '{ "method": "getdnssecproof", "params": ["' + name + '", ' + _estimate + ', ' + _verbose + '] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get DNS security proof'}"
         return response
-    ### END METHOD ################################### rpc_getDnsSecProof(self, _name:str='', _estimate:bool=False, _verbose:bool=True)
+    ### END METHOD ################################### rpc_getDnsSecProof(self, name:str='', estimate:bool=False, verbose:bool=True)
     
-    def rpc_sendRawAirdrop(self, _base64_string:str=''):
+    def rpc_sendRawAirdrop(self, base64_string:str=''):
         """
         DESCRIPTION:
 
@@ -2186,20 +2186,20 @@ class hsd:
 
         (*) Denotes required argument
 
-        (*) _base64_string : Raw serialized base64-string.
+        (*) base64_string : Raw serialized base64-string.
         """
 
         endpoint = '/'
-        _message = '{ "method": "sendrawairdrop", "params": [ "' + _base64_string + '" ] }'
+        message = '{ "method": "sendrawairdrop", "params": [ "' + base64_string + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to send raw airdrom'}"
         return response
-    ### END METHOD ################################### rpc_sendRawAirdrop(self, _base64_string:str='')
+    ### END METHOD ################################### rpc_sendRawAirdrop(self, base64_string:str='')
     
-    def rpc_grindName(self, _length:int=10):
+    def rpc_grindName(self, length:int=10):
         """
         DESCRIPTION:
 
@@ -2209,18 +2209,18 @@ class hsd:
 
         (*) Denotes required argument
 
-        (*) _length : Length of name to generate.
+        (*) length : Length of name to generate.
         """
 
         endpoint = '/'
-        _message = '{ "method": "grindname", "params": [ ' + str(_length) + ' ] }'
+        message = '{ "method": "grindname", "params": [ ' + str(length) + ' ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to grind name'}"
         return response
-    ### END METHOD ################################### rpc_grindName(self, _length:int=10)
+    ### END METHOD ################################### rpc_grindName(self, length:int=10)
 
 
 ########################################################################################################
@@ -2236,7 +2236,7 @@ class hsw:
     ADDRESS = ''
     PORT = ''
 
-    def __init__(self, _api_key:str, _ipaddress:str='127.0.0.1', _port:int=12039):
+    def __init__(self, api_key:str, ip_address:str='127.0.0.1', port:int=12039):
         """
         DESCRIPTION:
 
@@ -2246,19 +2246,19 @@ class hsw:
 
         (*) Denotes required argument
 
-        (*) _api_key   : HSW API key.
+        (*) api_key    : HSW API key.
 
-        ( ) _ipaddress : HSW node ip. Default = '127.0.0.1'.
+        ( ) ip_address : HSW node ip. Default = '127.0.0.1'.
 
-        ( ) _port      : HSW node port. Default = 12039
+        ( ) port       : HSW node port. Default = 12039
         """
 
-        self.API_KEY = _api_key
-        self.ADDRESS = _ipaddress
-        self.PORT = str(_port)
-    ### END METHOD ################################### __init__(self, _api_key:str, _ipaddress:str='127.0.0.1', _port:int=12039):
+        self.API_KEY = api_key
+        self.ADDRESS = ip_address
+        self.PORT = str(port)
+    ### END METHOD ################################### __init__(self, api_key:str, ip_address:str='127.0.0.1', port:int=12039):
 
-    def get(self, _endpoint:str):
+    def get(self, endpoint:str):
         """
         DESCRIPTION:
 
@@ -2268,17 +2268,17 @@ class hsw:
 
         (*) Denotes required argument
 
-        (*) _endpoint : API endpoint to send GET request.
+        (*) endpoint : API endpoint to send GET request.
         """
 
-        url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + _endpoint
+        url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + endpoint
 
-        getResponse = requests.get(url)
-        response = getResponse.json()
+        get_response = requests.get(url)
+        response = get_response.json()
         return response # Returned as json
-    ### END METHOD ################################### get(self, _endpoint:str)
+    ### END METHOD ################################### get(self, endpoint:str)
 
-    def post(self, _endpoint:str, _message:str=''):
+    def post(self, endpoint:str, message:str=''):
         """
         DESCRIPTION:
 
@@ -2288,19 +2288,19 @@ class hsw:
 
         (*) Denotes required argument
 
-        (*) _endpoint : API endpoint to send POST message.
+        (*) endpoint : API endpoint to send POST message.
 
-        (*) _message  : Message to be sent.
+        (*) message  : Message to be sent.
         """
         
-        url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + _endpoint
+        url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + endpoint
 
-        postRequest = requests.post(url, _message)
-        response = postRequest.json()
+        post_request = requests.post(url, message)
+        response = post_request.json()
         return response # Returned as json
-    ### END METHOD ################################### post(self, _endpoint:str, _message:str='')
+    ### END METHOD ################################### post(self, endpoint:str, message:str='')
 
-    def put(self, _endpoint:str, _message:str=''):
+    def put(self, endpoint:str, message:str=''):
         """
         DESCRIPTION:
 
@@ -2310,19 +2310,19 @@ class hsw:
 
         (*) Denotes required argument
 
-        (*) _endpoint : API endpoint to send POST message.
+        (*) endpoint : API endpoint to send POST message.
 
-        (*) _message  : Message to be sent.
+        (*) message  : Message to be sent.
         """
         
-        url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + _endpoint
+        url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + endpoint
 
-        putRequest = requests.put(url, _message)
+        putRequest = requests.put(url, message)
         response = putRequest.json()
         return response # Returned as json
-    ### END METHOD ################################### put(self, _endpoint:str, _message:str='')
+    ### END METHOD ################################### put(self, endpoint:str, message:str='')
 
-    def delete(self, _endpoint:str, _message:str=''):
+    def delete(self, endpoint:str, message:str=''):
         """
         DESCRIPTION:
 
@@ -2332,20 +2332,20 @@ class hsw:
 
         (*) Denotes required argument
 
-        (*) _endpoint : API endpoint to send POST message.
+        (*) endpoint : API endpoint to send POST message.
 
-        (*) _message  : Message to be sent.
+        (*) message  : Message to be sent.
         """
         
-        url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + _endpoint
+        url = 'http://x:' + self.API_KEY + '@' + self.ADDRESS + ':' + self.PORT + endpoint
     
-        putRequest = requests.delete(url, _message)
+        putRequest = requests.delete(url, message)
         response = putRequest.json()
         return response # Returned as json
-    ### END METHOD ################################### delete(self, _endpoint:str, _message:str='')
+    ### END METHOD ################################### delete(self, endpoint:str, message:str='')
 
-    def createWallet(self, _passphrase:str, _id:str='primary', _accountkey:str='', _type:str='pubkeyhash',
-                    _mnemonic:str='',_master:str='', _watchonly:bool=True, _m:int=1, _n:int=1):
+    def createWallet(self, passphrase:str, id:str='primary', account_key:str='', type:str='pubkeyhash',
+                    mnemonic:str='', master:str='', watch_only:bool=True, m:int=1, n:int=1):
         """
         DESCRIPTION:
 
@@ -2355,46 +2355,46 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id         : Wallet ID (used for storage).
+            (*) id          : Wallet ID (used for storage).
 
-            ( ) _type       : Type of wallet (pubkeyhash, multisig). Default is 'pubkeyhash'
+            ( ) type        : Type of wallet (pubkeyhash, multisig). Default is 'pubkeyhash'
 
-            ( ) _master     : Master HD key. If not present, it will be generated.
+            ( ) master      : Master HD key. If not present, it will be generated.
 
-            ( ) _mnemonic   : A mnemonic phrase to use to instantiate an hd private key. One will be generated if none provided.
+            ( ) mnemonic    : A mnemonic phrase to use to instantiate an hd private key. One will be generated if none provided.
 
-            ( ) _m          : 'm' value for multisig (m-of-n).
+            ( ) m           : 'm' value for multisig (m-of-n).
 
-            ( ) _n          : 'n' value for multisig (m-of-n)
+            ( ) n           : 'n' value for multisig (m-of-n)
 
-            (*) _passphrase : A strong passphrase used to encrypt the wallet.
+            (*) passphrase  : A strong passphrase used to encrypt the wallet.
 
-            ( ) _watchonly  : Watch for CLI. Default set to True.
+            ( ) watch_only  : Watch for CLI. Default set to True.
 
-            (*) _accountkey : The extended public key for the primary account in the new wallet. This value is ignored if watchOnly is false (key for CLI).
+            (*) account_key : The extended public key for the primary account in the new wallet. This value is ignored if _watch_only is false (key for CLI).
         """
         
-        watchonly = ''
+        _watch_only = ''
 
-        if _watchonly == True:
-            watchonly = '1'
+        if watch_only == True:
+            _watch_only = '1'
         else:
-            watchonly = '0'
+            _watch_only = '0'
 
-        endpoint = '/wallet/' + _id
+        endpoint = '/wallet/' + id
 
-        _message = '{"passphrase":"' + _passphrase + '", "watchOnly": ' + watchonly + ', "accountKey":"' + _accountkey + \
-                       '", "type":"' + _type + '", "master":"' + _master + '", "m": ' + str(_m) + ', "n": ' + str(_n) + ', "mnemonic":"' + _mnemonic + '"}'
+        message = '{"passphrase":"' + passphrase + '", "_watch_only": ' + str(_watch_only) + ', "accountKey":"' + account_key + \
+                       '", "type":"' + type + '", "master":"' + master + '", "m": ' + str(m) + ', "n": ' + str(n) + ', "mnemonic":"' + mnemonic + '"}'
         try:
-            response = self.put(endpoint, _message)
+            response = self.put(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'Failed to create new wallet'}"
         return response
-    ### END METHOD ################################### createWallet(self, _id:str='primary', _passphrase:str, _accountkey:str='', _type:str='pubkeyhash',
-    #                                                               _mnemonic:str='',_master:str=None, _watchonly:bool=True, _m:int=1, _n:int=1)
+    ### END METHOD ################################### createWallet(self, id:str='primary', passphrase:str, account_key:str='', type:str='pubkeyhash',
+    #                                                               mnemonic:str='',master:str=None, watch_only:bool=True, m:int=1, n:int=1)
 
-    def resetAuthToken(self, _passphrase:str, _id:str='primary'):
+    def resetAuthToken(self, passphrase:str, id:str='primary'):
         """
         DESCRIPTION:
 
@@ -2404,23 +2404,23 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id         : Wallet ID.
+            (*) id         : Wallet ID.
 
-            (*) _passphrase : A strong passphrase used to encrypt the wallet.
+            (*) passphrase : A strong passphrase used to encrypt the wallet.
         """
         
-        endpoint = '/wallet/' + _id + '/retoken'
+        endpoint = '/wallet/' + id + '/retoken'
 
-        _message = '{"passphrase":"' + _passphrase + '"}'
+        message = '{"passphrase":"' + passphrase + '"}'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to reset auth token for the wallet " + _id + "'}"
+            response['error'] = "{'message': 'Failed to reset auth token for the wallet " + id + "'}"
         return response
-    ### END METHOD ################################### resetAuthToken(self, _id:str='primary', _passphrase:str)
+    ### END METHOD ################################### resetAuthToken(self, id:str='primary', passphrase:str)
 
-    def getWalletInfo(self, _id:str=''):
+    def getWalletInfo(self, id:str=''):
         """
         DESCRIPTION:
 
@@ -2430,19 +2430,19 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _id : Name of the wallet whose info you would like to retrieve.
+            ( ) id : Name of the wallet whose info you would like to retrieve.
         """
         
-        endpoint = '/wallet/' + _id
+        endpoint = '/wallet/' + id
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to get info for wallet " + _id + "'}"
+            response['error'] = "{'message': 'Failed to get info for wallet " + id + "'}"
         return response
-    ### END METHOD ################################### getWalletInfo(self, _id:str='')
+    ### END METHOD ################################### getWalletInfo(self, id:str='')
 
-    def getMasterHDKey(self, _id:str='primary'):
+    def getMasterHDKey(self, id:str='primary'):
         """
         DESCRIPTION:
 
@@ -2453,10 +2453,10 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id : Name of the wallet whose info you would like to retrieve.
+            (*) id : Name of the wallet whose info you would like to retrieve.
         """
         
-        endpoint = '/wallet/' + _id + '/master'
+        endpoint = '/wallet/' + id + '/master'
 
         try:
             response = self.get(endpoint)
@@ -2464,9 +2464,9 @@ class hsw:
             response = {}
             response['error'] = "{'message': 'Failed to get master HD key'}"
         return response
-    ### END METHOD ################################### getMasterHDKey(self, _id:str='')
+    ### END METHOD ################################### getMasterHDKey(self, id:str='')
 
-    def changePassword(self, _new_passphrase:str, _id:str='primary', _old_passphrase:str=''):
+    def changePassword(self, new_passphrase:str, id:str='primary', old_passphrase:str=''):
         """
         DESCRIPTION:
 
@@ -2476,50 +2476,50 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id             : Wallet ID.
+            (*) id             : Wallet ID.
 
-            ( ) _old_passphrase : Old passphrase. Pass in empty string if none.
+            ( ) old_passphrase : Old passphrase. Pass in empty string if none.
 
-            (*) _new_passphrase : New passphrase.
+            (*) new_passphrase : New passphrase.
         """
         
-        endpoint = '/wallet/' + _id + '/passphrase'
+        endpoint = '/wallet/' + id + '/passphrase'
 
-        _message = '{"old":"' + _old_passphrase + '", "passphrase":"' + _new_passphrase + '"}'
+        message = '{"old":"' + old_passphrase + '", "passphrase":"' + new_passphrase + '"}'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'Failed to change password'}"
         return response
-    ### END METHOD ################################### changePassword(self, _id:str='primary', _new_passphrase:str, _old_passphrase:str='')
+    ### END METHOD ################################### changePassword(self, id:str='primary', new_passphrase:str, old_passphrase:str='')
 
-    def signTransaction(self, _passphrase:str, _txhex:str, _id:str='primary'):
+    def signTransaction(self, passphrase:str, tx_hex:str, id:str='primary'):
         """
         DESCRIPTION:
 
             Sign a templated transaction (useful for multisig).
  
-            (*) _id         : Wallet ID.
+            (*) id         : Wallet ID.
 
-            (*) _passphrase : Passphrase to unlock the wallet.
+            (*) passphrase : Passphrase to unlock the wallet.
 
-            (*) _txhex     : The (hex) of the transaction you would like to sign.
+            (*) tx_hex     : The (hex) of the transaction you would like to sign.
         """
         
-        endpoint = '/wallet/' + _id + '/sign'
+        endpoint = '/wallet/' + id + '/sign'
 
-        _message = '{"tx":"' + _txhex + '", "passphrase":"' + _passphrase + '"}'
+        message = '{"tx":"' + tx_hex + '", "passphrase":"' + passphrase + '"}'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to sign transaction (hex) " + _txhex + "'}"
+            response['error'] = "{'message': 'Failed to sign transaction (hex) " + tx_hex + "'}"
         return response
-    ### END METHOD ################################### signTransaction(self, _id:str='primary', _passphrase:str, _txhex:str)
+    ### END METHOD ################################### signTransaction(self, id:str='primary', passphrase:str, tx_hex:str)
 
-    def sendTransaction(self, _id:str, _passphrase:str, _rate:int, _value:float=None, _smart:bool=False, _blocks:int=None, _maxFee:int=None, _subtractFee:bool=False,
-                        _subtractIndex:int=None, _selection:str='all', _depth:int=None, _address:str=''):
+    def sendTransaction(self, id:str, passphrase:str, rate:int, value:float=None, smart:bool=False, blocks:int=None, max_fee:int=None, subtract_fee:bool=False,
+                        subtract_index:int=None, selection:str='all', depth:int=None, address:str=''):
         """
         Description:
 
@@ -2529,60 +2529,60 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id            : Account to use for transaction.
+            (*) id             : Account to use for transaction.
 
-            ( ) _passphrase    : Passphrase to unlock the account.
+            (*) passphrase     : Passphrase to unlock the account.
 
-            (*) _smart         : Whether or not to choose smart coins, will also used unconfirmed transactions.
+            (*) rate           : The rate for transaction fees. Denominated in subunits per kb.
 
-            (*) _blocks        : Number of blocks to use for fee estimation.
+            ( ) value          : Value to send in subunits (or whole HNS, see warning above).
 
-            (*) _rate          : The rate for transaction fees. Denominated in subunits per kb.
+            ( ) smart          : Whether or not to choose smart coins, will also used unconfirmed transactions.
 
-            (*) _maxFee        : Maximum fee you're willing to pay.
+            ( ) blocks         : Number of blocks to use for fee estimation.
 
-            (*) _subtractFee   : Whether to subtract fee from outputs (evenly).
+            ( ) max_fee        : Maximum fee you're willing to pay.
 
-            (*) _subtractIndex : Subtract only from specified output index.
+            ( ) subtract_fee   : Whether to subtract fee from outputs (evenly).
 
-            (*) _selection     : How to select coins.
+            ( ) subtract_index : Subtract only from specified output index.
 
-            (*) _depth         : Number of confirmation for coins to spend.
+            ( ) selection      : How to select coins.
 
-            (*) _value         : Value to send in subunits (or whole HNS, see warning above).
+            ( ) depth          : Number of confirmation for coins to spend.
 
-            (*) _address       : Destination address for transaction.
+            ( ) address        : Destination address for transaction.
         """
 
-        smart = ''
-        subtractFee = ''
+        _smart = ''
+        _subtract_fee = ''
 
-        if _smart == True:
-            smart = '1'
+        if smart == True:
+            _smart = '1'
         else:
-            smart = '0'
+            _smart = '0'
 
-        if _subtractFee == True:
-            subtractFee = '1'
+        if subtract_fee == True:
+            _subtract_fee = '1'
         else:
-            subtractFee = '0'
+            _subtract_fee = '0'
 
-        outputs = '[{"address":"' + _address + '", "value":' + str(_value) + ', "smart":' + smart + ', "blocks":' + str(_blocks) + \
-                 ', "maxFee":' + str(_maxFee) + ', "subtractFee":' + subtractFee + ', "subtractIndex":' + str(_subtractIndex) + \
-                 ', "selection":"' + _selection + '", "depth":' + str(_depth) + '}]'
+        outputs = '[{"address":"' + address + '", "value":' + str(value) + ', "smart":' + _smart + ', "blocks":' + str(blocks) + \
+                 ', "maxFee":' + str(max_fee) + ', "_subtract_fee":' + _subtract_fee + ', "subtractIndex":' + str(subtract_index) + \
+                 ', "selection":"' + selection + '", "depth":' + str(depth) + '}]'
         
         print(outputs)
 
-        endpoint = '/wallet/' + _id + "/send"
+        endpoint = '/wallet/' + id + "/send"
 
-        _message = '{"passphrase":"' + _passphrase + '", "rate":' + str(_rate) + ', "outputs": [' + outputs + ']}'
+        message = '{"passphrase":"' + passphrase + '", "rate":' + str(rate) + ', "outputs": [' + outputs + ']}'
 
-        response = self.post(endpoint, _message)
+        response = self.post(endpoint, message)
         return response
-    ### END METHOD ################################### def sendTransaction(self, _id:str, _new_passphrase:str, _old_passphrase:str='')
+    ### END METHOD ################################### def sendTransaction(self, id:str, new_passphrase:str, old_passphrase:str='')
 
-    def createTransaction(self, _id:str, _passphrase:str, _rate:int, _value:float=None, _smart:bool=False, _blocks:int=None, _maxFee:int=None, _subtractFee:bool=False,
-                        _subtractIndex:int=None, _selection:str='all', _depth:int=None, _address:str=''):
+    def createTransaction(self, id:str, passphrase:str, rate:int, value:float=None, smart:bool=False, blocks:int=None, max_fee:int=None, subtract_fee:bool=False,
+                        subtract_index:int=None, selection:str='all', depth:int=None, address:str=''):
         """
         Description:
 
@@ -2592,60 +2592,60 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id            : Account to use for transaction.
+            (*) id             : Account to use for transaction.
 
-            ( ) _passphrase    : Passphrase to unlock the account.
+            (*) passphrase     : Passphrase to unlock the account.
 
-            (*) _smart         : Whether or not to choose smart coins, will also used unconfirmed transactions.
+            (*) rate           : The rate for transaction fees. Denominated in subunits per kb.
 
-            (*) _blocks        : Number of blocks to use for fee estimation.
+            ( ) value          : Value to send in subunits (or whole HNS, see warning above).
 
-            (*) _rate          : The rate for transaction fees. Denominated in subunits per kb.
+            ( ) smart          : Whether or not to choose smart coins, will also used unconfirmed transactions.
 
-            (*) _maxFee        : Maximum fee you're willing to pay.
+            ( ) blocks         : Number of blocks to use for fee estimation.
 
-            (*) _subtractFee   : Whether to subtract fee from outputs (evenly).
+            ( ) max_fee        : Maximum fee you're willing to pay.
 
-            (*) _subtractIndex : Subtract only from specified output index.
+            ( ) subtract_fee   : Whether to subtract fee from outputs (evenly).
 
-            (*) _selection     : How to select coins.
+            ( ) subtract_index : Subtract only from specified output index.
 
-            (*) _depth         : Number of confirmation for coins to spend.
+            ( ) selection      : How to select coins.
 
-            (*) _value         : Value to send in subunits (or whole HNS, see warning above).
+            ( ) depth          : Number of confirmation for coins to spend.
 
-            (*) _address       : Destination address for transaction.
+            ( ) address        : Destination address for transaction.
         """
 
-        smart = ''
-        subtractFee = ''
+        _smart = ''
+        _subtract_fee = ''
 
-        if _smart == True:
-            smart = '1'
+        if smart == True:
+            _smart = '1'
         else:
-            smart = '0'
+            _smart = '0'
 
-        if _subtractFee == True:
-            subtractFee = '1'
+        if subtract_fee == True:
+            _subtract_fee = '1'
         else:
-            subtractFee = '0'
+            _subtract_fee = '0'
 
-        outputs = '[{"address":"' + _address + '", "value":' + str(_value) + ', "smart":' + smart + ', "blocks":' + str(_blocks) + \
-                 ', "maxFee":' + str(_maxFee) + ', "subtractFee":' + subtractFee + ', "subtractIndex":' + str(_subtractIndex) + \
-                 ', "selection":"' + _selection + '", "depth":' + str(_depth) + '}]'
+        outputs = '[{"address":"' + address + '", "value":' + str(value) + ', "smart":' + _smart + ', "blocks":' + str(blocks) + \
+                 ', "maxFee":' + str(max_fee) + ', "_subtract_fee":' + _subtract_fee + ', "subtractIndex":' + str(subtract_index) + \
+                 ', "selection":"' + selection + '", "depth":' + str(depth) + '}]'
         
         print(outputs)
 
-        endpoint = '/wallet/' + _id + "/create"
+        endpoint = '/wallet/' + id + "/create"
 
-        _message = '{"passphrase":"' + _passphrase + '", "rate":' + str(_rate) + ', "outputs": [' + outputs + ']}'
+        message = '{"passphrase":"' + passphrase + '", "rate":' + str(rate) + ', "outputs": [' + outputs + ']}'
 
-        response = self.post(endpoint, _message)
+        response = self.post(endpoint, message)
         return response
-    ### END METHOD ################################### createTransaction(self, _id:str, _passphrase:str, _rate:int, _value:float=None, _smart:bool=False, _blocks:int=None, _maxFee:int=None, _subtractFee:bool=False,
-    #                                                                        _subtractIndex:int=None, _selection:str='all', _depth:int=None, _address:str=''):
+    ### END METHOD ################################### createTransaction(self, id:str, passphrase:str, rate:int, value:float=None, smart:bool=False, blocks:int=None, max_fee:int=None, subtract_fee:bool=False,
+    #                                                                        subtract_index:int=None, selection:str='all', depth:int=None, address:str=''):
 
-    def zapTransactions(self, _account:str, _id:str='primary', _age:int=0):
+    def zapTransactions(self, account:str, id:str='primary', age:int=0):
         """
         DESCRIPTION:
 
@@ -2655,25 +2655,25 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id      : Wallet ID.
+            (*) id      : Wallet ID.
 
-            ( ) _account : Account to zap from.
+            ( ) account : Account to zap from.
 
-            (*) _age     : Age threshold to zap up to (seconds).
+            (*) age     : Age threshold to zap up to (seconds).
         """
         
-        endpoint = '/wallet/' + _id + '/zap'
+        endpoint = '/wallet/' + id + '/zap'
 
-        _message = '{"account":"' + _account + '", "age":"' + _age + '"}'
+        message = '{"account":"' + account + '", "age":"' + age + '"}'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to zap transaction for account " + _account + "'}"
+            response['error'] = "{'message': 'Failed to zap transaction for account " + account + "'}"
         return response
-    ### END METHOD ################################### zapTransactions(self, _account:str, _id:str='primary', _age:int=0)
+    ### END METHOD ################################### zapTransactions(self, account:str, id:str='primary', age:int=0)
 
-    def lockWallet(self, _id:str='primary'):
+    def lockWallet(self, id:str='primary'):
         """
         DESCRIPTION:
 
@@ -2683,27 +2683,27 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _id : Name ID of wallet to lock.
+            ( ) id : Name ID of wallet to lock.
         """
         
-        endpoint = '/wallet/' + _id + '/lock'
+        endpoint = '/wallet/' + id + '/lock'
 
-        _message = ''
+        message = ''
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to lock wallet "  + _id + "'}"
+            response['error'] = "{'message': 'Failed to lock wallet "  + id + "'}"
         return response
-    ### END METHOD ################################### lockWallet(self, _id:str='primary')
+    ### END METHOD ################################### lockWallet(self, id:str='primary')
 
-    def importPublicKey(self, _account:str, _pub_key:str, _id:str='primary'):
+    def importPublicKey(self, account:str, public_key:str, id:str='primary'):
         """
         DESCRIPTION:
 
             Import a standard (public) WIF key.
 
-            A rescan will be required to see any transaction history associated with the key.
+            A _rescan will be required to see any transaction history associated with the key.
             
             Note: Imported keys do not exist anywhere in the wallet's HD tree.They can be
                   associated with accounts but will not be properly backed up with only the
@@ -2713,29 +2713,29 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id      : ID of target wallet to import key into.
+            (*) id         : ID of target wallet to import key into.
 
-            ( ) _pub_key : Hex encoded public key.
+            ( ) public_key : Hex encoded public key.
         """
         
-        endpoint = '/wallet/' + _id + '/import'
+        endpoint = '/wallet/' + id + '/import'
 
-        _message = '{"account":"' + _account + '", "publicKey":"' + _pub_key + '"}'
+        message = '{"account":"' + account + '", "publicKey":"' + public_key + '"}'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to import public key for account " + _account + "'}"
+            response['error'] = "{'message': 'Failed to import public key for account " + account + "'}"
         return response
-    ### END METHOD ################################### importPublicKey(self, _account:str, _pub_key:str, _id:str='primary')
+    ### END METHOD ################################### importPublicKey(self, account:str, public_key:str, id:str='primary')
 
-    def importPrivateKey(self, _account:str, _priv_key:str, _id:str='primary'):
+    def importPrivateKey(self, account:str, private_key:str, id:str='primary'):
         """
         DESCRIPTION:
 
             Import a standard (private) WIF key.
 
-            A rescan will be required to see any transaction history associated with the key.
+            A _rescan will be required to see any transaction history associated with the key.
             
             Note: Imported keys do not exist anywhere in the wallet's HD tree.They can be
                   associated with accounts but will not be properly backed up with only the
@@ -2745,23 +2745,23 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id       : ID of target wallet to import key into.
+            (*) id          : ID of target wallet to import key into.
 
-            ( ) _priv_key : Hex encoded public key.
+            ( ) private_key : Hex encoded public key.
         """
         
-        endpoint = '/wallet/' + _id + '/import'
+        endpoint = '/wallet/' + id + '/import'
 
-        _message = '{"account":"' + _account + '", "privateKey":"' + _priv_key + '"}'
+        message = '{"account":"' + account + '", "privateKey":"' + private_key + '"}'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to import private key for account " + _account + "'}"
+            response['error'] = "{'message': 'Failed to import private key for account " + account + "'}"
         return response
-    ### END METHOD ################################### importPrivateKey(self, _account:str, _priv_key:str, _id:str='primary')
+    ### END METHOD ################################### importPrivateKey(self, account:str, private_key:str, id:str='primary')
 
-    def importAddress(self, _account:str, _address:str):
+    def importAddress(self, account:str, address:str):
         """
         Description:
 
@@ -2774,20 +2774,20 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _account : Wallet ID.
+            (*) account : Wallet ID.
 
-            ( ) _address : Hex encoded public key.
+            ( ) address : Hex encoded public key.
         """
         
         endpoint = '/wallet/watchonly1/import'
 
-        _message = '{"account":"' + _account + '", "address":"' + _address + '"}'
+        message = '{"account":"' + account + '", "address":"' + address + '"}'
 
-        response = self.post(endpoint, _message)
+        response = self.post(endpoint, message)
         return response
-    ### END METHOD ################################### importAddress(self, _account:str, _address:str)
+    ### END METHOD ################################### importAddress(self, account:str, address:str)
 
-    def getBlocksWithWalletTX(self, _id:str='primary'):
+    def getBlocksWithWalletTX(self, id:str='primary'):
         """
         DESCRIPTION:
 
@@ -2797,19 +2797,19 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id : Name of the wallet.
+            (*) id : Name of the wallet.
         """
         
-        endpoint = '/wallet/' + _id + '/block'
+        endpoint = '/wallet/' + id + '/block'
         try:
             response = self.get(endpoint)
         except:
             response = {}
             response['error'] = "{'message': 'Failed to get blocks with existing wallet transactions'}"
         return response
-    ### END METHOD ################################### getBlocksWithWalletTX(self, _id:str='primary')
+    ### END METHOD ################################### getBlocksWithWalletTX(self, id:str='primary')
 
-    def getWalletBlockByHeight(self, _height:int, _id:str='primary'):
+    def getWalletBlockByHeight(self, height:int, id:str='primary'):
         """
         DESCRIPTION:
 
@@ -2819,21 +2819,21 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _height : Height of block being queried.
+            (*) height : Height of block being queried.
 
-            ( ) _id     : Name of the wallet.
+            ( ) id     : Name of the wallet.
         """
         
-        endpoint = '/wallet/' + _id + '/block/' + str(_height)
+        endpoint = '/wallet/' + id + '/block/' + str(height)
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to get wallet block at height " + _height + "'}"
+            response['error'] = "{'message': 'Failed to get wallet block at height " + height + "'}"
         return response
-    ### END METHOD ################################### getWalletBlockByHeight(self, _height:int, _id:str='primary')
+    ### END METHOD ################################### getWalletBlockByHeight(self, height:int, id:str='primary')
 
-    def addXPubKey(self, _accountkey:str, _account:str='default'):
+    def addXPubKey(self, account_key:str, account:str='default'):
         """
         DESCRIPTION:
 
@@ -2853,23 +2853,23 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _accountkey : xpubkey to add to the multisig wallet.
+            (*) account_key : xpubkey to add to the multisig wallet.
 
-            ( ) _account    : Multisig account to add the xpubkey to (default='default').
+            ( ) account     : Multisig account to add the xpubkey to (default='default').
         """
 
         endpoint = '/wallet/multisig3/shared-key/'
 
-        _message = '{"accountKey":"' + _accountkey + '", "account":"' + _account + '"}'
+        message = '{"accountKey":"' + account_key + '", "account":"' + account + '"}'
         try:
-            response = self.put(endpoint, _message)
+            response = self.put(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to add xpubkey " + _accountkey + " for account " + _account + "'}"
+            response['error'] = "{'message': 'Failed to add xpubkey " + account_key + " for account " + account + "'}"
         return response
-    ### END METHOD ################################### addXPubKey(self, _accountkey:str, _account:str='default')
+    ### END METHOD ################################### addXPubKey(self, account_key:str, account:str='default')
 
-    def removeXPubKey(self, _accountkey:str, _account:str='default'):
+    def removeXPubKey(self, account_key:str, account:str='default'):
         """
         DESCRIPTION:
 
@@ -2889,23 +2889,23 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _accountkey : xpubkey to add to the multisig wallet.
+            (*) account_key : xpubkey to add to the multisig wallet.
 
-            ( ) _account    : Multisig account to remove the xpubkey from (default='default').
+            ( ) account     : Multisig account to remove the xpubkey from (default='default').
         """
 
         endpoint = '/wallet/multisig3/shared-key/'
 
-        _message = '{"accountKey":"' + _accountkey + '", "account":"' + _account + '"}'
+        message = '{"accountKey":"' + account_key + '", "account":"' + account + '"}'
         try:
-            response = self.delete(endpoint, _message)
+            response = self.delete(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to remove xpubkey "' + _accountkey + '" for account " + _account + "'}"
+            response['error'] = "{'message': 'Failed to remove xpubkey "' + account_key + '" for account " + account + "'}"
         return response
-    ### END METHOD ################################### removeXPubKey(self, _accountkey:str, _account:str='default')
+    ### END METHOD ################################### removeXPubKey(self, account_key:str, account:str='default')
 
-    def getPublicKeyByAddress(self, _address:str, _id:str='primary'):
+    def getPublicKeyByAddress(self, address:str, id:str='primary'):
         """
         DESCRIPTION:
 
@@ -2915,21 +2915,21 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _address : Bech32 encoded address to get corresponding public key for.
+            (*) address : Bech32 encoded address to get corresponding public key for.
 
-            ( ) _id      : Name of wallet.
+            ( ) id      : Name of wallet.
         """
         
-        endpoint = '/wallet/' + _id + '/key/' + _address
+        endpoint = '/wallet/' + id + '/key/' + address
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to get public key for address " + _address + "'}"
+            response['error'] = "{'message': 'Failed to get public key for address " + address + "'}"
         return response
-    ### END METHOD ################################### getPublicKeyByAddress(self, _address:str, _id:str='primary')
+    ### END METHOD ################################### getPublicKeyByAddress(self, address:str, id:str='primary')
 
-    def getPrivateKeyByAddress(self, _address:str, _passphrase:str, _id:str='primary'):
+    def getPrivateKeyByAddress(self, address:str, passphrase:str, id:str='primary'):
         """
         DESCRIPTION:
 
@@ -2939,23 +2939,23 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _address    : Address to get corresponding private key for.
+            (*) address    : Address to get corresponding private key for.
 
-            (*) _passphrase : Passphrase of wallet.
+            (*) passphrase : Passphrase of wallet.
 
-            ( ) _id         : Name of wallet.
+            ( ) id         : Name of wallet.
         """
         
-        endpoint = '/wallet/' + _id + '/wif/' + _address + '?passphrase=' + _passphrase
+        endpoint = '/wallet/' + id + '/wif/' + address + '?passphrase=' + passphrase
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to get private key for address " + _address + "'}"
+            response['error'] = "{'message': 'Failed to get private key for address " + address + "'}"
         return response
-    ### END METHOD ################################### getPrivateKeyByAddress(self, _address:str, _passphrase:str, _id:str='primary')
+    ### END METHOD ################################### getPrivateKeyByAddress(self, address:str, passphrase:str, id:str='primary')
 
-    def generateReceivingAddress(self, _account:str, _id:str='primary'):
+    def generateReceivingAddress(self, account:str, id:str='primary'):
         """
         DESCRIPTION:
 
@@ -2965,23 +2965,23 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id       : Name of wallet.
+            (*) id       : Name of wallet.
 
-            (*) _account  : BIP44 account to generate address from.
+            ( ) account  : BIP44 account to generate address from.
         """
         
-        endpoint = '/wallet/' + _id + '/address'
+        endpoint = '/wallet/' + id + '/address'
 
-        _message = '{"account":"' + _account + '"}'
+        message = '{"account":"' + account + '"}'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to generate receiving address for account " + _account + "'}"
+            response['error'] = "{'message': 'Failed to generate receiving address for account " + account + "'}"
         return response
-    ### END METHOD ################################### generateReceivingAddress(self, _account:str, _id:str='primary')
+    ### END METHOD ################################### generateReceivingAddress(self, account:str, id:str='primary')
 
-    def generateChangeAddress(self, _account:str='default', _id:str='primary'):
+    def generateChangeAddress(self, account:str='default', id:str='primary'):
         """
         DESCRIPTION:
 
@@ -2991,23 +2991,23 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id       : Name of wallet.
+            ( ) id       : Name of wallet.
 
-            (*) _account  : BIP44 account to generate address from. Default = 'defualt'
+            ( ) account  : BIP44 account to generate address from. Default = 'defualt'
         """
         
-        endpoint = '/wallet/' + _id + '/change'
+        endpoint = '/wallet/' + id + '/change'
 
-        _message = '{"account":"' + _account + '"}'
+        message = '{"account":"' + account + '"}'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to generate change address for account " + _account + "'}"
+            response['error'] = "{'message': 'Failed to generate change address for account " + account + "'}"
         return response
-    ### END METHOD ################################### generateChangeAddress(self, _account:str='default', _id:str='primary')
+    ### END METHOD ################################### generateChangeAddress(self, account:str='default', id:str='primary')
 
-    def getBalance(self, _account:str='', _id:str='primary'):
+    def getBalance(self, account:str='', id:str='primary'):
         """
         DESCRIPTION:
 
@@ -3020,21 +3020,21 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _account    : Address to get corresponding private key for.
+            (*) account    : Address to get corresponding private key for.
 
-            ( ) _id         : Wallet ID.
+            ( ) id         : Wallet ID.
         """
         
-        endpoint = '/wallet/' + _id + '/balance?account=' + _account
+        endpoint = '/wallet/' + id + '/balance?account=' + account
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to get balance for account " + _account + "'}"
+            response['error'] = "{'message': 'Failed to get balance for account " + account + "'}"
         return response
-    ### END METHOD ################################### getBalance(self, _account:str='', _id:str='primary')
+    ### END METHOD ################################### getBalance(self, account:str='', id:str='primary')
 
-    def listCoins(self, _id:str='primary'):
+    def listCoins(self, id:str='primary'):
         """
         DESCRIPTION:
 
@@ -3044,19 +3044,19 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _id : Wallet ID.
+            ( ) id : Wallet ID.
         """
         
-        endpoint = '/wallet/' + _id + '/coin'
+        endpoint = '/wallet/' + id + '/coin'
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to list coins for wallet ID " + _id + "'}"
+            response['error'] = "{'message': 'Failed to list coins for wallet ID " + id + "'}"
         return response
-    ### END METHOD ################################### listCoins(self, _id:str='primary')
+    ### END METHOD ################################### listCoins(self, id:str='primary')
 
-    def lockCoinOutpoints(self, _txhash:str, _index:str='0', _id:str='primary'):
+    def lockCoinOutpoints(self, tx_hash:str, index:str='0', id:str='primary'):
         """
         DESCRIPTION:
 
@@ -3066,23 +3066,23 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _txhash : Hash of transaction that created the outpoint.
+            (*) tx_hash : Hash of transaction that created the outpoint.
 
-            ( ) _index  : Index of the output in the transaction being referenced. Default = '0'
+            ( ) index   : Index of the output in the transaction being referenced. Default = '0'
 
-            ( ) _id     : ID of wallet that contains the outpoint. Default = 'primary'
+            ( ) id      : ID of wallet that contains the outpoint. Default = 'primary'
         """
 
-        endpoint = '/wallet/' + _id + '/locked/' + _txhash + '/' + _index
+        endpoint = '/wallet/' + id + '/locked/' + tx_hash + '/' + index
         try:
             response = self.put(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to lock coin outpoint for transaction " + _txhash + " at index " + _index + "'}"
+            response['error'] = "{'message': 'Failed to lock coin outpoint for transaction " + tx_hash + " at index " + index + "'}"
         return response
-    ### END METHOD ################################### lockCoinOutpoints(self, _txhash:str, _index:str='0', _id:str='primary')
+    ### END METHOD ################################### lockCoinOutpoints(self, tx_hash:str, index:str='0', id:str='primary')
 
-    def unlockCoinOutpoints(self, _txhash:str, _index:str='0', _id:str='primary'):
+    def unlockCoinOutpoints(self, tx_hash:str, index:str='0', id:str='primary'):
         """
         DESCRIPTION:
 
@@ -3092,20 +3092,20 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _txhash : Hash of transaction that created the outpoint.
+            (*) tx_hash : Hash of transaction that created the outpoint.
 
-            ( ) _index  : Index of the output in the transaction being referenced. Default = '0'
+            ( ) index   : Index of the output in the transaction being referenced. Default = '0'
 
-            ( ) _id     : ID of wallet that contains the outpoint. Default = 'primary'
+            ( ) id      : ID of wallet that contains the outpoint. Default = 'primary'
         """
 
-        endpoint = '/wallet/' + _id + '/locked/' + _txhash + '/' + _index
+        endpoint = '/wallet/' + id + '/locked/' + tx_hash + '/' + index
 
         response = self.delete(endpoint)
         return response
-    ### END METHOD ################################### unlockCoinOutpoints(self, _txhash:str, _index:str='0', _id:str='primary')
+    ### END METHOD ################################### unlockCoinOutpoints(self, tx_hash:str, index:str='0', id:str='primary')
 
-    def getLockedOutpoints(self, _id:str='primary'):
+    def getLockedOutpoints(self, id:str='primary'):
         """
         DESCRIPTION:
 
@@ -3115,19 +3115,19 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _id : ID of wallet to check for outpoints.
+            ( ) id : ID of wallet to check for outpoints.
         """
         
-        endpoint = '/wallet/' + _id + '/locked'
+        endpoint = '/wallet/' + id + '/locked'
         try:
             response = self.get(endpoint)
         except:
             response = {}
             response['error'] = "{'message': 'Failed to get list of locked outpoints'}"
         return response
-    ### END METHOD ################################### getLockedOutpoints(self, _id:str='primary')
+    ### END METHOD ################################### getLockedOutpoints(self, id:str='primary')
 
-    def getWalletCoin(self, _txhash:str, _index:str='0', _id:str='primary'):
+    def getWalletCoin(self, tx_hash:str, index:str='0', id:str='primary'):
         """
         DESCRIPTION:
 
@@ -3137,27 +3137,27 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _txhash : ID of wallet that contains the outpoint.
+            (*) tx_hash : ID of wallet that contains the outpoint.
 
-            ( ) _index : Hash of transaction that created the outpoint.
+            ( ) index   : Hash of transaction that created the outpoint.
 
-            ( ) _id : Index of the output in the transaction being referenced.
+            ( ) id      : Index of the output in the transaction being referenced.
         """
         
-        endpoint = '/wallet/' + _id + '/coin/' + _txhash + '/' + _index
+        endpoint = '/wallet/' + id + '/coin/' + tx_hash + '/' + index
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to get coin for transaction hash " + _txhash + " at index " + _index + "'}"
+            response['error'] = "{'message': 'Failed to get coin for transaction hash " + tx_hash + " at index " + index + "'}"
         return response
-    ### END METHOD ################################### getWalletCoin(self, _txhash:str, _index:str='0', _id:str='primary')
+    ### END METHOD ################################### getWalletCoin(self, tx_hash:str, index:str='0', id:str='primary')
 
-    def walletRescan(self, _height:int):
+    def walletRescan(self, height:int):
         """
         DESCRIPTION:
 
-            Initiates a blockchain rescan for the walletdb. Wallets will
+            Initiates a blockchain _rescan for the walletdb. Wallets will
             be rolled back to the specified height (transactions above
             this height will be unconfirmed).
         
@@ -3165,20 +3165,20 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _height : Name of wallet.
+            (*) height : Name of wallet.
         """
         
-        endpoint = '/rescan/'
+        endpoint = '/_rescan/'
 
-        _message = '{"height": ' + str(_height) + ' }'
+        message = '{"height": ' + str(height) + ' }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to rescan wallet'}"
+            response['error'] = "{'message': 'Failed to _rescan wallet'}"
         return response
-    ### END METHOD ################################### walletRescan(self, _height:int)
+    ### END METHOD ################################### walletRescan(self, height:int)
 
     def walletResend(self):
         """
@@ -3200,7 +3200,7 @@ class hsw:
         return response
     ### END METHOD ################################### walletResend(self)
 
-    def walletBackup(self, _path:str=''):
+    def walletBackup(self, path:str=''):
         """
         DESCRIPTION:
 
@@ -3210,10 +3210,10 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _path : Local directory to save backup.
+            (*) path : Local directory to save backup.
         """
         
-        endpoint = '/backup?path=' + _path
+        endpoint = '/backup?path=' + path
 
         try:
             response = self.post(endpoint)
@@ -3221,9 +3221,9 @@ class hsw:
             response = {}
             response['error'] = "{'message': 'Failed to back up wallet'}"
         return response
-    ### END METHOD ################################### walletBackup(self, _path:str='')
+    ### END METHOD ################################### walletBackup(self, path:str='')
 
-    def walletMasterHDKeyBackup(self, _id:str='primary'):
+    def walletMasterHDKeyBackup(self, id:str='primary'):
         """
         DESCRIPTION:
 
@@ -3239,17 +3239,17 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _id : Wallet ID. Default = 'primary'
+            ( ) id : Wallet ID. Default = 'primary'
         """
         
-        endpoint = '/wallet/' + _id + '/master'
+        endpoint = '/wallet/' + id + '/master'
         try:
             response = self.get(endpoint)
         except:
             response = {}
             response['error'] = "{'message': 'Failed to back up master HD private key'}"
         return response
-    ### END METHOD ################################### walletMasterHDKeyBackup(self, _id:str='primary')
+    ### END METHOD ################################### walletMasterHDKeyBackup(self, id:str='primary')
 
     def listWallets(self):
         """
@@ -3272,7 +3272,7 @@ class hsw:
         return response
     ### END METHOD ################################### listWallets(self)
 
-    def getWalletAccountList(self, _id:str='primary'):
+    def getWalletAccountList(self, id:str='primary'):
         """
         DESCRIPTION:
 
@@ -3283,19 +3283,19 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _id : ID of wallet you would like to retrieve the account list for. Default = 'primary'
+            ( ) id : ID of wallet you would like to retrieve the account list for. Default = 'primary'
         """
         
-        endpoint = '/wallet/' + _id + '/account'
+        endpoint = '/wallet/' + id + '/account'
         try:
             response = self.get(endpoint)
         except:
             response = {}
             response['error'] = "{'message': 'Cannot get account list'}"
         return response
-    ### END METHOD ################################### getWalletAccountList(self, _id:str='primary')
+    ### END METHOD ################################### getWalletAccountList(self, id:str='primary')
 
-    def getAccountInfo(self, _id:str='primary', _account:str='default'):
+    def getAccountInfo(self, id:str='primary', account:str='default'):
         """
         DESCRIPTION:
 
@@ -3305,11 +3305,11 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _id : ID of wallet you would like to query. Default = 'primary'
-            ( ) _account : ID of account you would to retrieve information for. Default = 'default'
+            ( ) id : ID of wallet you would like to query. Default = 'primary'
+            ( ) account : ID of account you would to retrieve information for. Default = 'default'
         """
         
-        endpoint = '/wallet/' + _id + '/account/' + _account
+        endpoint = '/wallet/' + id + '/account/' + account
 
         try:
             response = self.get(endpoint)
@@ -3317,9 +3317,9 @@ class hsw:
             response = {}
             response['error'] = "{'message': 'Cannot get account info'}"
         return response
-    ### END METHOD ################################### getAccountInfo(self, _id:str='primary', _account:str='default')
+    ### END METHOD ################################### getAccountInfo(self, id:str='primary', account:str='default')
 
-    def createAccount(self, _passphrase:str, _id:str, _account:str, _accountkey:str='', _type:str='pubkeyhash', _m:int=1, _n:int=1):
+    def createAccount(self, passphrase:str, id:str, account:str, account_key:str='', type:str='pubkeyhash', m:int=1, n:int=1):
         """
         DESCRIPTION:
 
@@ -3329,37 +3329,37 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id          : Wallet ID (used for storage).
+            (*) id          : Wallet ID (used for storage).
 
-            (*) _passphrase  : A strong passphrase used to encrypt the wallet.
+            (*) passphrase  : A strong passphrase used to encrypt the wallet.
 
-            (*) _account : Name to give the account.
+            (*) account     : Name to give the account.
 
-            ( ) _type        : Type of wallet (pubkeyhash, multisig). Default is 'pubkeyhash'
-
-            ( ) _accountkey  : The extended public key for the account. This is ignored for
+            ( ) account_key : The extended public key for the account. This is ignored for
                               non watch only wallets. Watch only accounts can't accept private
                               keys for import (or sign transactions).
 
-            ( ) _m           : 'm' value for multisig (m-of-n).
+            ( ) type        : Type of wallet (pubkeyhash, multisig). Default is 'pubkeyhash'
 
-            ( ) _n           : 'n' value for multisig (m-of-n)
+            ( ) m           : 'm' value for multisig (m-of-n).
+
+            ( ) n           : 'n' value for multisig (m-of-n)
         """
         
-        endpoint = '/wallet/' + _id + '/account/' + _account
+        endpoint = '/wallet/' + id + '/account/' + account
 
-        _message = '{"type":"' + _type + '", "passphrase":"' + _passphrase + '", "accountKey":"' + _accountkey + '", "m": ' + str(_m) + ', "n": ' + str(_n) + '}'
+        message = '{"type":"' + type + '", "passphrase":"' + passphrase + '", "accountKey":"' + account_key + '", "m": ' + str(m) + ', "n": ' + str(n) + '}'
         try:
-            response = self.put(endpoint, _message)
+            response = self.put(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to create account '" + _account + "'}"
+            response['error'] = "{'message': 'Failed to create account '" + account + "'}"
         return response
-    ### END METHOD ################################### createAccount(self, _passphrase:str, _id:str, _account:str,
-    #                                                                      _accountkey:str='', _type:str='pubkeyhash',
-    #                                                                      _m:int=1, _n:int=1)
+    ### END METHOD ################################### createAccount(self, passphrase:str, id:str, account:str,
+    #                                                                      account_key:str='', type:str='pubkeyhash',
+    #                                                                      m:int=1, n:int=1)
 
-    def getWalletTxDetails(self, _id:str='primary', _txhash:str=''):
+    def getWalletTxDetails(self, id:str='primary', tx_hash:str=''):
         """
         DESCRIPTION:
 
@@ -3369,21 +3369,21 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _id     : ID of wallet that handled the transaction. Default = 'primary'
-            (*) _txhash : ID of account you would to retrieve information for.
+            ( ) id      : ID of wallet that handled the transaction. Default = 'primary'
+            (*) tx_hash : ID of account you would to retrieve information for.
         """
         
-        endpoint = '/wallet/' + _id + '/tx/' + _txhash
+        endpoint = '/wallet/' + id + '/tx/' + tx_hash
 
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Cannot get transaction details for the wallet '" + _id + "'}"
+            response['error'] = "{'message': 'Cannot get transaction details for the wallet '" + id + "'}"
         return response
-    ### END METHOD ################################### getWalletTxDetails(self, _id:str='primary', _txhash:str='')
+    ### END METHOD ################################### getWalletTxDetails(self, id:str='primary', tx_hash:str='')
 
-    def deleteTransaction(self, _id:str='primary', _txhash:str=''):
+    def deleteTransaction(self, id:str='primary', tx_hash:str=''):
         """
         DESCRIPTION:
 
@@ -3394,21 +3394,21 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _id     : ID of wallet where the transaction is that you want to remove.
+            ( ) id      : ID of wallet where the transaction is that you want to remove.
 
-            (*) _txhash : Hash of transaction you would like to remove.
+            (*) tx_hash : Hash of transaction you would like to remove.
         """
 
-        endpoint = '/wallet/' + _id + '/tx/' + _txhash
+        endpoint = '/wallet/' + id + '/tx/' + tx_hash
         try:
             response = self.delete(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to delete transaction in '" + _id + "'}"
+            response['error'] = "{'message': 'Failed to delete transaction in '" + id + "'}"
         return response
-    ### END METHOD ################################### deleteTransaction(self, _id:str='primary', _txhash:str='')
+    ### END METHOD ################################### deleteTransaction(self, id:str='primary', tx_hash:str='')
 
-    def getWalletTxHistory(self, _id:str='primary'):
+    def getWalletTxHistory(self, id:str='primary'):
         """
         DESCRIPTION:
 
@@ -3418,20 +3418,20 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _id : ID of wallet to get history of. Default = 'primary'
+            ( ) id : ID of wallet to get history of. Default = 'primary'
         """
         
-        endpoint = '/wallet/' + _id + '/tx/history'
+        endpoint = '/wallet/' + id + '/tx/history'
 
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to get transaction history for '" + _id + "'}"
+            response['error'] = "{'message': 'Failed to get transaction history for '" + id + "'}"
         return response
-    ### END METHOD ################################### getWalletTxHistory(self, _id:str='primary')
+    ### END METHOD ################################### getWalletTxHistory(self, id:str='primary')
 
-    def getPendingTransactions(self, _id:str='primary'):
+    def getPendingTransactions(self, id:str='primary'):
         """
         DESCRIPTION:
 
@@ -3441,20 +3441,20 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _id : ID of wallet to get pending/unconfirmed transactions. Default = 'primary'
+            ( ) id : ID of wallet to get pending/unconfirmed transactions. Default = 'primary'
         """
         
-        endpoint = '/wallet/' + _id + '/tx/unconfirmed'
+        endpoint = '/wallet/' + id + '/tx/unconfirmed'
 
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to get pending transactions for '" + _id + "'}"
+            response['error'] = "{'message': 'Failed to get pending transactions for '" + id + "'}"
         return response
-    ### END METHOD ################################### getPendingTransactions(self, _id:str='primary')
+    ### END METHOD ################################### getPendingTransactions(self, id:str='primary')
 
-    def getRangeOfTransactions(self, _start:int=0, _end:int=0, _id:str='primary'):
+    def getRangeOfTransactions(self, start:int=0, end:int=0, id:str='primary'):
         """
         DESCRIPTION:
 
@@ -3466,24 +3466,24 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _start   : Start time to get range from. Default = 0
+            ( ) start   : Start time to get range from. Default = 0
 
-            ( ) _end     : End time to get range from. Default = 0
+            ( ) end     : End time to get range from. Default = 0
 
-            ( ) _id      : ID of wallet to get transactions from. Default = 'primary'
+            ( ) id      : ID of wallet to get transactions from. Default = 'primary'
         """
         
-        endpoint = '/wallet/' + _id + '/tx/range?start=' + _start + '&end=' + _end
+        endpoint = '/wallet/' + id + '/tx/range?start=' + start + '&end=' + end
 
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to get transaction range for '" + _id + "'}"
+            response['error'] = "{'message': 'Failed to get transaction range for '" + id + "'}"
         return response
-    ### END METHOD ################################### getRangeOfTransactions(self, _start:int, _end:int, _id:str='primary')
+    ### END METHOD ################################### getRangeOfTransactions(self, start:int, end:int, id:str='primary')
 
-    def getWalletNames(self, _id:str='primary'):
+    def getWalletNames(self, id:str='primary'):
         """
         DESCRIPTION:
 
@@ -3496,20 +3496,20 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _id : ID of wallet to get transactions from. Default = 'primary'
+            ( ) id : ID of wallet to get transactions from. Default = 'primary'
         """
         
-        endpoint = '/wallet/' + _id + '/name'
+        endpoint = '/wallet/' + id + '/name'
 
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to get list of wallet names for '" + _id + "'}"
+            response['error'] = "{'message': 'Failed to get list of wallet names for '" + id + "'}"
         return response
-    ### END METHOD ################################### getWalletNames(self, _id:str='primary')
+    ### END METHOD ################################### getWalletNames(self, id:str='primary')
 
-    def getWalletName(self, _name:str='', _id:str='primary'):
+    def getWalletName(self, name:str='', id:str='primary'):
         """
         DESCRIPTION:
 
@@ -3519,22 +3519,22 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name : Name of wallet.
+            (*) name : Name of wallet.
 
-            (*) _id   : ID of wallet. Default = 'primary'
+            (*) id   : ID of wallet. Default = 'primary'
         """
         
-        endpoint = '/wallet/' + _id + '/name/' + _name
+        endpoint = '/wallet/' + id + '/name/' + name
 
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to get status of wallet named '" + _name + "'}"
+            response['error'] = "{'message': 'Failed to get status of wallet named '" + name + "'}"
         return response
-    ### END METHOD ################################### getWalletName(self, _name:str='', _id:str='primary')
+    ### END METHOD ################################### getWalletName(self, name:str='', id:str='primary')
 
-    def getWalletAuctions(self, _id:str='primary'):
+    def getWalletAuctions(self, id:str='primary'):
         """
         DESCRIPTION:
 
@@ -3547,20 +3547,20 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _id : ID of wallet. Default = 'primary'
+            ( ) id : ID of wallet. Default = 'primary'
         """
         
-        endpoint = '/wallet/' + _id + '/auction'
+        endpoint = '/wallet/' + id + '/auction'
 
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to get auctions for '" + _id + "' wallet.'}"
+            response['error'] = "{'message': 'Failed to get auctions for '" + id + "' wallet.'}"
         return response
-    ### END METHOD ################################### getWalletAuctions(self, _id:str='primary')
+    ### END METHOD ################################### getWalletAuctions(self, id:str='primary')
 
-    def getWalletAuctionByName(self, _name:str='', _id:str='primary'):
+    def getWalletAuctionByName(self, name:str='', id:str='primary'):
         """
         DESCRIPTION:
 
@@ -3570,22 +3570,22 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name : Name of wallet.
+            (*) name : Name of wallet.
 
-            ( ) _id   : ID of wallet. Default = 'primary'
+            ( ) id   : ID of wallet. Default = 'primary'
         """
         
-        endpoint = '/wallet/' + _id + '/auction/' + _name
+        endpoint = '/wallet/' + id + '/auction/' + name
 
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to get auctions for the wallet '" + _name + "'}"
+            response['error'] = "{'message': 'Failed to get auctions for the wallet '" + name + "'}"
         return response
-    ### END METHOD ################################### getWalletAuctionByName(self, _name:str='', _id:str='primary')
+    ### END METHOD ################################### getWalletAuctionByName(self, name:str='', id:str='primary')
 
-    def getWalletBids(self, _id:str='primary', _own:bool=True):
+    def getWalletBids(self, id:str='primary', own:bool=True):
         """
         DESCRIPTION:
 
@@ -3598,28 +3598,28 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _id  : ID of wallet. Default = 'primary'
+            ( ) id  : ID of wallet. Default = 'primary'
 
-            ( ) _own : Whether to only show bids from this wallet. Default = True
+            ( ) own : Whether to only show bids from this wallet. Default = True
         """
-        own = ''
+        _own = ''
 
-        if _own == True:
-            own = '1'
+        if own == True:
+            _own = '1'
         else:
-            own = '0'
+            _own = '0'
         
-        endpoint = '/wallet/' + _id + '/bid?own=' + own
+        endpoint = '/wallet/' + id + '/bid?own=' + _own
 
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to get bids for the wallet '" + _id + "'}"
+            response['error'] = "{'message': 'Failed to get bids for the wallet '" + id + "'}"
         return response
-    ### END METHOD ################################### getWalletBids(self, _id:str='primary', _own:bool=True)
+    ### END METHOD ################################### getWalletBids(self, id:str='primary', own:bool=True)
 
-    def getWalletBidsByName(self, _name:str='', _id:str='primary', _own:bool=False):
+    def getWalletBidsByName(self, name:str='', id:str='primary', own:bool=False):
         """
         DESCRIPTION:
 
@@ -3629,30 +3629,30 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name : Name of domain to display bids for.
+            (*) name : Name of domain to display bids for.
 
-            ( ) _id   : ID of wallet. Default = 'primary'
+            ( ) id   : ID of wallet. Default = 'primary'
 
-            ( ) _own  : Whether to only show bids from this wallet. Default = False
+            ( ) own  : Whether to only show bids from this wallet. Default = False
         """
-        own = ''
+        _own = ''
 
-        if _own == True:
-            own = '1'
+        if own == True:
+            _own = '1'
         else:
-            own = '0'
+            _own = '0'
         
-        endpoint = '/wallet/' + _id + '/bid/' + _name + '?own=' + own
+        endpoint = '/wallet/' + id + '/bid/' + name + '?own=' + _own
 
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to get bids for the domain '" + _name + "'}"
+            response['error'] = "{'message': 'Failed to get bids for the domain '" + name + "'}"
         return response
-    ### END METHOD ################################### getWalletBidsByName(self, _name:str='', _id:str='primary', _own:bool=False)
+    ### END METHOD ################################### getWalletBidsByName(self, name:str='', id:str='primary', own:bool=False)
 
-    def getWalletReveals(self, _id:str='primary', _own:bool=False):
+    def getWalletReveals(self, id:str='primary', own:bool=False):
         """
         DESCRIPTION:
 
@@ -3662,28 +3662,28 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _id  : ID of wallet. Default = 'primary'
+            ( ) id  : ID of wallet. Default = 'primary'
 
-            ( ) _own : Whether to only show reveals from this wallet. Default = False
+            ( ) own : Whether to only show reveals from this wallet. Default = False
         """
-        own = ''
+        _own = ''
 
-        if _own == True:
-            own = '1'
+        if own == True:
+            _own = '1'
         else:
-            own = '0'
+            _own = '0'
         
-        endpoint = '/wallet/' + _id + '/reveal?own=' + own
+        endpoint = '/wallet/' + id + '/reveal?own=' + _own
 
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to get reveals known to the wallet '" + _id + "'}"
+            response['error'] = "{'message': 'Failed to get reveals known to the wallet '" + id + "'}"
         return response
-    ### END METHOD ################################### getWalletReveals(self, _id:str='primary', _own:bool=False)
+    ### END METHOD ################################### getWalletReveals(self, id:str='primary', own:bool=False)
 
-    def getWalletRevealsByName(self, _name:str, _id:str='primary', _own:bool=False):
+    def getWalletRevealsByName(self, name:str, id:str='primary', own:bool=False):
         """
         DESCRIPTION:
 
@@ -3693,30 +3693,30 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name : Name of domain to get reveals for.
+            (*) name : Name of domain to get reveals for.
 
-            ( ) _id   : ID of wallet. Default = 'primary'
+            ( ) id   : ID of wallet. Default = 'primary'
 
-            ( ) _own  : Whether to only show reveals from this wallet. Default = False
+            ( ) own  : Whether to only show reveals from this wallet. Default = False
         """
-        own = ''
+        _own = ''
 
-        if _own == True:
-            own = '1'
+        if own == True:
+            _own = '1'
         else:
-            own = '0'
+            _own = '0'
         
-        endpoint = '/wallet/' + _id + '/reveal/' + _name + '?own=' + own
+        endpoint = '/wallet/' + id + '/reveal/' + name + '?own=' + _own
 
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to get reveals for the domain '" + _name + "'}"
+            response['error'] = "{'message': 'Failed to get reveals for the domain '" + name + "'}"
         return response
-    ### END METHOD ################################### getWalletRevealsByName(self, _name:str='', _id:str='primary', _own:bool=False)
+    ### END METHOD ################################### getWalletRevealsByName(self, name:str='', id:str='primary', own:bool=False)
 
-    def getWalletResourceByName(self, _name:str, _id:str='primary'):
+    def getWalletResourceByName(self, name:str, id:str='primary'):
         """
         DESCRIPTION:
 
@@ -3726,22 +3726,22 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name : Name of domain.
+            (*) name : Name of domain.
 
-            ( ) _id   : ID of wallet. Default = 'primary'
+            ( ) id   : ID of wallet. Default = 'primary'
         """
 
-        endpoint = '/wallet/' + _id + '/resource'
+        endpoint = '/wallet/' + id + '/resource'
 
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to get data resources associated with the domain '" + _name + "'}"
+            response['error'] = "{'message': 'Failed to get data resources associated with the domain '" + name + "'}"
         return response
-    ### END METHOD ################################### getWalletResourceByName(self, _name:str='', _id:str='primary')
+    ### END METHOD ################################### getWalletResourceByName(self, name:str='', id:str='primary')
 
-    def getNonceForBid(self, _bid:float, _name:str, _address:str, _id:str='primary'):
+    def getNonceForBid(self, bid:float, name:str, address:str, id:str='primary'):
         """
         DESCRIPTION:
 
@@ -3754,26 +3754,26 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _bid     : Value of bid to blind.
+            (*) bid     : Value of bid to blind.
 
-            (*) _name    : Name of domain.
+            (*) name    : Name of domain.
 
-            (*) _address : Address controlling bid.
+            (*) address : Address controlling bid.
 
-            ( ) _id      : ID of wallet. Default = 'primary'
+            ( ) id      : ID of wallet. Default = 'primary'
         """
 
-        endpoint = '/wallet/' + _id + '/nounce/' + _name + '?address=' + _address + '&bid=' + str(_bid)
+        endpoint = '/wallet/' + id + '/nounce/' + name + '?address=' + address + '&bid=' + str(bid)
 
         try:
             response = self.get(endpoint)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to generate nonce for blind bid on '" + _name + "'}"
+            response['error'] = "{'message': 'Failed to generate nonce for blind bid on '" + name + "'}"
         return response
-    ### END METHOD ################################### getNonceForBid(self, _bid:float, _name:str, _address:str, _id:str='primary')
+    ### END METHOD ################################### getNonceForBid(self, bid:float, name:str, address:str, id:str='primary')
 
-    def sendOPEN(self, _id:str, _passphrase:str, _name:str, _sign:bool=True, _broadcast:bool=True):
+    def sendOPEN(self, id:str, passphrase:str, name:str, sign:bool=True, broadcast:bool=True):
         """
         DESCRIPTION:
 
@@ -3783,42 +3783,42 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id         : Wallet ID.
+            (*) id         : Wallet ID.
 
-            (*) _passphrase : Passphrase to unlock the wallet.
+            (*) passphrase : Passphrase to unlock the wallet.
 
-            (*) _name       : Name to OPEN.
+            (*) name       : Name to OPEN.
 
-            ( ) _sign       : Whether to sign the transaction. Default = True
+            ( ) sign       : Whether to sign the transaction. Default = True
 
-            ( ) _broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
+            ( ) broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
         """
 
-        sign = ''
-        broadcast = ''
+        _sign = ''
+        _broadcast = ''
 
-        if _sign == True:
-            sign = '1'
+        if sign == True:
+            _sign = '1'
         else:
-            sign = '0'
+            _sign = '0'
 
-        if _broadcast == True:
-            broadcast = '1'
+        if broadcast == True:
+            _broadcast = '1'
         else:
-            broadcast = '0'
+            _broadcast = '0'
         
-        endpoint = '/wallet/' + _id + '/open'
+        endpoint = '/wallet/' + id + '/open'
 
-        _message = '{ "passphrase":"' + _passphrase + '", "name":"' + _name + '", "broadcast":' + broadcast + ', "sign":' + sign + ' }'
+        message = '{ "passphrase":"' + passphrase + '", "name":"' + name + '", "broadcast":' + str(_broadcast) + ', "sign":' + str(_sign) + ' }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to OPEN auction for '" + _name + "'}"
+            response['error'] = "{'message': 'Failed to OPEN auction for '" + name + "'}"
         return response
-    ### END METHOD ################################### sendOPEN(self, _id:str, _passphrase:str, _name:str, _sign:bool=True, _broadcast:bool=True)
+    ### END METHOD ################################### sendOPEN(self, id:str, passphrase:str, name:str, sign:bool=True, broadcast:bool=True)
 
-    def sendBID(self, _id:str, _passphrase:str, _name:str, _bid:int, _lockup:int, _sign:bool=True, _broadcast:bool=True):
+    def sendBID(self, id:str, passphrase:str, name:str, bid:int, lockup:int, sign:bool=True, broadcast:bool=True):
         """
         DESCRIPTION:
 
@@ -3828,48 +3828,48 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id         : Wallet ID.
+            (*) id         : Wallet ID.
 
-            (*) _passphrase : Passphrase to unlock the wallet.
+            (*) passphrase : Passphrase to unlock the wallet.
 
-            (*) _name       : Name to BID on.
+            (*) name       : Name to BID on.
 
-            (*) _bid        : Value (in dollarydoos) to bid for name.
+            (*) bid        : Value (in dollarydoos) to bid for name.
 
-            (*) _lockup     : Value (in dollarydoos) to actually send in the transaction, blinding the actual bid value.
+            (*) lockup     : Value (in dollarydoos) to actually send in the transaction, blinding the actual bid value.
 
-            ( ) _sign       : Whether to sign the transaction. Default = True
+            ( ) sign       : Whether to sign the transaction. Default = True
 
-            ( ) _broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
+            ( ) broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
         """
 
-        sign = ''
-        broadcast = ''
+        _sign = ''
+        _broadcast = ''
 
-        if _sign == True:
-            sign = '1'
+        if sign == True:
+            _sign = '1'
         else:
-            sign = '0'
+            _sign = '0'
 
-        if _broadcast == True:
-            broadcast = '1'
+        if broadcast == True:
+            _broadcast = '1'
         else:
-            broadcast = '0'
+            _broadcast = '0'
         
-        endpoint = '/wallet/' + _id + '/bid'
+        endpoint = '/wallet/' + id + '/bid'
 
-        _message = '{ "passphrase":"' + _passphrase + '", "name":"' + _name + '", "broadcast":' + broadcast + \
-                   ', "sign":' + sign + ', "bid":' + str(_bid) + ', "lockup":' + str(_lockup) + ' }'
+        message = '{ "passphrase":"' + passphrase + '", "name":"' + name + '", "broadcast":' + str(_broadcast) + \
+                   ', "sign":' + str(_sign) + ', "bid":' + str(bid) + ', "lockup":' + str(lockup) + ' }'
         
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to send BID for '" + _name + "'}"
+            response['error'] = "{'message': 'Failed to send BID for '" + name + "'}"
         return response
-    ### END METHOD ################################### sendBID(self, _id:str, _passphrase:str, _name:str, _bid:int, _lockup:int, _sign:bool=True, _broadcast:bool=True)
+    ### END METHOD ################################### sendBID(self, id:str, passphrase:str, name:str, bid:int, lockup:int, sign:bool=True, broadcast:bool=True)
 
-    def sendREVEAL(self, _id:str, _passphrase:str, _name:str='', _sign:bool=True, _broadcast:bool=True):
+    def sendREVEAL(self, id:str, passphrase:str, name:str='', sign:bool=True, broadcast:bool=True):
         """
         DESCRIPTION:
 
@@ -3881,93 +3881,93 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id         : Wallet ID.
+            (*) id         : Wallet ID.
 
-            (*) _passphrase : Passphrase to unlock the wallet.
+            (*) passphrase : Passphrase to unlock the wallet.
 
-            ( ) _name       : Name to REVEAL bids for (or `null` for all names).
+            ( ) name       : Name to REVEAL bids for (or `null` for all names).
 
-            ( ) _sign       : Whether to sign the transaction. Default = True
+            ( ) sign       : Whether to sign the transaction. Default = True
 
-            ( ) _broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
+            ( ) broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
         """
 
-        sign = ''
-        broadcast = ''
+        _sign = ''
+        _broadcast = ''
 
-        if _sign == True:
-            sign = '1'
+        if sign == True:
+            _sign = '1'
         else:
-            sign = '0'
+            _sign = '0'
 
-        if _broadcast == True:
-            broadcast = '1'
+        if broadcast == True:
+            _broadcast = '1'
         else:
-            broadcast = '0'
+            _broadcast = '0'
         
-        endpoint = '/wallet/' + _id + '/reveal'
+        endpoint = '/wallet/' + id + '/reveal'
 
-        _message = '{ "passphrase":"' + _passphrase + '", "name":"' + _name + '", "broadcast":' + broadcast + ', "sign":' + sign + ' }'
+        message = '{ "passphrase":"' + passphrase + '", "name":"' + name + '", "broadcast":' + str(_broadcast) + ', "sign":' + str(_sign) + ' }'
         
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to send name REVEAL for '" + _name + "'}"
+            response['error'] = "{'message': 'Failed to send name REVEAL for '" + name + "'}"
         return response
-    ### END METHOD ################################### sendREVEAL(self, _id:str, _passphrase:str, _name:str='', _sign:bool=True, _broadcast:bool=True)
+    ### END METHOD ################################### sendREVEAL(self, id:str, passphrase:str, name:str='', sign:bool=True, broadcast:bool=True)
 
-    def sendREDEEM(self, _id:str, _passphrase:str, _name:str='', _sign:bool=True, _broadcast:bool=True):
+    def sendREDEEM(self, id:str, passphrase:str, name:str='', sign:bool=True, broadcast:bool=True):
         """
         DESCRIPTION:
 
             Create, sign, and send a REDEEM. This transaction sweeps the value
             from losing bids back into the wallet. If multiple bids (and reveals)
             were placed on a name, all losing bids will be redeemed by this 
-            ransaction. If no value is passed in for `_name`, all qualifying bids
+            ransaction. If no value is passed in for `name`, all qualifying bids
             are redeemed.
         
         PARAMS:
 
             (*) Denotes required argument
 
-            (*) _id         : Wallet ID.
+            (*) id         : Wallet ID.
 
-            (*) _passphrase : Passphrase to unlock the wallet.
+            (*) passphrase : Passphrase to unlock the wallet.
 
-            ( ) _name       : Name to REDEEM bids for (or null for all names).
+            ( ) name       : Name to REDEEM bids for (or null for all names).
 
-            ( ) _sign       : Whether to sign the transaction. Default = True
+            ( ) sign       : Whether to sign the transaction. Default = True
 
-            ( ) _broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
+            ( ) broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
         """
 
-        sign = ''
-        broadcast = ''
+        _sign = ''
+        _broadcast = ''
 
-        if _sign == True:
-            sign = '1'
+        if sign == True:
+            _sign = '1'
         else:
-            sign = '0'
+            _sign = '0'
 
-        if _broadcast == True:
-            broadcast = '1'
+        if broadcast == True:
+            _broadcast = '1'
         else:
-            broadcast = '0'
+            _broadcast = '0'
         
-        endpoint = '/wallet/' + _id + '/redeem'
+        endpoint = '/wallet/' + id + '/redeem'
 
-        _message = '{ "passphrase":"' + _passphrase + '", "name":"' + _name + '", "broadcast":' + broadcast + ', "sign":' + sign + ' }'
+        message = '{ "passphrase":"' + passphrase + '", "name":"' + name + '", "broadcast":' + str(_broadcast) + ', "sign":' + str(_sign) + ' }'
         
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to REDEEM bids for '" + _name + "'}"
+            response['error'] = "{'message': 'Failed to REDEEM bids for '" + name + "'}"
         return response
-    ### END METHOD ################################### sendREDEEM(self, _id:str, _passphrase:str, _name:str='', _sign:bool=True, _broadcast:bool=True)
+    ### END METHOD ################################### sendREDEEM(self, id:str, passphrase:str, name:str='', sign:bool=True, broadcast:bool=True)
 
-    def sendUPDATE(self, _id:str, _passphrase:str, _name:str, _data:str, _sign:bool=True, _broadcast:bool=True):
+    def sendUPDATE(self, id:str, passphrase:str, name:str, data:str, sign:bool=True, broadcast:bool=True):
         """
         DESCRIPTION:
 
@@ -3982,46 +3982,46 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id         : Wallet ID.
+            (*) id         : Wallet ID.
 
-            (*) _passphrase : Passphrase to unlock the wallet.
+            (*) passphrase : Passphrase to unlock the wallet.
 
-            ( ) _name       : Name to UPDATE.
+            ( ) name       : Name to UPDATE.
 
-            ( ) _data       : JSON object containing an array of DNS records (resource object).
+            ( ) data       : JSON object containing an array of DNS records (resource object).
                               See https://hsd-dev.org/api-docs/#resource-object for more information.
 
-            ( ) _sign       : Whether to sign the transaction. Default = True
+            ( ) sign       : Whether to sign the transaction. Default = True
 
-            ( ) _broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
+            ( ) broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
         """
 
-        sign = ''
-        broadcast = ''
+        _sign = ''
+        _broadcast = ''
 
-        if _sign == True:
-            sign = '1'
+        if sign == True:
+            _sign = '1'
         else:
-            sign = '0'
+            _sign = '0'
 
-        if _broadcast == True:
-            broadcast = '1'
+        if broadcast == True:
+            _broadcast = '1'
         else:
-            broadcast = '0'
+            _broadcast = '0'
         
-        endpoint = '/wallet/' + _id + '/update'
+        endpoint = '/wallet/' + id + '/update'
 
-        _message = '{ "passphrase":"' + _passphrase + '", "name":"' + _name + '", "broadcast":' + broadcast + ', "sign":' + sign + ', "data":' + _data + ' }'
+        message = '{ "passphrase":"' + passphrase + '", "name":"' + name + '", "broadcast":' + str(_broadcast) + ', "sign":' + str(_sign) + ', "data":' + data + ' }'
         
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to UPDATE resource data for '" + _name + "'}"
+            response['error'] = "{'message': 'Failed to UPDATE resource data for '" + name + "'}"
         return response
-    ### END METHOD ################################### sendUPDATE(self, _id:str, _passphrase:str, _name:str, _data:str, _sign:bool=True, _broadcast:bool=True)
+    ### END METHOD ################################### sendUPDATE(self, id:str, passphrase:str, name:str, data:str, sign:bool=True, broadcast:bool=True)
 
-    def sendRENEW(self, _id:str, _passphrase:str, _name:str, _sign:bool=True, _broadcast:bool=True):
+    def sendRENEW(self, id:str, passphrase:str, name:str, sign:bool=True, broadcast:bool=True):
         """
         DESCRIPTION:
 
@@ -4031,43 +4031,43 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id         : Wallet ID.
+            (*) id         : Wallet ID.
 
-            (*) _passphrase : Passphrase to unlock the wallet.
+            (*) passphrase : Passphrase to unlock the wallet.
 
-            ( ) _name       : Name to RENEW.
+            ( ) name       : Name to RENEW.
 
-            ( ) _sign       : Whether to sign the transaction. Default = True
+            ( ) sign       : Whether to sign the transaction. Default = True
 
-            ( ) _broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
+            ( ) broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
         """
 
-        sign = ''
-        broadcast = ''
+        _sign = ''
+        _broadcast = ''
 
-        if _sign == True:
-            sign = '1'
+        if sign == True:
+            _sign = '1'
         else:
-            sign = '0'
+            _sign = '0'
 
-        if _broadcast == True:
-            broadcast = '1'
+        if broadcast == True:
+            _broadcast = '1'
         else:
-            broadcast = '0'
+            _broadcast = '0'
         
-        endpoint = '/wallet/' + _id + '/renewal'
+        endpoint = '/wallet/' + id + '/renewal'
 
-        _message = '{ "passphrase":"' + _passphrase + '", "name":"' + _name + '", "broadcast":' + broadcast + ', "sign":' + sign + ' }'
+        message = '{ "passphrase":"' + passphrase + '", "name":"' + name + '", "broadcast":' + str(_broadcast) + ', "sign":' + str(_sign) + ' }'
         
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to RENEW domain '" + _name + "'}"
+            response['error'] = "{'message': 'Failed to RENEW domain '" + name + "'}"
         return response
-    ### END METHOD ################################### sendRENEW(self, _id:str, _passphrase:str, _name:str, _sign:bool=True, _broadcast:bool=True)
+    ### END METHOD ################################### sendRENEW(self, id:str, passphrase:str, name:str, sign:bool=True, broadcast:bool=True)
 
-    def sendTRANSFER(self, _id:str, _passphrase:str, _name:str, _address:str, _sign:bool=True, _broadcast:bool=True):
+    def sendTRANSFER(self, id:str, passphrase:str, name:str, address:str, sign:bool=True, broadcast:bool=True):
         """
         DESCRIPTION:
 
@@ -4077,45 +4077,45 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id         : Wallet ID.
+            (*) id         : Wallet ID.
 
-            (*) _passphrase : Passphrase to unlock the wallet.
+            (*) passphrase : Passphrase to unlock the wallet.
 
-            ( ) _name       : Name to TRANSFER.
+            ( ) name       : Name to TRANSFER.
 
-            ( ) _address    : Address to transfer name ownership to.
+            ( ) address    : Address to transfer name ownership to.
 
-            ( ) _sign       : Whether to sign the transaction. Default = True
+            ( ) sign       : Whether to sign the transaction. Default = True
 
-            ( ) _broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
+            ( ) broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
         """
 
-        sign = ''
-        broadcast = ''
+        _sign = ''
+        _broadcast = ''
 
-        if _sign == True:
-            sign = '1'
+        if sign == True:
+            _sign = '1'
         else:
-            sign = '0'
+            _sign = '0'
 
-        if _broadcast == True:
-            broadcast = '1'
+        if broadcast == True:
+            _broadcast = '1'
         else:
-            broadcast = '0'
+            _broadcast = '0'
         
-        endpoint = '/wallet/' + _id + '/transfer'
+        endpoint = '/wallet/' + id + '/transfer'
 
-        _message = '{ "passphrase":"' + _passphrase + '", "name":"' + _name + '", "broadcast":' + broadcast + ', "sign":' + sign + ', "address": "' + _address + '" }'
+        message = '{ "passphrase":"' + passphrase + '", "name":"' + name + '", "broadcast":' + str(_broadcast) + ', "sign":' + str(_sign) + ', "address": "' + address + '" }'
         
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to TRANSFER domain '" + _name + "'}"
+            response['error'] = "{'message': 'Failed to TRANSFER domain '" + name + "'}"
         return response
-    ### END METHOD ################################### sendTRANSFER(self, _id:str, _passphrase:str, _name:str, _address:str, _sign:bool=True, _broadcast:bool=True)
+    ### END METHOD ################################### sendTRANSFER(self, id:str, passphrase:str, name:str, address:str, sign:bool=True, broadcast:bool=True)
 
-    def cancelTRANSFER(self, _id:str, _passphrase:str, _name:str, _sign:bool=True, _broadcast:bool=True):
+    def cancelTRANSFER(self, id:str, passphrase:str, name:str, sign:bool=True, broadcast:bool=True):
         """
         DESCRIPTION:
 
@@ -4129,43 +4129,43 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id         : Wallet ID.
+            (*) id         : Wallet ID.
 
-            (*) _passphrase : Passphrase to unlock the wallet.
+            (*) passphrase : Passphrase to unlock the wallet.
 
-            (*) _name       : Name in transferred state to cancel transfer for.
+            (*) name       : Name in transferred state to cancel transfer for.
 
-            ( ) _sign       : Whether to sign the transaction. Default = True
+            ( ) sign       : Whether to sign the transaction. Default = True
 
-            ( ) _broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
+            ( ) broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
         """
 
-        sign = ''
-        broadcast = ''
+        _sign = ''
+        _broadcast = ''
 
-        if _sign == True:
-            sign = '1'
+        if sign == True:
+            _sign = '1'
         else:
-            sign = '0'
+            _sign = '0'
 
-        if _broadcast == True:
-            broadcast = '1'
+        if broadcast == True:
+            _broadcast = '1'
         else:
-            broadcast = '0'
+            _broadcast = '0'
         
-        endpoint = '/wallet/' + _id + '/cancel'
+        endpoint = '/wallet/' + id + '/cancel'
 
-        _message = '{ "passphrase":"' + _passphrase + '", "name":"' + _name + '", "broadcast":' + broadcast + ', "sign":' + sign + '" }'
+        message = '{ "passphrase":"' + passphrase + '", "name":"' + name + '", "broadcast":' + str(_broadcast) + ', "sign":' + str(_sign) + '" }'
         
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to cancel transfer of '" + _name + "'}"
+            response['error'] = "{'message': 'Failed to cancel transfer of '" + name + "'}"
         return response
-    ### END METHOD ################################### cancelTRANSFER(self, _id:str, _passphrase:str, _name:str, _sign:bool=True, _broadcast:bool=True)
+    ### END METHOD ################################### cancelTRANSFER(self, id:str, passphrase:str, name:str, sign:bool=True, broadcast:bool=True)
 
-    def sendFINALIZE(self, _id:str, _passphrase:str, _name:str, _sign:bool=True, _broadcast:bool=True):
+    def sendFINALIZE(self, id:str, passphrase:str, name:str, sign:bool=True, broadcast:bool=True):
         """
         DESCRIPTION:
 
@@ -4175,43 +4175,43 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id         : Wallet ID.
+            (*) id         : Wallet ID.
 
-            (*) _passphrase : Passphrase to unlock the wallet.
+            (*) passphrase : Passphrase to unlock the wallet.
 
-            (*) _name       : Name in transferred state to finalize transfer for.
+            (*) name       : Name in transferred state to finalize transfer for.
 
-            ( ) _sign       : Whether to sign the transaction. Default = True
+            ( ) sign       : Whether to sign the transaction. Default = True
 
-            ( ) _broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
+            ( ) broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
         """
 
-        sign = ''
-        broadcast = ''
+        _sign = ''
+        _broadcast = ''
 
-        if _sign == True:
-            sign = '1'
+        if sign == True:
+            _sign = '1'
         else:
-            sign = '0'
+            _sign = '0'
 
-        if _broadcast == True:
-            broadcast = '1'
+        if broadcast == True:
+            _broadcast = '1'
         else:
-            broadcast = '0'
+            _broadcast = '0'
         
-        endpoint = '/wallet/' + _id + '/finalize'
+        endpoint = '/wallet/' + id + '/finalize'
 
-        _message = '{ "passphrase":"' + _passphrase + '", "name":"' + _name + '", "broadcast":' + broadcast + ', "sign":' + sign + '" }'
+        message = '{ "passphrase":"' + passphrase + '", "name":"' + name + '", "broadcast":' + str(_broadcast) + ', "sign":' + str(_sign) + '" }'
         
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to FINALIZE transfer of '" + _name + "'}"
+            response['error'] = "{'message': 'Failed to FINALIZE transfer of '" + name + "'}"
         return response
-    ### END METHOD ################################### sendFINALIZE(self, _id:str, _passphrase:str, _name:str, _sign:bool=True, _broadcast:bool=True)
+    ### END METHOD ################################### sendFINALIZE(self, id:str, passphrase:str, name:str, sign:bool=True, broadcast:bool=True)
 
-    def sendREVOKE(self, _id:str, _passphrase:str, _name:str, _sign:bool=True, _broadcast:bool=True):
+    def sendREVOKE(self, id:str, passphrase:str, name:str, sign:bool=True, broadcast:bool=True):
         """
         DESCRIPTION:
 
@@ -4228,41 +4228,41 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _id         : Wallet ID.
+            (*) id         : Wallet ID.
 
-            (*) _passphrase : Passphrase to unlock the wallet.
+            (*) passphrase : Passphrase to unlock the wallet.
 
-            (*) _name       : Name in transferred state to REVOKE transfer for.
+            (*) name       : Name in transferred state to REVOKE transfer for.
 
-            ( ) _sign       : Whether to sign the transaction. Default = True
+            ( ) sign       : Whether to sign the transaction. Default = True
 
-            ( ) _broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
+            ( ) broadcast  : Whether to broadcast the transaction (must sign if true). Default = True
         """
 
-        sign = ''
-        broadcast = ''
+        _sign = ''
+        _broadcast = ''
 
-        if _sign == True:
-            sign = '1'
+        if sign == True:
+            _sign = '1'
         else:
-            sign = '0'
+            _sign = '0'
 
-        if _broadcast == True:
-            broadcast = '1'
+        if broadcast == True:
+            _broadcast = '1'
         else:
-            broadcast = '0'
+            _broadcast = '0'
         
-        endpoint = '/wallet/' + _id + '/revoke'
+        endpoint = '/wallet/' + id + '/revoke'
 
-        _message = '{ "passphrase":"' + _passphrase + '", "name":"' + _name + '", "broadcast":' + broadcast + ', "sign":' + sign + '" }'
+        message = '{ "passphrase":"' + passphrase + '", "name":"' + name + '", "broadcast":' + str(_broadcast) + ', "sign":' + str(_sign) + '" }'
         
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'Failed to REVOKE transfer of '" + _name + "'}"
+            response['error'] = "{'message': 'Failed to REVOKE transfer of '" + name + "'}"
         return response
-    ### END METHOD ################################### sendREVOKE(self, _id:str, _passphrase:str, _name:str, _sign:bool=True, _broadcast:bool=True)
+    ### END METHOD ################################### sendREVOKE(self, id:str, passphrase:str, name:str, sign:bool=True, broadcast:bool=True)
 
     def rpc_getNames(self):
         """
@@ -4276,16 +4276,16 @@ class hsw:
         """
         
         endpoint = '/'
-        _message = '{ "method": "getnames", "params": [] }'
+        message = '{ "method": "getnames", "params": [] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get domain names in wallet'}"
         return response
     ### END METHOD ################################### rpc_getNames(self)
 
-    def rpc_getAuctionInfo(self, _name:str):
+    def rpc_getAuctionInfo(self, name:str):
         """
         DESCRIPTION:
 
@@ -4294,18 +4294,18 @@ class hsw:
         PARAMS:
             (*) Denotes required argument
         
-            (*) _name : Name to get auction information for.
+            (*) name : Name to get auction information for.
         """
         
         endpoint = '/'
-        _message = '{ "method": "getauctioninfo", "params": [ "' + _name + '" ] }'
+        message = '{ "method": "getauctioninfo", "params": [ "' + name + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to find auction information for `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to find auction information for `" + name + "`'}"
         return response
-    ### END METHOD ################################### rpc_getAuctionInfo(self, _name:str)
+    ### END METHOD ################################### rpc_getAuctionInfo(self, name:str)
 
     def rpc_getBIDS(self):
         """
@@ -4319,9 +4319,9 @@ class hsw:
         """
         
         endpoint = '/'
-        _message = '{ "method": "getbids", "params": [] }'
+        message = '{ "method": "getbids", "params": [] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to find BIDs places with your wallet'}"
@@ -4340,16 +4340,16 @@ class hsw:
         """
         
         endpoint = '/'
-        _message = '{ "method": "getreveals", "params": [] }'
+        message = '{ "method": "getreveals", "params": [] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to find any REVEAL transactions sent by your wallet'}"
         return response
     ### END METHOD ################################### rpc_getREVEALS(self)
 
-    def rpc_sendOPEN(self, _name:str):
+    def rpc_sendOPEN(self, name:str):
         """
         DESCRIPTION:
 
@@ -4359,20 +4359,20 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name : Domain name to send `OPEN` transaction for.
+            (*) name : Domain name to send `OPEN` transaction for.
         """
         
         endpoint = '/'
-        _message = '{ "method": "sendopen", "params": [ "' + _name + '" ] }'
+        message = '{ "method": "sendopen", "params": [ "' + name + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to start OPEN phase of auction for the domain `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to start OPEN phase of auction for the domain `" + name + "`'}"
         return response
-    ### END METHOD ################################### rpc_sendOPEN(self, _name:str)
+    ### END METHOD ################################### rpc_sendOPEN(self, name:str)
 
-    def rpc_sendBID(self, _name:str, _bidAmount:float, _lockupBlind:float, _account:str='default'):
+    def rpc_sendBID(self, name:str, bid_amount:float, lockup_blind:float, account:str='default'):
         """
         DESCRIPTION:
 
@@ -4387,26 +4387,26 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name        : Domain name to to bid on.
+            (*) name        : Domain name to to bid on.
 
-            (*) _bidAmount   : Amount to bid (in HNS).
+            (*) bid_amount   : Amount to bid (in HNS).
 
-            (*) _lockupBlind : Amount to lock up to blind your bid (must be greater than bid amount).
+            (*) lockup_blind : Amount to lock up to blind your bid (must be greater than bid amount).
 
-            ( ) _account     : Wallet account to use. Default = 'default'
+            ( ) account     : Wallet account to use. Default = 'default'
         """
         
         endpoint = '/'
-        _message = '{ "method": "sendbid", "params": [ "' + _name + '", ' + str(_bidAmount) + ', ' + str(_lockupBlind) + ', "' + _account + '" ] }'
+        message = '{ "method": "sendbid", "params": [ "' + name + '", ' + str(bid_amount) + ', ' + str(lockup_blind) + ', "' + account + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to to place BID for the domain `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to to place BID for the domain `" + name + "`'}"
         return response
-    ### END METHOD ################################### rpc_sendBID(self, _name:str, _bidAmount:float, _lockupBlind:float, _account:str='default')
+    ### END METHOD ################################### rpc_sendBID(self, name:str, bid_amount:float, lockup_blind:float, account:str='default')
 
-    def rpc_sendREVEAL(self, _name:str=''):
+    def rpc_sendREVEAL(self, name:str=''):
         """
         DESCRIPTION:
 
@@ -4419,24 +4419,24 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _name : Domain name to `REVEAL` bid for (`null` for all names).
+            ( ) name : Domain name to `REVEAL` bid for (`null` for all names).
         """
         
         endpoint = '/'
-        _message = '{ "method": "sendreveal", "params": [ "' + _name + '" ] }'
+        message = '{ "method": "sendreveal", "params": [ "' + name + '" ] }'
 
-        if _name == '':
-            _name = '[ALL]'
+        if name == '':
+            name = '[ALL]'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to start REVEAL phase of auction for the domain `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to start REVEAL phase of auction for the domain `" + name + "`'}"
         return response
-    ### END METHOD ################################### rpc_sendREVEAL(self, _name:str='')
+    ### END METHOD ################################### rpc_sendREVEAL(self, name:str='')
 
-    def rpc_sendREDEEM(self, _name:str=''):
+    def rpc_sendREDEEM(self, name:str=''):
         """
         DESCRIPTION:
 
@@ -4448,24 +4448,24 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _name : Domain name to `REDEEM` bid for (`null` for all names).
+            ( ) name : Domain name to `REDEEM` bid for (`null` for all names).
         """
         
         endpoint = '/'
-        _message = '{ "method": "sendredeem", "params": [ "' + _name + '" ] }'
+        message = '{ "method": "sendredeem", "params": [ "' + name + '" ] }'
 
-        if _name == '':
-            _name = '[ALL]'
+        if name == '':
+            name = '[ALL]'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to start REDEEM the domain `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to start REDEEM the domain `" + name + "`'}"
         return response
-    ### END METHOD ################################### rpc_sendREDEEM(self, _name:str='')
+    ### END METHOD ################################### rpc_sendREDEEM(self, name:str='')
 
-    def rpc_sendUPDATE(self, _name:str, _data:json):
+    def rpc_sendUPDATE(self, name:str, data:json):
         """
         DESCRIPTION:
 
@@ -4479,24 +4479,24 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name       : Domain name to `UPDATE`.
+            (*) name       : Domain name to `UPDATE`.
 
-            (*) _data       : JSON-encoded resource object.
+            (*) data       : JSON-encoded resource object.
                               See https://hsd-dev.org/api-docs/#resource-object for more information.
         """
 
-        data = json.dumps(_data)
+        data = json.dumps(data)
         endpoint = '/'
-        _message = '{ "method": "sendupdate", "params": [ "' + _name + '", ' + data + ' ] }'
+        message = '{ "method": "sendupdate", "params": [ "' + name + '", ' + data + ' ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to UPDATE the domain `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to UPDATE the domain `" + name + "`'}"
         return response
-    ### END METHOD ################################### rpc_sendUPDATE(self, _name:str, _data:str)
+    ### END METHOD ################################### rpc_sendUPDATE(self, name:str, data:str)
 
-    def rpc_sendRENEWAL(self, _name:str):
+    def rpc_sendRENEWAL(self, name:str):
         """
         DESCRIPTION:
 
@@ -4510,21 +4510,21 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name : Domain name to `RENEW` ownership of.
+            (*) name : Domain name to `RENEW` ownership of.
         """
         
         endpoint = '/'
-        _message = '{ "method": "sendrenewal", "params": [ "' + _name + '" ] }'
+        message = '{ "method": "sendrenewal", "params": [ "' + name + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to RENEW the domain `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to RENEW the domain `" + name + "`'}"
         return response
-    ### END METHOD ################################### rpc_sendRENEWAL(self, _name:str)
+    ### END METHOD ################################### rpc_sendRENEWAL(self, name:str)
 
-    def rpc_sendTRANSFER(self, _name:str, _address:str):
+    def rpc_sendTRANSFER(self, name:str, address:str):
         """
         DESCRIPTION:
 
@@ -4538,23 +4538,23 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name    : Domain name to `TRANSFER`.
+            (*) name    : Domain name to `TRANSFER`.
 
-            (*) _address : Address to `TRANSFER` name ownership to.
+            (*) address : Address to `TRANSFER` name ownership to.
         """
         
         endpoint = '/'
-        _message = '{ "method": "sendtransfer", "params": [ "' + _name + '", "' + _address + '" ] }'
+        message = '{ "method": "sendtransfer", "params": [ "' + name + '", "' + address + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to TRANSFER the domain `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to TRANSFER the domain `" + name + "`'}"
         return response
-    ### END METHOD ################################### rpc_sendTRANSFER(self, _name:str, _address:str)
+    ### END METHOD ################################### rpc_sendTRANSFER(self, name:str, address:str)
 
-    def rpc_sendFINALIZE(self, _name:str):
+    def rpc_sendFINALIZE(self, name:str):
         """
         DESCRIPTION:
 
@@ -4566,21 +4566,21 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name : Domain name to `FINALIZE`.
+            (*) name : Domain name to `FINALIZE`.
         """
         
         endpoint = '/'
-        _message = '{ "method": "sendfinalize", "params": [ "' + _name + '" ] }'
+        message = '{ "method": "sendfinalize", "params": [ "' + name + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to FINALIZE the domain `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to FINALIZE the domain `" + name + "`'}"
         return response
-    ### END METHOD ################################### rpc_sendFINALIZE(self, _name:str)
+    ### END METHOD ################################### rpc_sendFINALIZE(self, name:str)
 
-    def rpc_sendCANCEL(self, _name:str):
+    def rpc_sendCANCEL(self, name:str):
         """
         DESCRIPTION:
 
@@ -4596,21 +4596,21 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name : Domain name to `CANCEL` the in-progress transfer of.
+            (*) name : Domain name to `CANCEL` the in-progress transfer of.
         """
         
         endpoint = '/'
-        _message = '{ "method": "sendcancel", "params": [ "' + _name + '" ] }'
+        message = '{ "method": "sendcancel", "params": [ "' + name + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to CANCEL the transfer of `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to CANCEL the transfer of `" + name + "`'}"
         return response
-    ### END METHOD ################################### rpc_sendCANCEL(self, _name:str)
+    ### END METHOD ################################### rpc_sendCANCEL(self, name:str)
 
-    def rpc_sendREVOKE(self, _name:str):
+    def rpc_sendREVOKE(self, name:str):
         """
         DESCRIPTION:
 
@@ -4626,21 +4626,21 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name : Domain name to `REVOKE` the in-progress transfer of.
+            (*) name : Domain name to `REVOKE` the in-progress transfer of.
         """
         
         endpoint = '/'
-        _message = '{ "method": "sendrevoke", "params": [ "' + _name + '" ] }'
+        message = '{ "method": "sendrevoke", "params": [ "' + name + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to REVOKE the in-progress transfer of `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to REVOKE the in-progress transfer of `" + name + "`'}"
         return response
-    ### END METHOD ################################### rpc_sendREVOKE(self, _name:str)
+    ### END METHOD ################################### rpc_sendREVOKE(self, name:str)
 
-    def rpc_importNONCE(self, _name:str, _address:str, _bidValue:float):
+    def rpc_importNONCE(self, name:str, address:str, _bidValue:float):
         """
         DESCRIPTION:
 
@@ -4654,25 +4654,25 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name     : Domain name bid on.
+            (*) name     : Domain name bid on.
 
-            (*) _address  : Address submitting the bid.
+            (*) address  : Address submitting the bid.
 
             (*) _bidValue : Value of the bid (in HNS).
         """
         
         endpoint = '/'
-        _message = '{ "method": "importnonce", "params": [ "' + _name + '", "' + _address + '", ' + str(_bidValue) + ' ] }'
+        message = '{ "method": "importnonce", "params": [ "' + name + '", "' + address + '", ' + str(_bidValue) + ' ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to regenerate NONCE for `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to regenerate NONCE for `" + name + "`'}"
         return response
-    ### END METHOD ################################### rpc_importNONCE(self, _name:str, _address:str, _bidValue:float)
+    ### END METHOD ################################### rpc_importNONCE(self, name:str, address:str, _bidValue:float)
 
-    def rpc_createOPEN(self, _name:str, _force:bool, _account:str):
+    def rpc_createOPEN(self, name:str, force:bool, account:str):
         """
         DESCRIPTION:
 
@@ -4682,32 +4682,32 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name    : Domain name to `OPEN` bidding on.
+            (*) name    : Domain name to `OPEN` bidding on.
 
-            (*) _force   : Currently ignored but required if additional parameters are passed.
+            (*) force   : Currently ignored but required if additional parameters are passed.
 
-            (*) _account : Account to use.
+            (*) account : Account to use.
         """
         
-        force = ''
+        _force = ''
 
-        if _force == True:
-            force = '1'
+        if force == True:
+            _force = '1'
         else:
-            force = '0'
+            _force = '0'
 
         endpoint = '/'
-        _message = '{ "method": "createopen", "params": [ "' + _name + '", ' + force + ', "' + _account + '" ] }'
+        message = '{ "method": "createopen", "params": [ "' + name + '", ' + str(_force) + ', "' + account + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to unsigned OPEN transaction for `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to unsigned OPEN transaction for `" + name + "`'}"
         return response
-    ### END METHOD ################################### rpc_createOPEN(self, _name:str, _force:bool, _account:str)
+    ### END METHOD ################################### rpc_createOPEN(self, name:str, force:bool, account:str)
 
-    def rpc_createBID(self, _name:str, _bidAmount:float, _lockupBlind:float, _account:str):
+    def rpc_createBID(self, name:str, bid_amount:float, lockup_blind:float, account:str):
         """
         DESCRIPTION:
 
@@ -4721,27 +4721,27 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name        : Domain name bid on.
+            (*) name        : Domain name bid on.
 
-            (*) _bidAmount   : Amount to bid (in HNS).
+            (*) bid_amount   : Amount to bid (in HNS).
 
-            (*) _lockupBlind : Amount to lock up to blind your bid, must be greater than `_bidAmount`).
+            (*) lockup_blind : Amount to lock up to blind your bid, must be greater than `bid_amount`).
 
-            (*) _address     : Address submitting the bid.
+            (*) address     : Address submitting the bid.
         """
         
         endpoint = '/'
-        _message = '{ "method": "createbid", "params": [ "' + _name + '", ' + str(_bidAmount) + ', ' + str(_lockupBlind) + ', "' + _account + '" ] }'
+        message = '{ "method": "createbid", "params": [ "' + name + '", ' + str(bid_amount) + ', ' + str(lockup_blind) + ', "' + account + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to create BID for `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to create BID for `" + name + "`'}"
         return response
-    ### END METHOD ################################### rpc_createBID(self, _name:str, _bidAmount:float, _lockupBlind:float, _account:str)
+    ### END METHOD ################################### rpc_createBID(self, name:str, bid_amount:float, lockup_blind:float, account:str)
 
-    def rpc_createREVEAL(self, _name:str='', _account:str=''):
+    def rpc_createREVEAL(self, name:str='', account:str=''):
         """
         DESCRIPTION:
 
@@ -4754,26 +4754,26 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _name    : Domain name to `REVEAL` bid for (`null` for all names).
+            ( ) name    : Domain name to `REVEAL` bid for (`null` for all names).
 
-            ( ) _account : Account to use.
+            ( ) account : Account to use.
         """
         
         endpoint = '/'
-        _message = '{ "method": "createreveal", "params": [ "' + _name + '", "' + _account + '" ] }'
+        message = '{ "method": "createreveal", "params": [ "' + name + '", "' + account + '" ] }'
 
-        if _name == '':
-            _name = '[ALL]'
+        if name == '':
+            name = '[ALL]'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to create a REVEAL transaction for domain `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to create a REVEAL transaction for domain `" + name + "`'}"
         return response
-    ### END METHOD ################################### rpc_createREVEAL(self, _name:str='', _account:str='')
+    ### END METHOD ################################### rpc_createREVEAL(self, name:str='', account:str='')
 
-    def rpc_createREDEEM(self, _name:str='', _account:str=''):
+    def rpc_createREDEEM(self, name:str='', account:str=''):
         """
         DESCRIPTION:
 
@@ -4786,26 +4786,26 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _name    : Domain name to `REDEEM` a losing bid for (null for all names).
+            ( ) name    : Domain name to `REDEEM` a losing bid for (null for all names).
 
-            ( ) _account : Account to use.
+            ( ) account : Account to use.
         """
         
         endpoint = '/'
-        _message = '{ "method": "createredeem", "params": [ "' + _name + '", "' + _account + '" ] }'
+        message = '{ "method": "createredeem", "params": [ "' + name + '", "' + account + '" ] }'
 
-        if _name == '':
-            _name = '[ALL]'
+        if name == '':
+            name = '[ALL]'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to create a REDEEM transaction for domain `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to create a REDEEM transaction for domain `" + name + "`'}"
         return response
-    ### END METHOD ################################### rpc_createREDEEM(self, _name:str='', _account:str='')
+    ### END METHOD ################################### rpc_createREDEEM(self, name:str='', account:str='')
 
-    def rpc_createUPDATE(self, _name:str, _data:json, _account:str=''):
+    def rpc_createUPDATE(self, name:str, data:json, account:str=''):
         """
         DESCRIPTION:
 
@@ -4815,30 +4815,30 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name    : Domain name to `UPDATE` the data for.
+            (*) name    : Domain name to `UPDATE` the data for.
 
-            (*) _data    : JSON-encoded resource object.
+            (*) data    : JSON-encoded resource object.
                            See https://hsd-dev.org/api-docs/#resource-object for more information.
 
-            ( ) _account : Account to use.
+            ( ) account : Account to use.
         """
         
-        data = json.dumps(_data)
+        data = json.dumps(data)
         endpoint = '/'
-        _message = '{ "method": "createupdate", "params": [ "' + _name + '", ' + data + ', "' + _account + '" ] }'
+        message = '{ "method": "createupdate", "params": [ "' + name + '", ' + data + ', "' + account + '" ] }'
 
-        if _name == '':
-            _name = '[ALL]'
+        if name == '':
+            name = '[ALL]'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to create UPDATE for `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to create UPDATE for `" + name + "`'}"
         return response
-    ### END METHOD ################################### rpc_createUPDATE(self, _name:str, _data:json, _account:str='')
+    ### END METHOD ################################### rpc_createUPDATE(self, name:str, data:json, account:str='')
 
-    def rpc_createRENEWAL(self, _name:str, _account:str=''):
+    def rpc_createRENEWAL(self, name:str, account:str=''):
         """
         DESCRIPTION:
 
@@ -4848,23 +4848,23 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name    : Domain name to `RENEW` ownership of.
+            (*) name    : Domain name to `RENEW` ownership of.
 
-            ( ) _account : Account to use.
+            ( ) account : Account to use.
         """
         
         endpoint = '/'
-        _message = '{ "method": "createrenewal", "params": [ "' + _name + '", "' + _account + '" ] }'
+        message = '{ "method": "createrenewal", "params": [ "' + name + '", "' + account + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to create RENEW transaction for domain `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to create RENEW transaction for domain `" + name + "`'}"
         return response
-    ### END METHOD ################################### rpc_createRENEWAL(self, _name:str, _account:str='')
+    ### END METHOD ################################### rpc_createRENEWAL(self, name:str, account:str='')
 
-    def rpc_createTRANSFER(self, _name:str, _address:str, _account:str=''):
+    def rpc_createTRANSFER(self, name:str, address:str, account:str=''):
         """
         DESCRIPTION:
 
@@ -4874,25 +4874,25 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name    : Domain name to `TRANSFER` ownership of.
+            (*) name    : Domain name to `TRANSFER` ownership of.
 
-            (*) _address : Address to transfer name ownership to.
+            (*) address : Address to transfer name ownership to.
 
-            ( ) _account : Account to use.
+            ( ) account : Account to use.
         """
         
         endpoint = '/'
-        _message = '{ "method": "createtransfer", "params": [ "' + _name + '", "' + _address + '", "' + _account + '" ] }'
+        message = '{ "method": "createtransfer", "params": [ "' + name + '", "' + address + '", "' + account + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to create TRANSFER transaction for domain `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to create TRANSFER transaction for domain `" + name + "`'}"
         return response
-    ### END METHOD ################################### rpc_createTRANSFER(self, _name:str, _address:str, _account:str='')
+    ### END METHOD ################################### rpc_createTRANSFER(self, name:str, address:str, account:str='')
 
-    def rpc_createFINALIZE(self, _name:str, _account:str=''):
+    def rpc_createFINALIZE(self, name:str, account:str=''):
         """
         DESCRIPTION:
 
@@ -4902,23 +4902,23 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name    : Domain name to `FINALIZE`.
+            (*) name    : Domain name to `FINALIZE`.
 
-            ( ) _account : Account to use.
+            ( ) account : Account to use.
         """
         
         endpoint = '/'
-        _message = '{ "method": "createfinalize", "params": [ "' + _name + '", "' + _account + '" ] }'
+        message = '{ "method": "createfinalize", "params": [ "' + name + '", "' + account + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to create a FINALIZE transaction for domain `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to create a FINALIZE transaction for domain `" + name + "`'}"
         return response
-    ### END METHOD ################################### rpc_createFINALIZE(self, _name:str, _account:str='')
+    ### END METHOD ################################### rpc_createFINALIZE(self, name:str, account:str='')
 
-    def rpc_createCANCEL(self, _name:str, _account:str=''):
+    def rpc_createCANCEL(self, name:str, account:str=''):
         """
         DESCRIPTION:
 
@@ -4928,23 +4928,23 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name    : Domain name to `CANCEL` the in-progress transfer of.
+            (*) name    : Domain name to `CANCEL` the in-progress transfer of.
 
-            ( ) _account : Account to use.
+            ( ) account : Account to use.
         """
         
         endpoint = '/'
-        _message = '{ "method": "createcancel", "params": [ "' + _name + '", "' + _account + '" ] }'
+        message = '{ "method": "createcancel", "params": [ "' + name + '", "' + account + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to create a CANCEL transaction for domain `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to create a CANCEL transaction for domain `" + name + "`'}"
         return response
-    ### END METHOD ################################### rpc_createCANCEL(self, _name:str, _account:str='')
+    ### END METHOD ################################### rpc_createCANCEL(self, name:str, account:str='')
 
-    def rpc_createREVOKE(self, _name:str, _account:str=''):
+    def rpc_createREVOKE(self, name:str, account:str=''):
         """
         DESCRIPTION:
 
@@ -4954,28 +4954,28 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name    : Domain name to `REVOKE` the in-progress transfer of.
+            (*) name    : Domain name to `REVOKE` the in-progress transfer of.
 
-            ( ) _account : Account to use.
+            ( ) account : Account to use.
         """
         
         endpoint = '/'
-        _message = '{ "method": "createrevoke", "params": [ "' + _name + '", "' + _account + '" ] }'
+        message = '{ "method": "createrevoke", "params": [ "' + name + '", "' + account + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to create a REVOKE transaction for domain `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to create a REVOKE transaction for domain `" + name + "`'}"
         return response
-    ### END METHOD ################################### rpc_createREVOKE(self, _name:str, _account:str='')
+    ### END METHOD ################################### rpc_createREVOKE(self, name:str, account:str='')
 
-    def rpc_importName(self, _name:str, _rescanHeight:int=None):
+    def rpc_importName(self, name:str, rescan_height:int=None):
         """
         DESCRIPTION:
 
             Add a name to the wallet "watchlist" without sending a transaction. Optionally
-            rescan the blockchain to recover `OPEN` and `BID`s for the name. This action will
+            _rescan the blockchain to recover `OPEN` and `BID`s for the name. This action will
             fail if the name already exists in the wallet.
 
             The purpose of this action is to "subscribe" to `BID`s for a name auction before
@@ -4983,7 +4983,7 @@ class hsw:
             been placed on a name they are interested in bidding on themselves, they may
             execute this RPC call and include a `height` parameter, which should be any block
             before the OPEN for the name was confirmed. The `OPEN` transaction must be included
-            in the rescan or the wallet will not track `BID`s on the name.
+            in the _rescan or the wallet will not track `BID`s on the name.
 
             Once the auction is rescanned, `rpc_getBIDS` can be used to return all current BIDs
             on a name, even if the wallet has not placed any BIDs itself.
@@ -4992,27 +4992,27 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name         : Domain name to import.
+            (*) name         : Domain name to import.
 
-            ( ) _rescanHeight : If present, perform a wallet rescan from specified height.
+            ( ) rescan_height : If present, perform a wallet _rescan from specified height.
         """
         
         endpoint = '/'
         
-        if _rescanHeight == None:
-            _message = '{ "method": "importname", "params": [ "' + _name + '" ] }'
+        if rescan_height == None:
+            message = '{ "method": "importname", "params": [ "' + name + '" ] }'
         else:
-            _message = '{ "method": "importname", "params": [ "' + _name + '", ' + str(_rescanHeight) + ' ] }'
+            message = '{ "method": "importname", "params": [ "' + name + '", ' + str(rescan_height) + ' ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to import domain `" + _name + "`'}"
+            response['error'] = "{'message': 'RPC failed to import domain `" + name + "`'}"
         return response
-    ### END METHOD ################################### rpc_importName(self, _name:str, _rescanHeight:int=None)
+    ### END METHOD ################################### rpc_importName(self, name:str, rescan_height:int=None)
 
-    def rpc_selectWallet(self, _walletID:str):
+    def rpc_selectWallet(self, wallet_id:str):
         """
         DESCRIPTION:
 
@@ -5022,19 +5022,19 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _walletID : ID of selected wallet.
+            (*) wallet_id : ID of selected wallet.
         """
         
         endpoint = '/'
-        _message = '{ "method": "selectwallet", "params": [ "' + _walletID + '" ] }'
+        message = '{ "method": "selectwallet", "params": [ "' + wallet_id + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to select wallet named `" + _walletID + "`'}"
+            response['error'] = "{'message': 'RPC failed to select wallet named `" + wallet_id + "`'}"
         return response
-    ### END METHOD ################################### rpc_selectWallet(self, _walletID:str)
+    ### END METHOD ################################### rpc_selectWallet(self, wallet_id:str)
 
     def rpc_getWalletInfo(self):
         """
@@ -5048,17 +5048,17 @@ class hsw:
         """
         
         endpoint = '/'
-        _message = '{ "method": "getwalletinfo" }'
+        message = '{ "method": "getwalletinfo" }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get wallet info'}"
         return response
     ### END METHOD ################################### rpc_getWalletInfo(self)
 
-    def rpc_fundRawTransaction(self, _txHex:str, _feeRate:float=None, _changeAddress:str=None):
+    def rpc_fundRawTransaction(self, tx_hex:str, fee_rate:float=None, change_address:str=None):
         """
         DESCRIPTION:
 
@@ -5068,37 +5068,37 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _txHex         : Raw transaction (hex).
+            (*) tx_hex         : Raw transaction (hex).
 
-            ( ) _feeRate       : Sets fee rate for transaction in HNS/kb.
+            ( ) fee_rate       : Sets fee rate for transaction in HNS/kb.
 
-            ( ) _changeAddress : Handshake address for change output of transaction.
+            ( ) change_address : Handshake address for change output of transaction.
         """
         
         endpoint = '/'
 
         options = {}
         
-        if _feeRate != None:
-            options['feeRate'] = _feeRate
+        if fee_rate != None:
+            options['feeRate'] = fee_rate
 
-        if _changeAddress != None:
-            options['changeAddress'] = _changeAddress
+        if change_address != None:
+            options['changeAddress'] = change_address
 
 
-        if _feeRate == None and _changeAddress == None:
-            _message = '{ "method": "fundrawtransaction", "params": [ "' + _txHex + '" ] }'
+        if fee_rate == None and change_address == None:
+            message = '{ "method": "fundrawtransaction", "params": [ "' + tx_hex + '" ] }'
         else:
-            #options = '{"changeAddress": "' +  _changeAddress + '", "feeRate": ' + str(_feeRate) + '}'
-            _message = '{ "method": "fundrawtransaction", "params": [ "' + _txHex + '", ' + json.dumps(options) + '] }'
+            #options = '{"changeAddress": "' +  change_address + '", "feeRate": ' + str(fee_rate) + '}'
+            message = '{ "method": "fundrawtransaction", "params": [ "' + tx_hex + '", ' + json.dumps(options) + '] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to fund raw transaction'}"
         return response
-    ### END METHOD ################################### rpc_fundRawTransaction(self, _txHex:str, _feeRate:float=None, _changeAddress:str=None)
+    ### END METHOD ################################### rpc_fundRawTransaction(self, tx_hex:str, fee_rate:float=None, change_address:str=None)
 
     def rpc_resendWalletTransactions(self):
         """
@@ -5112,17 +5112,17 @@ class hsw:
         """
         
         endpoint = '/'
-        _message = '{ "method": "resendwallettransactions" }'
+        message = '{ "method": "resendwallettransactions" }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed resend wallet transactions'}"
         return response
     ### END METHOD ################################### rpc_resendWalletTransactions(self)
 
-    def rpc_abandonTransaction(self, _txID:str):
+    def rpc_abandonTransaction(self, tx_id:str):
         """
         DESCRIPTION:
 
@@ -5132,21 +5132,21 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _txID : Transaction ID to remove.
+            (*) tx_id : Transaction ID to remove.
         """
         
         endpoint = '/'
-        _message = '{ "method": "abandontransaction", "params": [ "' + _txID + '" ] }'
+        message = '{ "method": "abandontransaction", "params": [ "' + tx_id + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to abandon transaction'}"
         return response
-    ### END METHOD ################################### rpc_abandonTransaction(self, _txID:str)
+    ### END METHOD ################################### rpc_abandonTransaction(self, tx_id:str)
 
-    def rpc_backupWallet(self, _path:str):
+    def rpc_backupWallet(self, path:str):
         """
         DESCRIPTION:
 
@@ -5156,21 +5156,21 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _path : Absolute path (including directories and filename) to write backup file.
+            (*) path : Absolute path (including directories and filename) to write backup file.
         """
         
         endpoint = '/'
-        _message = '{ "method": "backupwallet", "params": [ "' + _path + '" ] }'
+        message = '{ "method": "backupwallet", "params": [ "' + path + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed backup wallet'}"
         return response
-    ### END METHOD ################################### rpc_backupWallet(self, _path:str)
+    ### END METHOD ################################### rpc_backupWallet(self, path:str)
 
-    def rpc_dumpPrivKey(self, _address:str):
+    def rpc_dumpPrivKey(self, address:str):
         """
         DESCRIPTION:
 
@@ -5181,21 +5181,21 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _address : Reveal the private key for this Handshake address.
+            (*) address : Reveal the private key for this Handshake address.
         """
         
         endpoint = '/'
-        _message = '{ "method": "dumpprivkey", "params": [ "' + _address + '" ] }'
+        message = '{ "method": "dumpprivkey", "params": [ "' + address + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to dump private keys'}"
         return response
-    ### END METHOD ################################### rpc_dumpPrivKey(self, _address:str)
+    ### END METHOD ################################### rpc_dumpPrivKey(self, address:str)
 
-    def rpc_dumpWallet(self, _path:str):
+    def rpc_dumpWallet(self, path:str):
         """
         DESCRIPTION:
 
@@ -5206,21 +5206,21 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _path : Absolute path (including directories and filename) to write backup file.
+            (*) path : Absolute path (including directories and filename) to write backup file.
         """
         
         endpoint = '/'
-        _message = '{ "method": "dumpwallet", "params": [ "' + _path + '" ] }'
+        message = '{ "method": "dumpwallet", "params": [ "' + path + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to dump wallet to `" + _path + "`'}"
+            response['error'] = "{'message': 'RPC failed to dump wallet to `" + path + "`'}"
         return response
-    ### END METHOD ################################### rpc_dumpWallet(self, _path:str)
+    ### END METHOD ################################### rpc_dumpWallet(self, path:str)
 
-    def rpc_encryptWallet(self, _passphrase:str):
+    def rpc_encryptWallet(self, passphrase:str):
         """
         DESCRIPTION:
 
@@ -5233,21 +5233,21 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _passphrase : Absolute path (including directories and filename) to write backup file.
+            (*) passphrase : Absolute path (including directories and filename) to write backup file.
         """
         
         endpoint = '/'
-        _message = '{ "method": "encryptwallet", "params": [ "' + _passphrase + '" ] }'
+        message = '{ "method": "encryptwallet", "params": [ "' + passphrase + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to encrypt wallet'}"
         return response
-    ### END METHOD ################################### rpc_encryptWallet(self, _passphrase:str)
+    ### END METHOD ################################### rpc_encryptWallet(self, passphrase:str)
 
-    def rpc_getAccountAddress(self, _account:str='default'):
+    def rpc_getAccountAddress(self, account:str='default'):
         """
         DESCRIPTION:
 
@@ -5260,21 +5260,21 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _account : Account to retrieve address from.
+            ( ) account : Account to retrieve address from.
         """
         
         endpoint = '/'
-        _message = '{ "method": "getaccountaddress", "params": [ "' + _account + '" ] }'
+        message = '{ "method": "getaccountaddress", "params": [ "' + account + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get account address for `" + _account + "`'}"
+            response['error'] = "{'message': 'RPC failed to get account address for `" + account + "`'}"
         return response
-    ### END METHOD ################################### rpc_getAccountAddress(self, _account:str)
+    ### END METHOD ################################### rpc_getAccountAddress(self, account:str)
 
-    def rpc_getAccount(self, _address:str):
+    def rpc_getAccount(self, address:str):
         """
         DESCRIPTION:
 
@@ -5284,21 +5284,21 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _address : Address to search for.
+            (*) address : Address to search for.
         """
         
         endpoint = '/'
-        _message = '{ "method": "getaccount", "params": [ "' + _address + '" ] }'
+        message = '{ "method": "getaccount", "params": [ "' + address + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get account for the address `" + _address + "`'}"
+            response['error'] = "{'message': 'RPC failed to get account for the address `" + address + "`'}"
         return response
-    ### END METHOD ################################### rpc_getAccount(self, _address:str)
+    ### END METHOD ################################### rpc_getAccount(self, address:str)
 
-    def rpc_getAddressesByAccount(self, _account:str='default'):
+    def rpc_getAddressesByAccount(self, account:str='default'):
         """
         DESCRIPTION:
 
@@ -5311,21 +5311,21 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _account : Account to retrieve addresses from.
+            ( ) account : Account to retrieve addresses from.
         """
         
         endpoint = '/'
-        _message = '{ "method": "getaddressesbyaccount", "params": [ "' + _account + '" ] }'
+        message = '{ "method": "getaddressesbyaccount", "params": [ "' + account + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get all addresses for the account `" + _account + "`'}"
+            response['error'] = "{'message': 'RPC failed to get all addresses for the account `" + account + "`'}"
         return response
-    ### END METHOD ################################### rpc_getAddressesByAccount(self, _account:str='default')
+    ### END METHOD ################################### rpc_getAddressesByAccount(self, account:str='default')
 
-    def rpc_getBalance(self, _account:str=None):
+    def rpc_getBalance(self, account:str=None):
         """
         DESCRIPTION:
 
@@ -5338,26 +5338,26 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _account : Account to return balance of.
+            ( ) account : Account to return balance of.
         """
         
         endpoint = '/'
 
-        if _account == None:
-            _account = '[ALL]'
-            _message = '{ "method": "getbalance" }'
+        if account == None:
+            account = '[ALL]'
+            message = '{ "method": "getbalance" }'
         else:
-            _message = '{ "method": "getbalance", "params": [ "' + _account + '" ] }'
+            message = '{ "method": "getbalance", "params": [ "' + account + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get balance for `" + _account + "`'}"
+            response['error'] = "{'message': 'RPC failed to get balance for `" + account + "`'}"
         return response
-    ### END METHOD ################################### rpc_getBalance(self, _account:str=None)
+    ### END METHOD ################################### rpc_getBalance(self, account:str=None)
 
-    def rpc_getNewAddress(self, _account:str=''):
+    def rpc_getNewAddress(self, account:str=''):
         """
         DESCRIPTION:
 
@@ -5367,19 +5367,19 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _account : Account name. Default = 'defualt'
+            ( ) account : Account name. Default = 'defualt'
         """
         
         endpoint = '/'
 
-        _message = '{ "method": "getnewaddress", "params": [ "' + _account +'" ] }'
+        message = '{ "method": "getnewaddress", "params": [ "' + account +'" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get new receiving address'}"
         return response
-    ### END METHOD ################################### rpc_getNewAddress(self, _account:str='')
+    ### END METHOD ################################### rpc_getNewAddress(self, account:str='')
 
     def rpc_getRawChangeAddress(self):
         """
@@ -5393,79 +5393,79 @@ class hsw:
         """
         
         endpoint = '/'
-        _message = '{ "method": "getrawchangeaddress" }'
+        message = '{ "method": "getrawchangeaddress" }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed get next change address'}"
         return response
     ### END METHOD ################################### rpc_getRawChangeAddress(self)
 
-    def rpc_getReceivedByAccount(self, _account:str, _minConfirm:int=None):
+    def rpc_getReceivedByAccount(self, account:str, min_confirm:int=None):
         """
         DESCRIPTION:
 
             Get total amount received by specified account. Optionally
-            only count transactions with `_minConfirm` number of confirmations.
+            only count transactions with `min_confirm` number of confirmations.
         
         PARAMS:
 
             (*) Denotes required argument
 
-            (*) _account    : Account name.
+            (*) account    : Account name.
 
-            ( ) _minConfirm : Only include transactions with this many confirmations.
+            ( ) min_confirm : Only include transactions with this many confirmations.
         """
         
         endpoint = '/'
 
-        if _minConfirm == None:
-            _message = '{ "method": "getreceivedbyaccount", "params": [ "' + _account + '" ] }'
+        if min_confirm == None:
+            message = '{ "method": "getreceivedbyaccount", "params": [ "' + account + '" ] }'
         else:
-            _message = '{ "method": "getreceivedbyaccount", "params": [ "' + _account + '", ' + str(_minConfirm) + ' ] }'
+            message = '{ "method": "getreceivedbyaccount", "params": [ "' + account + '", ' + str(min_confirm) + ' ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get amount received for the `" + _account + "` account'}"
+            response['error'] = "{'message': 'RPC failed to get amount received for the `" + account + "` account'}"
         return response
-    ### END METHOD ################################### rpc_getReceivedByAccount(self, _account:str, _minConfirm:int=None)
+    ### END METHOD ################################### rpc_getReceivedByAccount(self, account:str, min_confirm:int=None)
 
-    def rpc_getReceivedByAddress(self, _address:str, _minConfirm:int=None):
+    def rpc_getReceivedByAddress(self, address:str, min_confirm:int=None):
         """
         DESCRIPTION:
 
             Get total amount received by specified address. Optionally
-            only count transactions with `_minConfirm` number of confirmations.
+            only count transactions with `min_confirm` number of confirmations.
         
         PARAMS:
 
             (*) Denotes required argument
 
-            (*) _address    : Address to request balance of.
+            (*) address    : Address to request balance of.
 
-            ( ) _minConfirm : Only include transactions with this many confirmations.
+            ( ) min_confirm : Only include transactions with this many confirmations.
         """
         
         endpoint = '/'
 
-        if _minConfirm == None:
-            _message = '{ "method": "getreceivedbyaddress", "params": [ "' + _address + '" ] }'
+        if min_confirm == None:
+            message = '{ "method": "getreceivedbyaddress", "params": [ "' + address + '" ] }'
         else:
-            _message = '{ "method": "getreceivedbyaddress", "params": [ "' + _address + '", ' + str(_minConfirm) + ' ] }'
+            message = '{ "method": "getreceivedbyaddress", "params": [ "' + address + '", ' + str(min_confirm) + ' ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get amount received for address `" + _address + "` account'}"
+            response['error'] = "{'message': 'RPC failed to get amount received for address `" + address + "` account'}"
         return response
-    ### END METHOD ################################### rpc_getReceivedByAddress(self, _account:str, _minConfirm:int=None)
+    ### END METHOD ################################### rpc_getReceivedByAddress(self, account:str, min_confirm:int=None)
 
-    def rpc_getTransaction(self, _txID:str, _watchOnly:bool=None):
+    def rpc_getTransaction(self, tx_id:str, watch_only:bool=None):
         """
         DESCRIPTION:
 
@@ -5475,32 +5475,32 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _txID      : ID of transaction to fetch.
+            (*) tx_id      : ID of transaction to fetch.
 
-            ( ) _watchOnly : (bool) Whether to include watch-only addresses in balance details.
+            ( ) watch_only : (bool) Whether to include watch-only addresses in balance details.
         """
         
         endpoint = '/'
 
-        if _watchOnly == None:
-            _message = '{ "method": "gettransaction", "params": [ "' + _txID + '" ] }'
+        if watch_only == None:
+            message = '{ "method": "gettransaction", "params": [ "' + tx_id + '" ] }'
         else:
-            watchOnly = ''
+            _watch_only = ''
 
-            if _watchOnly == True:
-                watchOnly = '1'
+            if watch_only == True:
+                _watch_only = '1'
             else:
-                watchOnly = '0'
+                _watch_only = '0'
 
-            _message = '{ "method": "gettransaction", "params": [ "' + _txID + '", ' + watchOnly + ' ] }'
+            message = '{ "method": "gettransaction", "params": [ "' + tx_id + '", ' + _watch_only + ' ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get transaction details'}"
         return response
-    ### END METHOD ################################### rpc_getTransaction(self, _txID:str, _watchOnly:bool=None)
+    ### END METHOD ################################### rpc_getTransaction(self, tx_id:str, watch_only:bool=None)
 
     def rpc_getUnconfirmedBalance(self):
         """
@@ -5514,17 +5514,17 @@ class hsw:
         """
         
         endpoint = '/'
-        _message = '{ "method": "getunconfirmedbalance" }'
+        message = '{ "method": "getunconfirmedbalance" }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed get balance of unconfirmed'}"
         return response
     ### END METHOD ################################### rpc_getUnconfirmedBalance(self)
 
-    def rpc_importPrivKey(self, _privKey:str, _label:str=None, _rescan:bool=None):
+    def rpc_importPrivKey(self, private_key:str, label:str=None, rescan:bool=None):
         """
         DESCRIPTION:
 
@@ -5534,39 +5534,39 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _privKey : Private key to import (WIF format).
+            (*) private_key : Private key to import (WIF format).
 
-            ( ) _label   : Ignored but required if additional parameters are passed.
+            ( ) label   : Ignored but required if additional parameters are passed.
 
-            ( ) _rescan  : (bool) Whether to rescan wallet after importing.
+            ( ) rescan  : (bool) Whether to _rescan wallet after importing.
         """
         
         endpoint = '/'
 
-        if _label == None and _rescan == None:
-            _message = '{ "method": "importprivkey", "params": [ "' + _privKey + '" ] }'
-        elif _rescan != None:
-            rescan = ''
+        if label == None and rescan == None:
+            message = '{ "method": "importprivkey", "params": [ "' + private_key + '" ] }'
+        elif rescan != None:
+            _rescan = ''
 
-            if _rescan == True:
-                rescan = '1'
+            if rescan == True:
+                _rescan = '1'
             else:
-                rescan = '0'
+                _rescan = '0'
 
-            if _label == None:
-                _label = 'Unlabeled'
+            if label == None:
+                label = 'Unlabeled'
 
-            _message = '{ "method": "importprivkey", "params": [ "' + _privKey + '", "' + _label + '", ' + rescan + ' ] }'
+            message = '{ "method": "importprivkey", "params": [ "' + private_key + '", "' + label + '", ' + _rescan + ' ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to import private key'}"
         return response
-    ### END METHOD ################################### rpc_importPrivKey(self, _privKey:str, _label:str=None, _rescan:bool=None)
+    ### END METHOD ################################### rpc_importPrivKey(self, private_key:str, label:str=None, rescan:bool=None)
 
-    def rpc_importWallet(self, _walletFile:str, _rescan:bool=False):
+    def rpc_importWallet(self, wallet_file:str, rescan:bool=False):
         """
         DESCRIPTION:
 
@@ -5576,30 +5576,30 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _walletFile : Path to wallet file.
+            (*) wallet_file : Path to wallet file.
 
-            ( ) _rescan  : (bool) Whether to rescan wallet after importing.
+            ( ) rescan  : (bool) Whether to _rescan wallet after importing.
         """
-        rescan = ''
+        _rescan = ''
 
-        if _rescan == True:
-            rescan = '1'
+        if rescan == True:
+            _rescan = '1'
         else:
-            rescan = '0'
+            _rescan = '0'
         
         endpoint = '/'
 
-        _message = '{ "method": "importwallet", "params": [ "' + _walletFile + '", ' + rescan + ' ] }'
+        message = '{ "method": "importwallet", "params": [ "' + wallet_file + '", ' + _rescan + ' ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to import wallet `" + _walletFile + "`'}"
+            response['error'] = "{'message': 'RPC failed to import wallet `" + wallet_file + "`'}"
         return response
-    ### END METHOD ################################### rpc_importWallet(self, _walletFile:str, _rescan:bool=False)
+    ### END METHOD ################################### rpc_importWallet(self, wallet_file:str, rescan:bool=False)
 
-    def rpc_importAddress(self, _address:str, _label:str=None, _rescan:bool=None, _p2sh:bool=None):
+    def rpc_importAddress(self, address:str, label:str=None, rescan:bool=None, p2sh:bool=None):
         """
         DESCRIPTION:
 
@@ -5611,55 +5611,55 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _address : Address to watch in wallet.
+            (*) address : Address to watch in wallet.
 
-            ( ) _label   : Ignored but required if additional parameters are passed.
+            ( ) label   : Ignored but required if additional parameters are passed.
 
-            ( ) _rescan  : (bool) Whether to rescan wallet after importing.
+            ( ) rescan  : (bool) Whether to _rescan wallet after importing.
 
-            ( ) _p2sh    : (bool) Whether to generate P2SH address from given script.
+            ( ) p2sh    : (bool) Whether to generate P2SH address from given script.
         """
         
         endpoint = '/'
 
-        if _rescan == None and _p2sh == None:
-            _message = '{ "method": "importaddress", "params": [ "' + _address + '" ] }'
+        if rescan == None and p2sh == None:
+            message = '{ "method": "importaddress", "params": [ "' + address + '" ] }'
         else:
-            rescan = ''
-            p2sh = ''
+            _rescan = ''
+            _p2sh = ''
 
-            if _rescan == True:
-                rescan = '1'
+            if rescan == True:
+                _rescan = '1'
             else:
-                rescan = '0'
+                _rescan = '0'
 
-            if _p2sh == True:
-                p2sh = '1'
+            if p2sh == True:
+                _p2sh = '1'
             else:
-                p2sh = '0'
+                _p2sh = '0'
         
 
-            if _label == None:
-                _label = 'Unlabeled'
+            if label == None:
+                label = 'Unlabeled'
 
-            _message = '{ "method": "importwallet", "params": [ "' + _address + '", "' + _label + '", ' + str(rescan) + ', ' + str(p2sh) + ' ] }'
+            message = '{ "method": "importwallet", "params": [ "' + address + '", "' + label + '", ' + str(_rescan) + ', ' + str(_p2sh) + ' ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to import address `" + _address + "`'}"
+            response['error'] = "{'message': 'RPC failed to import address `" + address + "`'}"
         return response
-    ### END METHOD ################################### rpc_importAddress(self, _address:str, _label:str=None, _rescan:bool=None, _p2sh:bool=None)
+    ### END METHOD ################################### rpc_importAddress(self, address:str, label:str=None, rescan:bool=None, p2sh:bool=None)
 
-    def rpc_importPrunedFunds(self, _txHex:str, _txOutProof:str):
+    def rpc_importPrunedFunds(self, tx_hex:str, tx_out_proof:str):
         """
         DESCRIPTION:
 
-            Imports funds (without rescan) into pruned wallets.
+            Imports funds (without _rescan) into pruned wallets.
             Corresponding address or script must previously be
             included in wallet. Does NOT check if imported coins
-            are already spent, rescan may be required after the
+            are already spent, _rescan may be required after the
             point in time in which the specified transaciton was
             included in the blockchain. See `hsd.rpc_getTxOutProof` and
             `hsw.rpc_removePrunedFunds`.
@@ -5668,23 +5668,23 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _txHex : Raw transaction in hex that funds an address already in the wallet.
+            (*) tx_hex : Raw transaction in hex that funds an address already in the wallet.
 
-            (*) _txOutProof : Hex output from `hsd.rpc_getTxOutProof` containing the tx.
+            (*) tx_out_proof : Hex output from `hsd.rpc_getTxOutProof` containing the tx.
         """
         
         endpoint = '/'
-        _message = '{ "method": "importprunedfunds", "params": [ "' + _txHex + '", "' + _txOutProof + '" ] }'
+        message = '{ "method": "importprunedfunds", "params": [ "' + tx_hex + '", "' + tx_out_proof + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to import pruned funds'}"
         return response
-    ### END METHOD ################################### rpc_importPrunedFunds(self, _txHex:str, _txOutProof:str)
+    ### END METHOD ################################### rpc_importPrunedFunds(self, tx_hex:str, tx_out_proof:str)
 
-    def rpc_importPubKey(self, _pubHexKey:str, _label:str=None, _rescan:bool=None):
+    def rpc_importPubKey(self, public_hex_key:str, label:str=None, rescan:bool=None):
         """
         DESCRIPTION:
 
@@ -5694,39 +5694,39 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _pubHexKey : Hex-encoded public key.
+            (*) public_hex_key : Hex-encoded public key.
 
-            ( ) _label   : Ignored but required if additional parameters are passed.
+            ( ) label   : Ignored but required if additional parameters are passed.
 
-            ( ) _rescan  : (bool) Whether to rescan wallet after importing.
+            ( ) rescan  : (bool) Whether to _rescan wallet after importing.
         """
         
         endpoint = '/'
 
-        if _rescan == None:
-            _message = '{ "method": "importpubkey", "params": [ "' + _pubHexKey + '" ] }'
+        if rescan == None:
+            message = '{ "method": "importpubkey", "params": [ "' + public_hex_key + '" ] }'
         else:
-            rescan = ''
+            _rescan = ''
 
-            if _rescan == True:
-                rescan = '1'
+            if rescan == True:
+                _rescan = '1'
             else:
-                rescan = '0'
+                _rescan = '0'
 
-            if _label == None:
-                _label = 'Unlabeled'
+            if label == None:
+                label = 'Unlabeled'
 
-            _message = '{ "method": "importpubkey", "params": [ "' + _pubHexKey + '", "' + _label + '", ' + str(rescan) + ' ] }'
+            message = '{ "method": "importpubkey", "params": [ "' + public_hex_key + '", "' + label + '", ' + str(_rescan) + ' ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to public key'}"
         return response
-    ### END METHOD ################################### rpc_importPubKey(self, _pubHexKey:str, _label:str=None, _rescan:bool=None)
+    ### END METHOD ################################### rpc_importPubKey(self, public_hex_key:str, label:str=None, rescan:bool=None)
 
-    def rpc_listAccounts(self, _minConfirm:int=None, _watchOnly:bool=None):
+    def rpc_listAccounts(self, min_confirm:int=None, watch_only:bool=None):
         """
         DESCRIPTION:
 
@@ -5736,78 +5736,78 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _minConfirm : Minimum confirmations for transaction to be included in balance.
+            ( ) min_confirm : Minimum confirmations for transaction to be included in balance.
 
-            ( ) _watchOnly  : (bool) Include watch-only addresses.
+            ( ) watch_only  : (bool) Include watch-only addresses.
         """
         
         endpoint = '/'
 
-        if _minConfirm == None and _watchOnly == None:
-            _message = '{ "method": "listaccounts", "params": [] }'
+        if min_confirm == None and watch_only == None:
+            message = '{ "method": "listaccounts", "params": [] }'
         else:
-            watchOnly = ''
+            _watch_only = ''
 
-            if _watchOnly == None:
-                _watchOnly = False
+            if watch_only == None:
+                watch_only = False
 
-            if _watchOnly == True:
-                watchOnly = '1'
+            if watch_only == True:
+                _watch_only = '1'
             else:
-                watchOnly = '0'
+                _watch_only = '0'
 
-            if _minConfirm == None:
-                _minConfirm = 0
+            if min_confirm == None:
+                min_confirm = 0
 
-            _message = '{ "method": "listaccounts", "params": [ ' + str(_minConfirm) + ', ' + str(watchOnly) + ' ] }'
+            message = '{ "method": "listaccounts", "params": [ ' + str(min_confirm) + ', ' + str(_watch_only) + ' ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get list of wallet accounts and balances'}"
         return response
-    ### END METHOD ################################### rpc_listAccounts(self, _minConfirm:int=None, _watchOnly:bool=None)
+    ### END METHOD ################################### rpc_listAccounts(self, min_confirm:int=None, watch_only:bool=None)
 
-    def rpc_lockUnspent(self, _lock:bool=True, _outputs:json=None):
+    def rpc_lockUnspent(self, lock:bool=True, outputs:json=None):
         """
         DESCRIPTION:
 
             Lock or unlock specified transaction outputs. If no outputs are
             specified, ALL coins will be unlocked (`unlock` only).
 
-            Note: If no paramaters are passed `_lock` will default to `True`
+            Note: If no paramaters are passed `lock` will default to `True`
         
         PARAMS:
 
             (*) Denotes required argument
 
-            ( ) _lock : (bool) `True` = lock coins, `False` = unlock coins. Default = `True`.
+            ( ) lock : (bool) `True` = lock coins, `False` = unlock coins. Default = `True`.
 
-            ( ) _outputs  : (bool) Array of outputs to lock or unlock.
+            ( ) outputs  : (bool) Array of outputs to lock or unlock.
         """
         
         endpoint = '/'
 
-        lock = ''
+        _lock = ''
 
-        if _lock == True:
-            lock = '0'
+        if lock == True:
+            _lock = '0'
         else:
-            lock = '1'
+            _lock = '1'
 
-        if _outputs == None:
-            _message = '{ "method": "lockunspent", "params": [ ' + lock + ' ] }'
+        if outputs == None:
+            message = '{ "method": "lockunspent", "params": [ ' + _lock + ' ] }'
         else:
-            _message = '{ "method": "lockunspent", "params": [ ' + lock + ', [' + json.dumps(_outputs) + '] ] }'
+            message = '{ "method": "lockunspent", "params": [ ' + _lock + ', [' + json.dumps(outputs) + '] ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed lock/unlock unspent coins'}"
         return response
-    ### END METHOD ################################### rpc_lockUnspent(self, _lock:bool=True, _outputs:json=None)
+    ### END METHOD ################################### rpc_lockUnspent(self, lock:bool=True, outputs:json=None)
 
     def rpc_listLockUnspent(self):
         """
@@ -5822,17 +5822,17 @@ class hsw:
         """
         
         endpoint = '/'
-        _message = '{ "method": "listlockunspent" }'
+        message = '{ "method": "listlockunspent" }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to list locked unspendable outputs'}"
         return response
     ### END METHOD ################################### rpc_listLockUnspent(self)
 
-    def rpc_listReceivedByAccount(self, _minConfirm:int=None, _includeEmpty:bool=None, _watchOnly:bool=None):
+    def rpc_listReceivedByAccount(self, min_confirm:int=None, include_empty:bool=None, watch_only:bool=None):
         """
         DESCRIPTION:
 
@@ -5842,51 +5842,51 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _minConfirm   : Minimum confirmations required to count a transaction.
+            ( ) min_confirm   : Minimum confirmations required to count a transaction.
 
-            ( ) _includeEmpty : (bool) Whether to include accounts with zero balance. Default = `False`.
+            ( ) include_empty : (bool) Whether to include accounts with zero balance. Default = `False`.
 
-            ( ) _watchOnly    : (bool) Whether to include watch-only addresses. Default = `False`.
+            ( ) watch_only    : (bool) Whether to include watch-only addresses. Default = `False`.
         """
         
         endpoint = '/'
 
-        if _minConfirm == None and _includeEmpty == None and _watchOnly == None:
-            _message = '{ "method": "listreceivedbyaccount", "params": [] }'
+        if min_confirm == None and include_empty == None and watch_only == None:
+            message = '{ "method": "listreceivedbyaccount", "params": [] }'
         else:
-            includeEmpty = ''
-            watchOnly = ''
+            _include_empty = ''
+            _watch_only = ''
 
-            if _includeEmpty == None:
-                _includeEmpty = False
+            if include_empty == None:
+                include_empty = False
 
-            if _includeEmpty == True:
-                includeEmpty = '1'
+            if include_empty == True:
+                _include_empty = '1'
             else:
-                includeEmpty = '0'
+                _include_empty = '0'
 
-            if _watchOnly == None:
-                _watchOnly = False
+            if watch_only == None:
+                watch_only = False
 
-            if _watchOnly == True:
-                watchOnly = '1'
+            if watch_only == True:
+                _watch_only = '1'
             else:
-                watchOnly = '0'
+                _watch_only = '0'
 
-            if _minConfirm == None:
-                    _minConfirm = 0
+            if min_confirm == None:
+                    min_confirm = 0
 
-            _message = '{ "method": "listreceivedbyaccount", "params": [ ' + str(_minConfirm) + ', ' + str(includeEmpty) + ', ' + str(watchOnly) + ' ] }'
+            message = '{ "method": "listreceivedbyaccount", "params": [ ' + str(min_confirm) + ', ' + str(_include_empty) + ', ' + str(_watch_only) + ' ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get list account balances'}"
         return response
-    ### END METHOD ################################### rpc_listReceivedByAccount(self, _minConfirm:int=None, _includeEmpty:bool=None, _watchOnly:bool=None)
+    ### END METHOD ################################### rpc_listReceivedByAccount(self, min_confirm:int=None, include_empty:bool=None, watch_only:bool=None)
 
-    def rpc_listReceivedByAddress(self, _minConfirm:int=None, _includeEmpty:bool=None, _watchOnly:bool=None):
+    def rpc_listReceivedByAddress(self, min_confirm:int=None, include_empty:bool=None, watch_only:bool=None):
         """
         DESCRIPTION:
 
@@ -5896,51 +5896,51 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _minConfirm   : Minimum confirmations required to count a transaction.
+            ( ) min_confirm   : Minimum confirmations required to count a transaction.
 
-            ( ) _includeEmpty : (bool) Whether to include addresses with zero balance. Default = `False`.
+            ( ) include_empty : (bool) Whether to include addresses with zero balance. Default = `False`.
 
-            ( ) _watchOnly    : (bool) Whether to include watch-only addresses. Default = `False`.
+            ( ) watch_only    : (bool) Whether to include watch-only addresses. Default = `False`.
         """
         
         endpoint = '/'
 
-        if _minConfirm == None and _includeEmpty == None and _watchOnly == None:
-            _message = '{ "method": "listreceivedbyaddress", "params": [] }'
+        if min_confirm == None and include_empty == None and watch_only == None:
+            message = '{ "method": "listreceivedbyaddress", "params": [] }'
         else:
-            includeEmpty = ''
-            watchOnly = ''
+            _include_empty = ''
+            _watch_only = ''
 
-            if _includeEmpty == None:
-                _includeEmpty = False
+            if include_empty == None:
+                include_empty = False
 
-            if _includeEmpty == True:
-                includeEmpty = '1'
+            if include_empty == True:
+                _include_empty = '1'
             else:
-                includeEmpty = '0'
+                _include_empty = '0'
 
-            if _watchOnly == None:
-                _watchOnly = False
+            if watch_only == None:
+                watch_only = False
 
-            if _watchOnly == True:
-                watchOnly = '1'
+            if watch_only == True:
+                _watch_only = '1'
             else:
-                watchOnly = '0'
+                _watch_only = '0'
 
-            if _minConfirm == None:
-                    _minConfirm = 0
+            if min_confirm == None:
+                    min_confirm = 0
 
-            _message = '{ "method": "listreceivedbyaddress", "params": [ ' + str(_minConfirm) + ', ' + str(includeEmpty) + ', ' + str(watchOnly) + ' ] }'
+            message = '{ "method": "listreceivedbyaddress", "params": [ ' + str(min_confirm) + ', ' + str(_include_empty) + ', ' + str(_watch_only) + ' ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get list address balances'}"
         return response
-    ### END METHOD ################################### rpc_listReceivedByAddress(self, _minConfirm:int=None, _includeEmpty:bool=None, _watchOnly:bool=None)
+    ### END METHOD ################################### rpc_listReceivedByAddress(self, min_confirm:int=None, include_empty:bool=None, watch_only:bool=None)
 
-    def rpc_listSinceBlock(self, _blockHash:str=None, _minConfirm:int=None, _watchOnly:bool=None):
+    def rpc_listSinceBlock(self, block_hash:str=None, min_confirm:int=None, watch_only:bool=None):
         """
         DESCRIPTION:
 
@@ -5951,42 +5951,42 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _blockHash    : Hash of earliest block to start listing from.
+            ( ) block_hash    : Hash of earliest block to start listing from.
 
-            ( ) _minConfirm   : Minimum confirmations required to count a transaction.
+            ( ) min_confirm   : Minimum confirmations required to count a transaction.
 
-            ( ) _watchOnly    : (bool) Whether to include watch-only addresses. Default = `False`.
+            ( ) watch_only    : (bool) Whether to include watch-only addresses. Default = `False`.
         """
         
         endpoint = '/'
 
-        if _blockHash == None and _minConfirm == None and _watchOnly == None:
-            _message = '{ "method": "listsinceblock", "params": [] }'
+        if block_hash == None and min_confirm == None and watch_only == None:
+            message = '{ "method": "listsinceblock", "params": [] }'
         else:
-            watchOnly = ''
+            _watch_only = ''
 
-            if _watchOnly == None:
-                _watchOnly = False
+            if watch_only == None:
+                watch_only = False
 
-            if _watchOnly == True:
-                watchOnly = '1'
+            if watch_only == True:
+                _watch_only = '1'
             else:
-                watchOnly = '0'
+                _watch_only = '0'
 
-            if _minConfirm == None:
-                    _minConfirm = 0
+            if min_confirm == None:
+                    min_confirm = 0
 
-            _message = '{ "method": "listsinceblock", "params": [ "' + _blockHash + '", ' + str(_minConfirm) + ', ' + str(watchOnly) + ' ] }'
+            message = '{ "method": "listsinceblock", "params": [ "' + block_hash + '", ' + str(min_confirm) + ', ' + str(_watch_only) + ' ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get list transactions since block `" + _blockHash + "`'}"
+            response['error'] = "{'message': 'RPC failed to get list transactions since block `" + block_hash + "`'}"
         return response
-    ### END METHOD ################################### rpc_listSinceBlock(self, _blockHash:str=None, _minConfirm:int=None, _watchOnly:bool=None)
+    ### END METHOD ################################### rpc_listSinceBlock(self, block_hash:str=None, min_confirm:int=None, watch_only:bool=None)
 
-    def rpc_listTransactions(self, _account:str='', _count:int=0, _from:int=0, _watchOnly:bool=None):
+    def rpc_listTransactions(self, account:str='', count:int=0, start_from:int=0, watch_only:bool=None):
         """
         DESCRIPTION:
 
@@ -5997,41 +5997,41 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _account   : Account name.
+            ( ) account    : Account name.
 
-            ( ) _count     : Max number of transactions to return.
+            ( ) count      : Max number of transactions to return.
 
-            ( ) _from      : Number of oldest transactions to skip.
+            ( ) start_from : Number of oldest transactions to skip.
 
-            ( ) _watchOnly : (bool) Whether to include watch-only addresses. Default = `False`.
+            ( ) watch_only : (bool) Whether to include watch-only addresses. Default = `False`.
         """
         
         endpoint = '/'
 
-        if _account == '' and _count == 0 and _from == 0 and _watchOnly == None:
-            _message = '{ "method": "listtransactions" }'
+        if account == '' and count == 0 and start_from == 0 and watch_only == None:
+            message = '{ "method": "listtransactions" }'
         else:
-            watchOnly = ''
+            _watch_only = ''
 
-            if _watchOnly == None:
-                _watchOnly = False
+            if watch_only == None:
+                watch_only = False
 
-            if _watchOnly == True:
-                watchOnly = '1'
+            if watch_only == True:
+                _watch_only = '1'
             else:
-                watchOnly = '0'
+                _watch_only = '0'
 
-            _message = '{ "method": "listtransactions", "params": [ "' + _account + '", ' + str(_count) + ', ' + str(_from) + ', ' + str(watchOnly) + ' ] }'
+            message = '{ "method": "listtransactions", "params": [ "' + account + '", ' + str(count) + ', ' + str(start_from) + ', ' + str(_watch_only) + ' ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
-            response['error'] = "{'message': 'RPC failed to get transactions for the account `" + _account + "`'}"
+            response['error'] = "{'message': 'RPC failed to get transactions for the account `" + account + "`'}"
         return response
-    ### END METHOD ################################### rpc_listTransactions(self, _account:str='', _count:int=0, _from:int=0, _watchOnly:bool=None)
+    ### END METHOD ################################### rpc_listTransactions(self, account:str='', count:int=0, start_from:int=0, watch_only:bool=None)
 
-    def rpc_listUnspent(self, _minConfirm:int=None, _maxConfirm:int=None, _addresses=None):
+    def rpc_listUnspent(self, min_confirm:int=None, max_confirm:int=None, addresses=None):
         """
         DESCRIPTION:
 
@@ -6042,32 +6042,32 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _minConfirm : Minimum confirmations required to return tx.
+            ( ) min_confirm : Minimum confirmations required to return tx.
 
-            ( ) _maxConfirm : Maximum confirmations required to return tx.
+            ( ) max_confirm : Maximum confirmations required to return tx.
 
-            ( ) _addresses  : Array of addresses to filter.
+            ( ) addresses   : Array of addresses to filter.
         """
         
         endpoint = '/'
 
-        if _minConfirm == None and _maxConfirm == None and _addresses == None:
-            _message = '{ "method": "listunspent" }'
+        if min_confirm == None and max_confirm == None and addresses == None:
+            message = '{ "method": "listunspent" }'
         else:
 
-            if _minConfirm == None:
-                _minConfirm = 0
+            if min_confirm == None:
+                min_confirm = 0
 
-            if _maxConfirm == None:
-                _minConfirm = 0
+            if max_confirm == None:
+                min_confirm = 0
             
-            if _addresses == None:
+            if addresses == None:
                 addresses = '[]'
             else:
                 addressCount = 0
                 addresses = '['
 
-                for address in _addresses:
+                for address in addresses:
                     addressCount += 1
 
                     if addressCount == 1:
@@ -6077,17 +6077,17 @@ class hsw:
 
                 addresses += ']'
 
-            _message = '{ "method": "listunspent", "params": [ ' + str(_minConfirm) + ', ' + str(_maxConfirm) + ', ' + addresses + ' ] }'
+            message = '{ "method": "listunspent", "params": [ ' + str(min_confirm) + ', ' + str(max_confirm) + ', ' + addresses + ' ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get unspent transaction outputs from addresses'}"
         return response
-    ### END METHOD ################################### rpc_listUnspent(self, _minConfirm:int=None, _maxConfirm:int=None, _addresses=None)
+    ### END METHOD ################################### rpc_listUnspent(self, min_confirm:int=None, max_confirm:int=None, addresses=None)
 
-    def rpc_sendFrom(self, _fromAccount:str, _toAddress:str, _amount:float, _minConfirm:int=None):
+    def rpc_sendFrom(self, from_account:str, to_address:str, amount:float, min_confirm:int=None):
         """
         DESCRIPTION:
 
@@ -6101,31 +6101,31 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _fromAccount : Wallet account to spend outputs from.
+            (*) from_account : Wallet account to spend outputs from.
 
-            (*) _toAddress   : Handshake address to send funds to.
+            (*) to_address   : Handshake address to send funds to.
 
-            (*) _amount      : Amount (in HNS) to send.
+            (*) amount       : Amount (in HNS) to send.
 
-            ( ) _minConfirm  : Minimum confirmations for output to be spent from.
+            ( ) min_confirm  : Minimum confirmations for output to be spent from.
         """
         
         endpoint = '/'
 
-        if _minConfirm == None:
-            _message = '{ "method": "sendfrom", "params": [ "' + _fromAccount + '", "' + _toAddress + '", ' + str(_amount) + ' ] }'
+        if min_confirm == None:
+            message = '{ "method": "sendfrom", "params": [ "' + from_account + '", "' + to_address + '", ' + str(amount) + ' ] }'
         else:
-            _message = '{ "method": "sendfrom", "params": [ "' + _fromAccount + '", "' + _toAddress + '", ' + str(_amount) + ', ' + str(_minConfirm) + ' ] }'
+            message = '{ "method": "sendfrom", "params": [ "' + from_account + '", "' + to_address + '", ' + str(amount) + ', ' + str(min_confirm) + ' ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to send HNS'}"
         return response
-    ### END METHOD ################################### rpc_sendFrom(self, _fromAccount:str, _toAddress:str, _amount:float, _minConfirm:int=None)
+    ### END METHOD ################################### rpc_sendFrom(self, from_account:str, to_address:str, amount:float, min_confirm:int=None)
 
-    def rpc_sendMany(self, _fromAccount:str, _outputs:json, _minConfirm:int=None, _subtractFee:bool=None, _label:str=None):
+    def rpc_sendMany(self, from_account:str, outputs:json, min_confirm:int=None, subtract_fee:bool=None, label:str=None):
         """
         DESCRIPTION:
 
@@ -6139,46 +6139,46 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _fromAccount : Wallet account to spend outputs from.
+            (*) from_account : Wallet account to spend outputs from.
 
-            (*) _outputs     : (json) of Handshake addresses and amounts to send.
+            (*) outputs      : (json) of Handshake addresses and amounts to send.
 
-            ( ) _minConfirm  : Minimum confirmations for output to be spent from.
+            ( ) min_confirm  : Minimum confirmations for output to be spent from.
 
-            ( ) _subtractFee : (bool) Subtract the transaction fee equally from the output amounts.
+            ( ) subtract_fee : (bool) Subtract the transaction fee equally from the output amounts.
 
-            ( ) _label       : Ignored but required if additional parameters are passed.
+            ( ) label        : Ignored but required if additional parameters are passed.
         """
         
         endpoint = '/'
 
-        if _minConfirm == None and _label == None and _subtractFee == None:
-            _message = '{ "method": "sendmany", "params": [ "' + _fromAccount + '", ' + json.dumps(_outputs) + ' ] }'
+        if min_confirm == None and label == None and subtract_fee == None:
+            message = '{ "method": "sendmany", "params": [ "' + from_account + '", ' + json.dumps(outputs) + ' ] }'
         else:
-            subtractFee = ''
+            _subtract_fee = ''
 
-            if _minConfirm == None:
-                _minConfirm = 0
+            if min_confirm == None:
+                min_confirm = 0
 
-            if _label == None:
-                _label = 'Unlabeled Transaction'
+            if label == None:
+                label = 'Unlabeled Transaction'
             
-            if _subtractFee == True:
-                subtractFee = '1'
+            if subtract_fee == True:
+                _subtract_fee = '1'
             else:
-                subtractFee = '0'
+                _subtract_fee = '0'
 
-            _message = '{ "method": "sendmany", "params": [ "' + _fromAccount + '", ' + json.dumps(_outputs) + ', ' + str(_minConfirm) + ', "' + _label + '", ' + subtractFee + ' ] }'
+            message = '{ "method": "sendmany", "params": [ "' + from_account + '", ' + json.dumps(outputs) + ', ' + str(min_confirm) + ', "' + label + '", ' + _subtract_fee + ' ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to send HNS to multiple addresses'}"
         return response
-    ### END METHOD ################################### rpc_sendMany(self, _fromAccount:str, _outputs:json, _minConfirm:int=None, _subtractFee:bool=None, _label:str=None)
+    ### END METHOD ################################### rpc_sendMany(self, from_account:str, outputs:json, min_confirm:int=None, subtract_fee:bool=None, label:str=None)
 
-    def rpc_createSendToAddress(self, _toAddress:str, _amount:float, _subtractFee:bool=None, _comment:str=None, _commentTo:str=None):
+    def rpc_createSendToAddress(self, to_address:str, amount:float, subtract_fee:bool=None, comment:str=None, comment_to:str=None):
         """
         DESCRIPTION:
 
@@ -6192,46 +6192,46 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _toAddress   : Handshake address to send funds to.
+            (*) to_address   : Handshake address to send funds to.
 
-            (*) _amount      : Amount (in HNS) to send.
+            (*) amount       : Amount (in HNS) to send.
 
-            ( ) _subtractFee : (bool) Subtract the transaction fee equally from the output amount.
+            ( ) subtract_fee : (bool) Subtract the transaction fee equally from the output amount.
 
-            ( ) _comment     : Ignored but required if additional parameters are passed.
+            ( ) comment      : Ignored but required if additional parameters are passed.
 
-            ( ) _commentTo   : Ignored but required if additional parameters are passed.
+            ( ) comment_to   : Ignored but required if additional parameters are passed.
         """
         
         endpoint = '/'
 
-        if _subtractFee == None and _comment == None and _commentTo == None:
-            _message = '{ "method": "createsendtoaddress", "params": [ "' + _toAddress + '", ' + str(_amount) + ' ] }'
+        if subtract_fee == None and comment == None and comment_to == None:
+            message = '{ "method": "createsendtoaddress", "params": [ "' + to_address + '", ' + str(amount) + ' ] }'
         else:
-            subtractFee = ''
+            _subtract_fee = ''
 
-            if _comment == None:
-                _comment = 'No Comment.'
+            if comment == None:
+                comment = 'No Comment.'
 
-            if _commentTo == None:
-                _commentTo = 'No Comment.'
+            if comment_to == None:
+                comment_to = 'No Comment.'
             
-            if _subtractFee == True:
-                subtractFee = '1'
+            if subtract_fee == True:
+                _subtract_fee = '1'
             else:
-                subtractFee = '0'
+                _subtract_fee = '0'
 
-            _message = '{ "method": "createsendtoaddress", "params": [ "' + _toAddress + '", ' + str(_amount) + ', "' + _comment + '", "' + _commentTo + '", ' + subtractFee + ' ] }'
+            message = '{ "method": "createsendtoaddress", "params": [ "' + to_address + '", ' + str(amount) + ', "' + comment + '", "' + comment_to + '", ' + _subtract_fee + ' ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to create HNS transaction to address'}"
         return response
-    ### END METHOD ################################### rpc_createSendToAddress(self, _toAddress:str, _amount:float, _subtractFee:bool=None, _comment:str=None, _commentTo:str=None)
+    ### END METHOD ################################### rpc_createSendToAddress(self, to_address:str, amount:float, subtract_fee:bool=None, comment:str=None, comment_to:str=None)
 
-    def rpc_sendToAddress(self, _toAddress:str, _amount:float, _subtractFee:bool=None, _comment:str=None, _commentTo:str=None):
+    def rpc_sendToAddress(self, to_address:str, amount:float, subtract_fee:bool=None, comment:str=None, comment_to:str=None):
         """
         DESCRIPTION:
 
@@ -6245,46 +6245,46 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _toAddress   : Handshake address to send funds to.
+            (*) to_address   : Handshake address to send funds to.
 
-            (*) _amount      : Amount (in HNS) to send.
+            (*) amount       : Amount (in HNS) to send.
 
-            ( ) _subtractFee : (bool) Subtract the transaction fee equally from the output amount.
+            ( ) subtract_fee : (bool) Subtract the transaction fee equally from the output amount.
 
-            ( ) _comment     : Ignored but required if additional parameters are passed.
+            ( ) comment      : Ignored but required if additional parameters are passed.
 
-            ( ) _commentTo   : Ignored but required if additional parameters are passed.
+            ( ) comment_to   : Ignored but required if additional parameters are passed.
         """
         
         endpoint = '/'
 
-        if _subtractFee == None and _comment == None and _commentTo == None:
-            _message = '{ "method": "sendtoaddress", "params": [ "' + _toAddress + '", ' + str(_amount) + ' ] }'
+        if subtract_fee == None and comment == None and comment_to == None:
+            message = '{ "method": "sendtoaddress", "params": [ "' + to_address + '", ' + str(amount) + ' ] }'
         else:
-            subtractFee = ''
+            _subtract_fee = ''
 
-            if _comment == None:
-                _comment = 'No Comment.'
+            if comment == None:
+                comment = 'No Comment.'
 
-            if _commentTo == None:
-                _commentTo = 'No Comment.'
+            if comment_to == None:
+                comment_to = 'No Comment.'
             
-            if _subtractFee == True:
-                subtractFee = '1'
+            if subtract_fee == True:
+                _subtract_fee = '1'
             else:
-                subtractFee = '0'
+                _subtract_fee = '0'
 
-            _message = '{ "method": "sendtoaddress", "params": [ "' + _toAddress + '", ' + str(_amount) + ', "' + _comment + '", "' + _commentTo + '", ' + subtractFee + ' ] }'
+            message = '{ "method": "sendtoaddress", "params": [ "' + to_address + '", ' + str(amount) + ', "' + comment + '", "' + comment_to + '", ' + _subtract_fee + ' ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to send HNS to address'}"
         return response
-    ### END METHOD ################################### rpc_sendToAddress(self, _toAddress:str, _amount:float, _subtractFee:bool=None, _comment:str=None, _commentTo:str=None)
+    ### END METHOD ################################### rpc_sendToAddress(self, to_address:str, amount:float, subtract_fee:bool=None, comment:str=None, comment_to:str=None)
 
-    def rpc_setTxFee(self, _txFee:float=0):
+    def rpc_setTxFee(self, tx_fee:float=0):
         """
         DESCRIPTION:
 
@@ -6299,21 +6299,21 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _txFee : Fee rate in HNS/kB. Default = `0`
+            ( ) tx_fee : Fee rate in HNS/kB. Default = `0`
         """
         
         endpoint = '/'
 
-        _message = '{ "method": "settxfee", "params": [ ' + str(_txFee) +' ] }'
+        message = '{ "method": "settxfee", "params": [ ' + str(tx_fee) +' ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to set transaction fee'}"
         return response
-    ### END METHOD ################################### rpc_setTxFee(self, _txFee:float=0)
+    ### END METHOD ################################### rpc_setTxFee(self, tx_fee:float=0)
 
-    def rpc_signMessage(self, _address:str, _message:str):
+    def rpc_signMessage(self, address:str, message:str):
         """
         DESCRIPTION:
 
@@ -6328,23 +6328,23 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _address : Wallet address to use for signing.
+            (*) address : Wallet address to use for signing.
 
-            (*) _message : The message to sign.
+            (*) message : The message to sign.
         """
         
         endpoint = '/'
 
-        _message = '{ "method": "signmessage", "params": [ "' + _address + '", "' + _message + '" ] }'
+        message = '{ "method": "signmessage", "params": [ "' + address + '", "' + message + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to sign message'}"
         return response
-    ### END METHOD ################################### rpc_signMessage(self, _address:str, _message:str)
+    ### END METHOD ################################### rpc_signMessage(self, address:str, message:str)
 
-    def rpc_signMessageWithName(self, _name:str, _message:str):
+    def rpc_signMessageWithName(self, name:str, message:str):
         """
         DESCRIPTION:
 
@@ -6359,21 +6359,21 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _name    : Domain name to use for signing.
+            (*) name    : Domain name to use for signing.
 
-            (*) _message : The message to sign.
+            (*) message : The message to sign.
         """
         
         endpoint = '/'
 
-        _message = '{ "method": "signmessagewithname", "params": [ "' + _name + '", "' + _message + '" ] }'
+        message = '{ "method": "signmessagewithname", "params": [ "' + name + '", "' + message + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to sign message with name'}"
         return response
-    ### END METHOD ################################### rpc_signMessageWithName(self, _name:str, _message:str)
+    ### END METHOD ################################### rpc_signMessageWithName(self, name:str, message:str)
 
     def rpc_walletLock(self):
         """
@@ -6388,17 +6388,17 @@ class hsw:
         """
         
         endpoint = '/'
-        _message = '{ "method": "walletlock" }'
+        message = '{ "method": "walletlock" }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to lock wallet'}"
         return response
     ### END METHOD ################################### rpc_walletLock(self)
 
-    def rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str):
+    def rpc_walletPasswordChange(self, old_passphrase:str, new_passphrase:str):
         """
         DESCRIPTION:
 
@@ -6408,23 +6408,23 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _oldPassphrase : The current wallet passphrase.
+            (*) old_passphrase : The current wallet passphrase.
 
-            (*) _newPassphrase : New passphrase.
+            (*) new_passphrase : New passphrase.
         """
         
         endpoint = '/'
-        _message = '{ "method": "walletpassphrasechange", "params": [ "' + _oldPassphrase + '", "' + _newPassphrase + '" ] }'
+        message = '{ "method": "walletpassphrasechange", "params": [ "' + old_passphrase + '", "' + new_passphrase + '" ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to change wallet password'}"
         return response
-    ### END METHOD ################################### rpc_walletPasswordChange(self, _oldPassphrase:str, _newPassphrase:str)
+    ### END METHOD ################################### rpc_walletPasswordChange(self, old_passphrase:str, new_passphrase:str)
 
-    def rpc_walletPassphrase(self, _passphrase:str, _timeout:int=600):
+    def rpc_walletPassphrase(self, passphrase:str, timeout:int=600):
         """
         DESCRIPTION:
 
@@ -6434,23 +6434,23 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _passphrase : The current wallet passphrase.
+            (*) passphrase : The current wallet passphrase.
 
-            ( ) _timeout    : Amount of time in seconds decryption key will stay in memory. Default = `600`
+            ( ) timeout    : Amount of time in seconds decryption key will stay in memory. Default = `600`
         """
         
         endpoint = '/'
-        _message = '{ "method": "walletpassphrase", "params": [ "' + _passphrase + '", ' + str(_timeout) + ' ] }'
+        message = '{ "method": "walletpassphrase", "params": [ "' + passphrase + '", ' + str(timeout) + ' ] }'
 
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to unlock wallet'}"
         return response
-    ### END METHOD ################################### rpc_walletPassphrase(self, _passphrase:str, _timeout:int=600)
+    ### END METHOD ################################### rpc_walletPassphrase(self, passphrase:str, timeout:int=600)
 
-    def rpc_removePrunedFunds(self, _txID:str):
+    def rpc_removePrunedFunds(self, tx_id:str):
         """
         DESCRIPTION:
 
@@ -6461,19 +6461,19 @@ class hsw:
 
             (*) Denotes required argument
 
-            (*) _txID : ID of the transaction to remove.
+            (*) tx_id : ID of the transaction to remove.
         """
         
         endpoint = '/'
 
-        _message = '{ "method": "removeprunedfunds", "params": [ "' + _txID + '" ] }'
+        message = '{ "method": "removeprunedfunds", "params": [ "' + tx_id + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to remove pruned funds'}"
         return response
-    ### END METHOD ################################### rpc_removePrunedFunds(self, _txID:str)
+    ### END METHOD ################################### rpc_removePrunedFunds(self, tx_id:str)
 
     def rpc_getMemoryInfo(self):
         """
@@ -6489,16 +6489,16 @@ class hsw:
         
         endpoint = '/'
 
-        _message = '{ "method": "getmemoryinfo" }'
+        message = '{ "method": "getmemoryinfo" }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to get memory info'}"
         return response
     ### END METHOD ################################### rpc_getMemoryInfo(self)
 
-    def rpc_setLogLevel(self, _logLevel:str='NONE'):
+    def rpc_setLogLevel(self, log_level:str='NONE'):
         """
         DESCRIPTION:
 
@@ -6510,19 +6510,19 @@ class hsw:
 
             (*) Denotes required argument
 
-            ( ) _logLevel : Level for the logger. Default = `NONE`
+            ( ) log_level : Level for the logger. Default = `NONE`
         """
         
         endpoint = '/'
 
-        _message = '{ "method": "setloglevel", "params": [ "' + _logLevel + '" ] }'
+        message = '{ "method": "setloglevel", "params": [ "' + log_level + '" ] }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to set log level'}"
         return response
-    ### END METHOD ################################### rpc_setLogLevel(self, _logLevel:str='NONE')
+    ### END METHOD ################################### rpc_setLogLevel(self, log_level:str='NONE')
 
     def rpc_stop(self):
         """
@@ -6537,9 +6537,9 @@ class hsw:
         
         endpoint = '/'
 
-        _message = '{ "method": "stop" }'
+        message = '{ "method": "stop" }'
         try:
-            response = self.post(endpoint, _message)
+            response = self.post(endpoint, message)
         except:
             response = {}
             response['error'] = "{'message': 'RPC failed to close wallet database'}"
