@@ -70,7 +70,10 @@ class Menu:
         self.clear_screen()
         print('    ' + self.title + '\n')
         for option in self.options:
-            print('\t' + str(option) + ': ' + self.options[option])
+            if option == 'space' or option == '':
+                print('')
+            else:
+                print('\t' + str(option) + ': ' + self.options[option])
         
         print()
         ############################################################ END: display(self)
@@ -110,25 +113,6 @@ class Menu:
 
         return choice
         ############################################################ END: get_input_pass(self)
-
-    def run(self):
-        """
-        DESCRIPTION:
-        
-            This function is used to run the menu.
-            
-        PARAMETERS:
-        
-            None.
-        """
-        self.display()
-        choice = self.get_input()
-        while choice not in self.options:
-            self.clear_screen()
-            self.display()
-            choice = self.get_input()
-        return choice
-        ############################################################ END: run(self)
 
     def clear_screen(self):
         """

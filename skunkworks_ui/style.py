@@ -342,7 +342,7 @@ def italic_font(text):
 ##                      CUSTOM FONT THEMES                      ##
 ##                                                              ##
 ##################################################################
-def title(text):
+def title_style(text):
     """
     DESCRIPTION:
     
@@ -351,7 +351,7 @@ def title(text):
     return style_underline + style_bold + text + endc + endc
     ########################################################## END: title(text)
     
-def prompt(text):
+def prompt_style(text):
     """
     DESCRIPTION:
     
@@ -365,7 +365,7 @@ def prompt(text):
     return yellow_foreground + style_bold + text + endc + endc
     ########################################################## END: prompt(text)
     
-def error(text):
+def error_style(text):
     """
     DESCRIPTION:
     
