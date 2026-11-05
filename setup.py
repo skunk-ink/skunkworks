@@ -10,7 +10,7 @@ setup(
     author='skunk-ink',
     author_email='murray.crawford85@gmail.com',
     license='MIT',
-    packages=['handshake', 'skunkworks_ui'],
+    packages=['skunkworks_ui'],
     install_requires=['requests>=2.22.0'],
 
     classifiers=[
